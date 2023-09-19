@@ -1,11 +1,15 @@
 import styles from './auth.module.css'
-import { Card, Text, CardBody, CardHeader, Image, Heading, Flex, Box, Input, Button } from '@chakra-ui/react'
-// import AuthImage from '../../assets/auth-page.png'
+import { Image } from '@chakra-ui/react'
+import { CardAuth } from '@/components/CardAuth'
 export default function Home () {
+  const handlerCardAuth = (e: ) => {
+    console.log('>>', e)
+  }
   return (
     <main className={styles.main}>
       <Image src='images/auth-page.png'/>
-      <Card padding='0px 42px 0px 42px' maxW='500px'>
+      <CardAuth onAuth={(e) => handlerCardAuth(e)}/>
+      {/* <Card padding='0px 42px 0px 42px' maxW='500px'>
         <CardHeader >
           <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap' justifyContent='center'>
             <Image src='images/logo.svg'/>
@@ -30,7 +34,7 @@ export default function Home () {
             </Flex>
           </Flex>
         </CardBody>
-      </Card>
+      </Card> */}
     </main>
   )
 }
