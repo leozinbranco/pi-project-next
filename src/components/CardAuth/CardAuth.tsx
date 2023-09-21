@@ -1,16 +1,20 @@
+'use client'
+
 import { Card, Text, CardBody, CardHeader, Image, Heading, Flex, Box, Input, Button } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 interface ICardAuth {
-  onAuth: () => IAuth
+  onAuth: (cpf: string, senha: string) => void
 }
 
-interface IAuth {
+export interface IAuth {
   cpf: string
   senha: string
 }
 
 export const CardAuth: FC<ICardAuth> = ({ onAuth }) => {
+  const [cpf, setCpf] = useState<string>()
+  const [senha, setSenha] = useState<string>()
   return (
     <Card padding='0px 42px 0px 42px' maxW='500px'>
       <CardHeader >
@@ -27,11 +31,11 @@ export const CardAuth: FC<ICardAuth> = ({ onAuth }) => {
         <Flex flexDirection='column' justifyContent='center' >
 
           <Text mb='8px'>CPF</Text>
-          <Input variant='filled' mb='22px' />
+          <Input variant='filled' mb='22px' onChange={(e) => setCpf(e.target.value)}/>
           <Text mb='8px'>Senha</Text>
-          <Input variant='filled' />
+          <Input variant='filled' type='password' onChange={(e) => setSenha(e.target.value)}/>
           <Flex w='100%' justifyContent='center'>
-            <Button color='white' mt='67px' bgColor='#02043E' size='md' onClick={onAuth}>
+            <Button color='white' mt='67px' bgColor='#02043E' size='md' onClick={() => onAuth(cpf!, senha!)}>
               Conecte-se
             </Button>
           </Flex>
