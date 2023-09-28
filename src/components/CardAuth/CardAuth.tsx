@@ -35,7 +35,7 @@ export const CardAuth: FC<ICardAuth> = ({ onAuth }) => {
           <Text mb='8px'>Senha</Text>
           <Input variant='filled' type='password' onChange={(e) => setSenha(e.target.value)}/>
           <Flex w='100%' justifyContent='center'>
-            <Button color='white' mt='67px' bgColor='#02043E' size='md' onClick={() => onAuth(cpf!, senha!)}>
+            <Button color='white' mt='67px' bgColor='#02043E' size='md' onClick={() => onAuth(cpf!, senha!)} _hover={{ bg: '#212485' }}>
               Conecte-se
             </Button>
           </Flex>

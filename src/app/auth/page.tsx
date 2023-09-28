@@ -8,7 +8,7 @@ export default function Home () {
   }
   return (
     <Flex flexDirection={{ base: 'column', sm: 'column', md: 'row', lg: 'row' }} minH='100vh' padding='6' alignItems='center' justifyContent='center' >
-      <Image src='images/auth-page.png'/>
+      <Image src='images/auth-page.svg'/>
       <CardAuth onAuth={handlerCardAuth}/>
     </Flex>
   )
