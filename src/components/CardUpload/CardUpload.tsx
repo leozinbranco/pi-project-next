@@ -1,5 +1,4 @@
 import { Card, CardBody, Flex, Image, Button, CardHeader, Heading, Box, Input } from '@chakra-ui/react'
-import { useRouter } from 'next/router';
 
 export const CardUpload = () => {
   return (
@@ -20,9 +19,12 @@ export const CardUpload = () => {
           <Box mt='25' mb='25' opacity='0.5'>
             Formatos Suporados: CSV
           </Box>
-          <Flex flexDirection='column' alignItems='center' justifyContent='center'>
+          <Flex flexDirection='row' gap='4' alignItems='center' justifyContent='center'>
             <Button color='white' bgColor='#02043E' size='md' _hover={{ bg: '#212485' }}>
               Upload de Arquivos
+            </Button>
+            <Button>
+              Sair
             </Button>
           </Flex>
         </Flex>
