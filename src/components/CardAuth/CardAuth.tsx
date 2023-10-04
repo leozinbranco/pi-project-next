@@ -1,5 +1,3 @@
-'use client'
-
 import { Card, Text, CardBody, CardHeader, Image, Heading, Flex, Box, Input, Button } from '@chakra-ui/react'
 import { FC, useState } from 'react'
 
