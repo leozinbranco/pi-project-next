@@ -14,7 +14,8 @@ import {
   Box,
   Textarea,
   InputGroup,
-  InputLeftElement
+  InputLeftElement,
+  Image
 } from '@chakra-ui/react'
 import { BiSupport, BiSolidUser } from 'react-icons/bi'
 
@@ -28,38 +29,59 @@ export const ModalSupport: FC<IModalSupport> = ({ visible, onClose }) => {
 
       <Modal isOpen={visible} onClose={onClose} >
         <ModalOverlay />
-        <ModalContent minH='500px'>
+        <ModalContent minH='500px' borderRadius='20px'>
 
           <ModalHeader alignItems='center'>
             <Flex justifyContent='center'>
-              <BiSupport size={62}/>
+              <Image
+                src='images/message-suport.png'
+                width='65px'
+                height='65px'
+              />
 
             </Flex>
-            Suporte</ModalHeader>
-          <ModalCloseButton />
+          </ModalHeader>
           <ModalBody>
             <Flex flexDirection='column'>
               {/* <Input variant='filled' placeholder='Filled' /> */}
               <InputGroup>
                 <InputLeftElement pointerEvents='none'>
-                  <BiSolidUser size={20}/>
+                  <Image
+                    src='images/profile.png'
+                  />
                 </InputLeftElement>
-                <Input type='tel' placeholder='Nome' />
+                <Input
+                  borderRadius='20px'
+                  type='tel'
+                />
               </InputGroup>
               <Flex flexDirection='column' margin='20px'>
-                <Checkbox value='1'>Erro Sistêmico</Checkbox>
-                <Checkbox value='2'>Nova Funcionalidade</Checkbox>
-                <Checkbox value='3'>Outros</Checkbox>
+                <Checkbox value='1' fontWeight='bolder'>Erro Sistêmico</Checkbox>
+                <Checkbox value='2' fontWeight='bolder'>Nova Funcionalidade</Checkbox>
+                <Checkbox value='3' fontWeight='bolder'>Outros</Checkbox>
               </Flex>
-              <Textarea placeholder='Escreva aqui detalhes do seu ticket' height='100%'/>
+              <InputGroup>
+                <Image
+                  src='images/message.png'
+                  position='absolute'
+                  top='9px'
+                  left='9px'
+                />
+                <Textarea
+                  borderRadius='20px'
+                  height='100%'
+                  rows={6}
+                  defaultValue='     '
+                />
+              </InputGroup>
             </Flex>
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
+          <ModalFooter style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button colorScheme='red' borderRadius='20px' mr={3} onClick={onClose}>
               Cancelar
             </Button>
-            <Button variant='ghost'>Enviar</Button>
+            <Button colorScheme='green' borderRadius='20px'>Enviar</Button>
           </ModalFooter>
           {/* </Flex>
           </ Flex> */}

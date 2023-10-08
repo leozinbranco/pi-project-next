@@ -28,7 +28,7 @@ export const CardAuth: FC<ICardAuth> = ({ onAuth }) => {
       <CardBody>
         <Flex flexDirection='column' justifyContent='center' >
 
-          <Text mb='8px'>CPF</Text>
+          <Text mb='8px'>CNPJ</Text>
           <Input variant='filled' mb='22px' onChange={(e) => setCpf(e.target.value)}/>
           <Text mb='8px'>Senha</Text>
           <Input variant='filled' type='password' onChange={(e) => setSenha(e.target.value)}/>
