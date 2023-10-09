@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'OrderFlow'
 }
 
-export default function RootLayout({
+export default function RootLayout ({
   children
 }: {
   children: React.ReactNode

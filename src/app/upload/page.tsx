@@ -1,5 +1,4 @@
 'use client'
-import styles from './upload.module.css'
 import { Image, Flex, IconButton } from '@chakra-ui/react'
 import { ModalSupport } from '@/components/ModalSupport'
 import { CardUpload } from 'components/CardUpload'
