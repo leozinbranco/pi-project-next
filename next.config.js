@@ -16,6 +16,11 @@ const nextConfig = {
         source: '/',
         destination: '/upload',
         permanent: false,
+      },
+      {
+        source: '/',
+        destination: '/serviceOrder',
+        permanent: false
       }
     ]
   },
