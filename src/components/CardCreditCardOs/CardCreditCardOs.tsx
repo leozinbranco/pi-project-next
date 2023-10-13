@@ -6,11 +6,8 @@ export const CardCreditCardOs = () => {
     return (
         <>
             <Box width='90%' margin='auto'>
-
                 <Box width='350px' height='150px' borderRadius='8' padding='8' mt='5' mb='5' bgColor='#0749F1'>
-
                     <Flex flexDirection='row' justifyContent='space-between'>
-
                         <Flex flexDirection='column' gap='2'>
                             <Image
                                 src='images/chip.png'
@@ -24,7 +21,6 @@ export const CardCreditCardOs = () => {
                                 Ordem de Serviço
                             </Text>
                         </Flex>
-
                         <Image
                             src='images/logo-card.png'
                             width='50px'
