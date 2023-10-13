@@ -1,7 +1,8 @@
 
-import { Card, CardBody, Flex, Image, Button, CardHeader, Heading, Box, Input } from '@chakra-ui/react'
+import { Flex, Heading, Box, Input } from '@chakra-ui/react'
 import React, { FC } from 'react'
 import { CardDataOs } from '../CardDataOs'
+import { CardCreditCardOs } from '../CardCreditCardOs'
 
 interface IFocusInput {
     onFocusSearch: () => void
@@ -33,6 +34,7 @@ export const CardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSearch 
                 </Flex>
             </Box >
             <CardDataOs />
+            <CardCreditCardOs />
         </>
     )
 }
