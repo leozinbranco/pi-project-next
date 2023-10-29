@@ -22,8 +22,9 @@ import { BiSupport, BiSolidUser } from 'react-icons/bi'
 interface IModalSupport {
   visible: boolean
   onClose: () => void
+  sendSuport: () => void
 }
-export const ModalSupport: FC<IModalSupport> = ({ visible, onClose }) => {
+export const ModalSupport: FC<IModalSupport> = ({ visible, onClose, sendSuport }) => {
   return (
     <>
 
@@ -81,7 +82,7 @@ export const ModalSupport: FC<IModalSupport> = ({ visible, onClose }) => {
             <Button colorScheme='red' borderRadius='20px' mr={3} onClick={onClose}>
               Cancelar
             </Button>
-            <Button colorScheme='green' borderRadius='20px'>Enviar</Button>
+            <Button colorScheme='green' borderRadius='20px' onClick={sendSuport}>Enviar</Button>
           </ModalFooter>
           {/* </Flex>
           </ Flex> */}

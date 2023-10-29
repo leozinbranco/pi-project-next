@@ -5,6 +5,9 @@ import { CardUpload } from 'components/CardUpload'
 import React, { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from './upload.module.css'
+import axios from 'axios'
+
+
 export default function UploadPage() {
     const [visivel, setVisivel] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
@@ -38,6 +41,32 @@ export default function UploadPage() {
             boxRef.current.style.display = 'block'
             boxRef.current.innerText = file
         }
+    }
+
+
+    const sendSuport = async () => {
+
+        return await axios.post(
+            'http://localhost:3002/suport/',
+            {
+
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                }
+            }
+        )
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                if (error.response.status === 404) {
+                    console.log(error.response.data.message)
+                }
+            })
+
     }
 
     class UploadComponent extends React.Component {
@@ -82,7 +111,7 @@ export default function UploadPage() {
 
                         </Flex>
                     </Flex>
-                    <ModalSupport visible={visivel} onClose={handlerOnCloseModal} />
+                    <ModalSupport visible={visivel} onClose={handlerOnCloseModal} sendSuport={sendSuport} />
                 </main>
             )
         }
