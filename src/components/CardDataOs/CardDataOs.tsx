@@ -10,9 +10,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='4'>
               <Image
                 src='../../images/number.png'
-                width='40px'
-                height='40px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>Nº O.S</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value='414' />
@@ -22,9 +22,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='4'>
               <Image
                 src='../../images/config.png'
-                width='40px'
-                height='40px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>Tipo O.S</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' />
@@ -34,9 +34,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='4'>
               <Image
                 src='../../images/config.png'
-                width='40px'
-                height='40px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>Tipo Objeto</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' />
@@ -46,9 +46,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='4'>
               <Image
                 src='../../images/status.png'
-                width='40px'
-                height='40px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>Status O.S</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' />
@@ -58,9 +58,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='3'>
               <Image
                 src='../../images/calendar.svg'
-                width='50px'
-                height='50px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>Data de Cadastro</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' />
@@ -70,9 +70,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='3'>
               <Image
                 src='../../images/calendar.svg'
-                width='50px'
-                height='50px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>Data de Atualização</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' />
@@ -85,9 +85,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='4'>
               <Image
                 src='../../images/messages.png'
-                width='40px'
-                height='40px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>Descrição Ajuste</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' />
@@ -97,9 +97,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='4'>
               <Image
                 src='../../images/messages.png'
-                width='40px'
-                height='40px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>Observações</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' />
@@ -109,9 +109,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='4'>
               <Image
                 src='../../images/responsible.png'
-                width='40px'
-                height='40px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>Responsável O.S</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' />
@@ -121,9 +121,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='4'>
               <Image
                 src='../../images/call.png'
-                width='35px'
-                height='35px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>Telefone Empr.</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' />
@@ -133,9 +133,9 @@ export const CardDataOs = () => {
             <Flex flexDirection='row' alignItems='center' gap='4'>
               <Image
                 src='../../images/notification.png'
-                width='35px'
-                height='35px'
-                            />
+                width='20px'
+                height='20px'
+              />
               <Flex flexDirection='column'>
                 <Text>E-mail Empr.</Text>
                 <Input borderColor='transparent' disabled borderBottom='2px solid #fff' />

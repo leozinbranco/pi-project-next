@@ -16,7 +16,7 @@ export const CardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSearch 
         <Heading color='#02043E'>
           Ordens de Serviço
         </Heading>
-        <Flex flexDirection='column' alignItems='end' mt='16'>
+        <Flex flexDirection='column' alignItems='end' mt='5'>
 
           <Input
             borderRadius='20px'
@@ -29,7 +29,7 @@ export const CardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSearch 
             ref={inputRef}
             onFocus={onFocusSearch}
             onBlur={onBlurSearch}
-                    />
+          />
         </Flex>
       </Box >
       <CardDataOs />

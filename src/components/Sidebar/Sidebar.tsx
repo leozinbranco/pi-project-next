@@ -5,7 +5,7 @@ import { Flex, Text, Link, Image, Divider, Box } from '@chakra-ui/react'
 import { FiHome, FiUsers, FiLogOut } from 'react-icons/fi'
 
 const menuItems = [
-  { id: 1, label: 'Dashboard', icon: () => <FiHome size={20} color='#FFFFFF'/>, link: '/home' },
+  { id: 1, label: 'Dashboard', icon: () => <FiHome size={20} color='#FFFFFF' />, link: '/home' },
   { id: 2, label: 'Cadastrar cliente', icon: () => <FiUsers size={20} color='#FFFFFF' />, link: '/home/inserir/cliente' }
 ]
 
@@ -15,13 +15,13 @@ export const Sidebar = () => {
   return (
     <Flex h='100vh' bgColor='#02043E' width={250} minW={250} flexDirection='column' >
       <Flex h='10%' paddingLeft={5} paddingBottom={3} paddingTop={5} paddingRight={5} alignItems='center'>
-        <Image src='../../images/logo-white.svg' width={35}/>
+        <Image src='../../images/logo-white.svg' width={35} />
         <Text marginLeft={3} color='white' fontSize={32} width='100%' whiteSpace='nowrap' fontFamily='Poppins'>
           Order Flow
         </Text>
       </Flex>
       <Box position='relative' padding='4'>
-        <Divider orientation='horizontal'/>
+        <Divider orientation='horizontal' />
       </Box>
       <Flex flexDirection='column'>
         {menuItems.map(({ icon, label, link }) => (

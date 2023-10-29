@@ -19,7 +19,7 @@ const nextConfig = {
       },
       {
         source: '/',
-        destination: '/serviceOrder',
+        destination: '/home',
         permanent: false
       }
     ]

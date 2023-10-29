@@ -12,11 +12,18 @@ export default function UploadPage() {
     const [visivel, setVisivel] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
     const boxRef = useRef<HTMLDivElement>(null)
+    const inputRefSup = useRef<HTMLInputElement>(null)
+    const checkBoxError = useRef<HTMLInputElement>(null)
+    const checkBoxNewFeature = useRef<HTMLInputElement>(null)
+    const checkBoxOther = useRef<HTMLInputElement>(null)
+    const textAreaRef = useRef<HTMLTextAreaElement>(null)
+    const textRef = useRef<HTMLInputElement>(null)
+    const textRefArea = useRef<HTMLInputElement>(null)
+
     const route = useRouter()
 
     const handlerOnCloseModal = () => {
         setVisivel(false)
-        console.log('Abriu modal')
     }
     const handlerOnOpenModal = () => {
         setVisivel(true)
@@ -43,29 +50,72 @@ export default function UploadPage() {
         }
     }
 
+    const handlerSendSuport = async () => {
 
-    const sendSuport = async () => {
+        if (inputRefSup.current && checkBoxError.current && checkBoxNewFeature.current && checkBoxOther.current && textAreaRef.current) {
 
-        return await axios.post(
-            'http://localhost:3002/suport/',
-            {
-
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                }
+            if (!checkBoxError.current.checked && !checkBoxNewFeature.current.checked && !checkBoxOther.current.checked && textRef.current) {
+                textRef.current.hidden = false
+                return false
             }
-        )
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                if (error.response.status === 404) {
-                    console.log(error.response.data.message)
+            if ((checkBoxError.current.checked || checkBoxNewFeature.current.checked || checkBoxOther.current.checked) && textRef.current) {
+                textRef.current.hidden = true
+            }
+
+            if (textAreaRef.current.value === '     ' && textRefArea.current) {
+                textRefArea.current.hidden = false
+                return false
+            }
+            if (textAreaRef.current.value !== '     ' && textRefArea.current) {
+                textRefArea.current.hidden = true
+            }
+
+            let typeTicket: number = 0;
+            if (checkBoxError.current.checked) {
+                typeTicket = 1
+            } else if (checkBoxNewFeature.current.checked) {
+                typeTicket = 2
+            } else {
+                typeTicket = 3
+            }
+
+            return await axios.post(
+                'http://localhost:3002/suport/',
+                {
+                    statusTicket: "dede",
+                    tipoTicket: String(typeTicket),
+                    descricaoTicket: textAreaRef.current.value,
+                    descricaoAjusteTicket: "eedde",
+                    dataAberturaTicket: "2023-10-30T15:30:00.000Z",
+                    dataUltimaModTicket: "2023-10-30T15:30:00.000Z",
+
+                    empresaTicket: {
+                        connect: {
+                            codEmpresa: 5
+                        }
+                    },
+                    cnpjTicket: {
+                        connect: {
+                            cnpjEmpresa: "matheusCalvo"
+                        }
+                    }
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                    }
                 }
-            })
+            )
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    if (error.response.status === 404) {
+                        console.log(error.response.data.message)
+                    }
+                })
+        }
 
     }
 
@@ -111,7 +161,17 @@ export default function UploadPage() {
 
                         </Flex>
                     </Flex>
-                    <ModalSupport visible={visivel} onClose={handlerOnCloseModal} sendSuport={sendSuport} />
+                    <ModalSupport
+                        visible={visivel}
+                        onClose={handlerOnCloseModal}
+                        sendSuport={handlerSendSuport}
+                        checkBoxError={checkBoxError}
+                        checkBoxNewFeature={checkBoxNewFeature}
+                        checkBoxOther={checkBoxOther}
+                        inputRef={inputRefSup} textAreaRef={textAreaRef}
+                        textRef={textRef}
+                        textRefArea={textRefArea}
+                    />
                 </main>
             )
         }

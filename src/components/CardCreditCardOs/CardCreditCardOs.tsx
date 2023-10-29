@@ -11,7 +11,7 @@ export const CardCreditCardOs = () => {
                 src='../../images/chip.png'
                 width='75px'
                 height='50px'
-                            />
+              />
               <Text color='#fff'>
                 145236
               </Text>
@@ -26,7 +26,7 @@ export const CardCreditCardOs = () => {
               position='relative'
               top='-5'
               right='-5'
-                        />
+            />
           </Flex>
         </Box>
       </Box>
