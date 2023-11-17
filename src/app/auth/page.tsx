@@ -1,10 +1,18 @@
 'use client'
 import { Image, Flex } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
 import { CardAuth } from '@/components/CardAuth'
-export default function Home() {
-  const handlerCardAuth = (cpf: string, senha: string) => {
-    console.log('cpf: ', cpf)
-    console.log('senha: ', senha)
+import { useAuth } from 'hooks/useAuth'
+export default function Home () {
+  const router = useRouter()
+  const { autenticaUsuario } = useAuth()
+  const handlerCardAuth = async (cpf: string, senha: string) => {
+    try {
+      await autenticaUsuario(cpf, senha)
+      router.push('/upload')
+    } catch (err) {
+      console.log('error: ', err)
+    }
   }
   return (
     <Flex flexDirection={{ base: 'column', sm: 'column', md: 'row', lg: 'row' }} minH='100vh' padding='6' alignItems='center' justifyContent='center' >
@@ -18,7 +26,7 @@ export default function Home() {
           height='72px'
         />
       </Flex>
-      <CardAuth onAuth={handlerCardAuth} />
+      <CardAuth onAuth={async (cpf, senha) => await handlerCardAuth(cpf, senha)} />
     </Flex>
   )
 }

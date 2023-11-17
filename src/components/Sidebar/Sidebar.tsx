@@ -1,17 +1,12 @@
 'use client'
-
-// import { useLogin } from '@/hooks'
 import { Flex, Text, Link, Image, Divider, Box } from '@chakra-ui/react'
-import { FiHome, FiUsers, FiLogOut } from 'react-icons/fi'
+import { FiHome, FiLogOut } from 'react-icons/fi'
 
 const menuItems = [
-  { id: 1, label: 'Dashboard', icon: () => <FiHome size={20} color='#FFFFFF' />, link: '/home' },
-  { id: 2, label: 'Cadastrar cliente', icon: () => <FiUsers size={20} color='#FFFFFF' />, link: '/home/inserir/cliente' }
+  { id: 1, label: 'Dashboard', icon: () => <FiHome size={20} color='#FFFFFF' />, link: '/home' }
 ]
 
 export const Sidebar = () => {
-  // const { logout } = useLogin()
-
   return (
     <Flex h='100vh' bgColor='#02043E' width={250} minW={250} flexDirection='column' >
       <Flex h='10%' paddingLeft={5} paddingBottom={3} paddingTop={5} paddingRight={5} alignItems='center'>

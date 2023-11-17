@@ -1,7 +1,9 @@
 import { Flex, Heading, Box, Input } from '@chakra-ui/react'
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { CardDataOs } from '../CardDataOs'
 import { CardCreditCardOs } from '../CardCreditCardOs'
+import { AppContext } from '@/context/Context'
+import { UserContextType } from '@/context/types'
 
 interface IFocusInput {
   onFocusSearch: () => void
@@ -9,7 +11,9 @@ interface IFocusInput {
   inputRef: React.Ref<HTMLInputElement>
 }
 
-export const CardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSearch }) => {
+export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSearch }) => {
+  const { dataWorkOrder } = useContext(AppContext) as UserContextType
+
   return (
     <>
       <Box width='90%' pt='5' pb='5' margin='auto'>
@@ -32,7 +36,7 @@ export const CardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSearch 
           />
         </Flex>
       </Box >
-      <CardDataOs />
+      <CardDataOs dataOs={dataWorkOrder}/>
       <CardCreditCardOs />
     </>
   )
