@@ -1,10 +1,10 @@
 'use client'
-import { CardOS } from '@/components/CardOS'
+import { BlocoCardOS } from '@/components/BlocoCardOS'
 import { Flex, Box } from '@chakra-ui/react'
 import { Sidebar } from 'components/Sidebar'
 import { useRef } from 'react'
 
-export default function Home() {
+export default function Home () {
   const inputSearch = useRef<HTMLInputElement>(null)
 
   const handleOnFocusSearch = () => {
@@ -24,7 +24,7 @@ export default function Home() {
       <Sidebar />
     </Box>
     <Flex width='100%' height='100vh' flexDirection='column' >
-      <CardOS onFocusSearch={handleOnFocusSearch} inputRef={inputSearch} onBlurSearch={handleOnBlurSearch} />
+      <BlocoCardOS onFocusSearch={handleOnFocusSearch} inputRef={inputSearch} onBlurSearch={handleOnBlurSearch} />
     </Flex>
   </Flex></section>
   )

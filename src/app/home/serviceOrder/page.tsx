@@ -1,5 +1,5 @@
 'use client'
-import { CardOS } from 'components/CardOS'
+import { BlocoCardOS } from '@/components/BlocoCardOS'
 import { useRef } from 'react'
 
 export default function Home () {
@@ -19,6 +19,6 @@ export default function Home () {
   }
   return (
 
-    <CardOS onFocusSearch={handleOnFocusSearch} inputRef={inputSearch} onBlurSearch={handleOnBlurSearch} />
+    <BlocoCardOS onFocusSearch={handleOnFocusSearch} inputRef={inputSearch} onBlurSearch={handleOnBlurSearch} />
   )
 }

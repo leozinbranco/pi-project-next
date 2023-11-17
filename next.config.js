@@ -5,23 +5,20 @@ const nextConfig = {
       {
         source: '/',
         destination: '/auth',
-        permanent: true,
-      },
-      {
-        source: '/',
-        destination: '/login',
-        permanent: false,
-      },
-      {
-        source: '/',
-        destination: '/upload',
-        permanent: false,
-      },
-      {
-        source: '/',
-        destination: '/home',
         permanent: false
-      }
+      },
+      {
+        source: '/',
+        has: [
+          {
+            type: 'header',
+            key: 'x-api-key',
+            value: '(?<authorized>yes|true)',
+          },
+        ],
+        permanent: false,
+        destination: '/home/serviceOrder',
+      },
     ]
   },
 }
