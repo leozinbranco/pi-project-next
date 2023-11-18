@@ -1,17 +1,22 @@
 'use client'
 import { Flex, Text, Link, Image, Divider, Box } from '@chakra-ui/react'
 import { FiHome, FiLogOut } from 'react-icons/fi'
+import { FC } from 'react'
 
 const menuItems = [
   { id: 1, label: 'Dashboard', icon: () => <FiHome size={20} color='#FFFFFF' />, link: '/home' }
 ]
 
-export const Sidebar = () => {
+interface IRedirectAuth {
+  onReturn: () => void
+}
+
+export const Sidebar: FC<IRedirectAuth> = ({ onReturn }) => {
   return (
-    <Flex h='100vh' bgColor='#02043E' width={250} minW={250} flexDirection='column' >
-      <Flex h='10%' paddingLeft={5} paddingBottom={3} paddingTop={5} paddingRight={5} alignItems='center'>
+    <Flex h='100vh' bgColor='#02043E' width={250} minW={250} flexDirection='column' padding={2}>
+      <Flex h='10%' paddingLeft={2} paddingBottom={3} paddingTop={5} paddingRight={5} alignItems='center'>
         <Image src='../../images/logo-white.svg' width={35} />
-        <Text marginLeft={3} color='white' fontSize={32} width='100%' whiteSpace='nowrap' fontFamily='Poppins'>
+        <Text color='white' fontSize={32} width='100%' whiteSpace='nowrap' fontFamily='Poppins'>
           Order Flow
         </Text>
       </Flex>
@@ -37,7 +42,7 @@ export const Sidebar = () => {
           <Divider orientation='horizontal' />
         </Flex>
         <Flex justifyContent='center' flexDirection='column' h='100%'>
-          <Link color='#FFFFFF' marginLeft={5} onClick={() => console.log()}>
+          <Link color='#FFFFFF' marginLeft={5} onClick={onReturn}>
             <Flex flexDirection='row' >
               <Flex marginRight={5} alignItems='center'>
                 <FiLogOut size={20} color='#FFFFFF' />

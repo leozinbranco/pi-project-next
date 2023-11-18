@@ -2,8 +2,9 @@
 import { Image, Flex, IconButton } from '@chakra-ui/react'
 import { ModalSupport } from '@/components/ModalSupport'
 import { CardUpload } from 'components/CardUpload'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useContext } from 'react'
 import { useRouter } from 'next/navigation'
+import { AppContext } from '@/context/Context'
 import styles from './upload.module.css'
 import axios from 'axios'
 
@@ -18,6 +19,8 @@ export default function UploadPage () {
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
   const textRef = useRef<HTMLInputElement>(null)
   const textRefArea = useRef<HTMLInputElement>(null)
+  const cnpjEmpresa = useRef<HTMLInputElement>(null)
+  const codEmpresa = useRef<HTMLInputElement>(null)
 
   const route = useRouter()
 
@@ -29,7 +32,7 @@ export default function UploadPage () {
   }
 
   const handlerOnReturn = () => {
-    route.push('auth')
+    route.push('/auth')
   }
 
   const handleOnFile = () => {
@@ -50,7 +53,7 @@ export default function UploadPage () {
   }
 
   const handlerSendSuport = async () => {
-    if (inputRefSup.current && checkBoxError.current && checkBoxNewFeature.current && checkBoxOther.current && textAreaRef.current) {
+    if (inputRefSup.current && checkBoxError.current && checkBoxNewFeature.current && checkBoxOther.current && textAreaRef.current && cnpjEmpresa.current && codEmpresa.current) {
       if (!checkBoxError.current.checked && !checkBoxNewFeature.current.checked && !checkBoxOther.current.checked && textRef.current) {
         textRef.current.hidden = false
         return false
@@ -67,53 +70,53 @@ export default function UploadPage () {
         textRefArea.current.hidden = true
       }
 
-      let typeTicket: number = 0
+      let typeTicket: string = ''
       if (checkBoxError.current.checked) {
-        typeTicket = 1
+        typeTicket = 'Erro Sistêmico'
       } else if (checkBoxNewFeature.current.checked) {
-        typeTicket = 2
+        typeTicket = 'Nova Funcionalidade'
       } else {
-        typeTicket = 3
+        typeTicket = 'Outros'
       }
+      try {
+        const response = await axios.post(
+          'http://localhost:3002/suport/',
+          {
+            statusTicket: 'dede',
+            tipoTicket: String(typeTicket),
+            descricaoTicket: textAreaRef.current.value,
+            descricaoAjusteTicket: typeTicket,
+            dataAberturaTicket: new Date(),
+            dataUltimaModTicket: new Date(),
 
-      return await axios.post(
-        'http://localhost:3002/suport/',
-        {
-          statusTicket: 'dede',
-          tipoTicket: String(typeTicket),
-          descricaoTicket: textAreaRef.current.value,
-          descricaoAjusteTicket: 'eedde',
-          dataAberturaTicket: '2023-10-30T15:30:00.000Z',
-          dataUltimaModTicket: '2023-10-30T15:30:00.000Z',
-
-          empresaTicket: {
-            connect: {
-              codEmpresa: 1
+            empresaTicket: {
+              connect: {
+                codEmpresa: Number(codEmpresa.current.value)
+              }
+            },
+            cnpjTicket: {
+              connect: {
+                cnpjEmpresa: cnpjEmpresa.current.value
+              }
             }
           },
-          cnpjTicket: {
-            connect: {
-              cnpjEmpresa: '12312312322'
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
             }
           }
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          }
+        )
+        console.log(response.data.message)
+      } catch (error) {
+        if (error?.response?.status === 404) {
+          console.log(error?.response?.data?.message)
         }
-      )
-        .then(response => {
-          console.log(response)
-        })
-        .catch(error => {
-          if (error.response.status === 404) {
-            console.log(error.response.data.message)
-          }
-        })
+      }
     }
   }
+
+  const { dataResp } = useContext(AppContext)
 
   class UploadComponent extends React.Component {
     handleDrop = (event: any) => {
@@ -167,7 +170,9 @@ export default function UploadPage () {
             inputRef={inputRefSup} textAreaRef={textAreaRef}
             textRef={textRef}
             textRefArea={textRefArea}
-                    />
+            dataResp={dataResp}
+            cnpjEmpresa={cnpjEmpresa}
+            codEmpresa={codEmpresa}/>
         </main>
       )
     }

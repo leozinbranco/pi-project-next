@@ -18,20 +18,24 @@ import {
   InputLeftElement,
   Image
 } from '@chakra-ui/react'
+import { UsuarioAdm } from 'hooks/useAuth'
 
 interface IModalSupport {
   visible: boolean
   onClose: () => void
-  sendSuport: () => void
+  sendSuport: () => Promise<false | undefined>
   inputRef: React.Ref<HTMLInputElement>
   checkBoxError: React.Ref<HTMLInputElement>
   checkBoxNewFeature: React.Ref<HTMLInputElement>
   checkBoxOther: React.Ref<HTMLInputElement>
+  cnpjEmpresa: React.Ref<HTMLInputElement>
+  codEmpresa: React.Ref<HTMLInputElement>
   textAreaRef: React.Ref<HTMLTextAreaElement>
   textRef: React.Ref<HTMLInputElement>
   textRefArea: React.Ref<HTMLInputElement>
+  dataResp: UsuarioAdm
 }
-export const ModalSupport: FC<IModalSupport> = ({ visible, onClose, sendSuport, inputRef, checkBoxError, checkBoxNewFeature, checkBoxOther, textAreaRef, textRef, textRefArea }) => {
+export const ModalSupport: FC<IModalSupport> = ({ dataResp, visible, onClose, sendSuport, inputRef, checkBoxError, checkBoxNewFeature, checkBoxOther, textAreaRef, textRef, textRefArea, cnpjEmpresa, codEmpresa }) => {
   return (
     <>
 
@@ -60,10 +64,12 @@ export const ModalSupport: FC<IModalSupport> = ({ visible, onClose, sendSuport, 
                 </InputLeftElement>
                 <Input
                   borderRadius='20px'
+                  value={dataResp?.empresaUsuario?.emailEmpresa}
                   ref={inputRef}
-                  required
                 />
               </InputGroup>
+              <Input ref={cnpjEmpresa} value={dataResp?.empresaUsuario?.cnpjEmpresa} hidden/>
+              <Input ref={codEmpresa} value={dataResp?.empresaUsuario?.codEmpresa} hidden/>
               <Flex flexDirection='column' margin='20px'>
                 <RadioGroup>
                   <Stack spacing={2} direction='column'>
@@ -100,7 +106,7 @@ export const ModalSupport: FC<IModalSupport> = ({ visible, onClose, sendSuport, 
             <Button colorScheme='red' borderRadius='20px' mr={3} onClick={onClose}>
               Cancelar
             </Button>
-            <Button colorScheme='green' borderRadius='20px' onClick={sendSuport}>Enviar</Button>
+            <Button colorScheme='green' borderRadius='20px' onClick={async () => await sendSuport()}>Enviar</Button>
           </ModalFooter>
           {/* </Flex>
           </ Flex> */}

@@ -3,12 +3,24 @@ import { Image, Flex } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { CardAuth } from '@/components/CardAuth'
 import { useAuth } from 'hooks/useAuth'
+import { UserContextType } from '@/context/types'
+import { AppContext } from '../../context'
+import { useContext } from 'react'
 export default function Home () {
   const router = useRouter()
   const { autenticaUsuario } = useAuth()
+  const { enviar } = useContext(AppContext) as UserContextType
   const handlerCardAuth = async (cpf: string, senha: string) => {
     try {
       await autenticaUsuario(cpf, senha)
+      autenticaUsuario(cpf, senha).then(res => {
+        enviar({
+          type: 'SET_VALUE',
+          payload: {
+            dataResp: res
+          }
+        })
+      })
       router.push('/upload')
     } catch (err) {
       console.log('error: ', err)

@@ -7,6 +7,10 @@ interface ICardDataOs {
 }
 
 export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
+  /* Instanciando datas para formatação */
+  dataOs.dataAberturaOs = new Date(dataOs.dataAberturaOs)
+  dataOs.dataUltimaModOs = new Date(dataOs.dataUltimaModOs)
+
   return (
     <Box bgColor='#02043E' margin='auto' width='90%' height='520px' color='#FFF' fontWeight='bolder' borderRadius='8'>
       <Flex flexDirection='row' columnGap='36' padding='5' justifyContent='space-around'>
@@ -67,7 +71,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Data de Cadastro</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.dataAberturaOs.toString()}/>
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={`${dataOs.dataAberturaOs.getDate() + 1}/${Number(dataOs.dataAberturaOs.getMonth() + 1)}/${dataOs.dataAberturaOs.getFullYear()}`}/>
             </Flex>
           </Flex>
 
@@ -79,7 +83,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Data de Atualização</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.dataUltimaModOs.toString()}/>
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={`${dataOs.dataUltimaModOs.getDate() + 1}/${Number(dataOs.dataUltimaModOs.getMonth() + 1)}/${dataOs.dataUltimaModOs.getFullYear()}`}/>
             </Flex>
           </Flex>
 

@@ -12,7 +12,7 @@ interface IFocusInput {
 }
 
 export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSearch }) => {
-  const { dataWorkOrder } = useContext(AppContext) as UserContextType
+  const { dataWorkOrder } = useContext(AppContext)
 
   return (
     <>
@@ -37,7 +37,7 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
         </Flex>
       </Box >
       <CardDataOs dataOs={dataWorkOrder}/>
-      <CardCreditCardOs />
+      <CardCreditCardOs dataOs={dataWorkOrder} />
     </>
   )
 }

@@ -14,7 +14,7 @@ export const CardLogin: FC<ICardLogin> = ({ onClickLogin }) => {
     <Card padding='0px 42px 0px 42px' maxW='500px' >
       <CardHeader>
         <Flex gap='4' alignItems='center' flexWrap='wrap' justifyContent='center'>
-          <Image src='images/logo.svg' />
+          <Image src='../images/logo.svg' />
           <Heading textAlign='center'> Login </Heading>
           <Box textAlign='center'>
             <Text>Conecte-se para visualizar a sua Ordem de Serviço</Text>

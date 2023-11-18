@@ -1,6 +1,11 @@
-import { Flex, Heading, Box, Text, Image } from '@chakra-ui/react'
+import { Flex, Box, Text, Image } from '@chakra-ui/react'
+import { FC } from 'react'
+import { OrdemServico } from 'hooks/useBuscarOrdemServico'
 
-export const CardCreditCardOs = () => {
+interface ICardDataOs {
+  dataOs: OrdemServico
+}
+export const CardCreditCardOs: FC<ICardDataOs> = ({ dataOs }) => {
   return (
     <>
       <Box width='90%' margin='auto'>
@@ -13,7 +18,7 @@ export const CardCreditCardOs = () => {
                 height='50px'
               />
               <Text color='#fff'>
-                145236
+                {dataOs.numOs}
               </Text>
               <Text color='#fff'>
                 Ordem de Serviço

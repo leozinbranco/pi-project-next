@@ -26,10 +26,9 @@ export const useWorkOrder = () => {
         'x-api-key': token,
         'Content-Type': 'application/json;charset=utf-8'
       }
-      const nestAPI = process.env.NEXT_PUBLIC_BACKEND_URL
       const config = { headers }
       const queryParams = new URLSearchParams({ codOs, pass }).toString()
-      const res = await axios.get(`${nestAPI}/work-order?${queryParams}`, config)
+      const res = await axios.get('http://localhost:3002/work-order?' + queryParams, config)
       const os = res.data as OrdemServico
       return os
     } catch (e) {
