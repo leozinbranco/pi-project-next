@@ -1,6 +1,6 @@
 import { IContextState } from './types'
 import { OrdemServico } from 'hooks/useBuscarOrdemServico'
-export const defaultOs: OrdemServico = {
+export const defaultOs: OrdemServico[] = [{
   codOs: 0,
   numOs: '00000',
   statusOs: 'DEFAULT',
@@ -11,11 +11,11 @@ export const defaultOs: OrdemServico = {
   telContatoOs: '19000000000',
   emailContatoOs: 'teste@email.com',
   cnpjClienteOs: '00000000000',
-  dataAberturaOs: new Date(),
-  dataUltimaModOs: new Date(),
+  dataAberturaOs: '22/11/23' as unknown as Date, // new Date(),
+  dataUltimaModOs: '22/11/23' as unknown as Date, // new Date(),
   atributoValidadorOs: 'DEFAULT',
   codEmpresaOs: 0
-}
+}]
 export const initialState: IContextState = {
   dataWorkOrder: defaultOs
 }

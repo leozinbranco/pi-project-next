@@ -3,11 +3,11 @@ import { BlocoCardOS } from '@/components/BlocoCardOS'
 import { Flex, Box } from '@chakra-ui/react'
 import { Sidebar } from 'components/Sidebar'
 import { useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useAuth } from 'hooks/useAuth'
 
 export default function Home () {
   const inputSearch = useRef<HTMLInputElement>(null)
-  const route = useRouter()
+  const { logout } = useAuth()
 
   const handleOnFocusSearch = () => {
     if (inputSearch.current) {
@@ -22,7 +22,7 @@ export default function Home () {
     }
   }
   const handlerOnReturn = () => {
-    route.push('/login')
+    logout()
   }
 
   return (<section><Flex marginLeft='auto' marginRight='auto' width='100%' >

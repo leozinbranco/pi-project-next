@@ -1,5 +1,6 @@
 'use client'
 import { Flex, Text, Link, Image, Divider, Box } from '@chakra-ui/react'
+import { useAuth } from 'hooks/useAuth'
 import { FiHome, FiLogOut } from 'react-icons/fi'
 import { FC } from 'react'
 

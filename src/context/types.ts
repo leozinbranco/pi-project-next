@@ -11,7 +11,8 @@ export enum EActionTypes {
 // }
 
 export interface IContextState {
-  dataWorkOrder: OrdemServico
+  serviceOrderAccessed: OrdemServico
+  allServiceOrder: OrdemServico[]
 }
 
 export interface IAction {

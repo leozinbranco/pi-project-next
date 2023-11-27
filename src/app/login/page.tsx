@@ -1,26 +1,35 @@
 'use client'
 import { Image, Flex } from '@chakra-ui/react'
 import { CardLogin } from 'components/CardLogin'
-import { useWorkOrder } from 'hooks/useBuscarOrdemServico'
 import { useRouter } from 'next/navigation'
 import { AppContext } from '../../context'
 import { useContext } from 'react'
 import { UserContextType } from '@/context/types'
+import { useWorkOrderFindAll } from 'hooks/useBuscarAllOrdemServico'
+import { OrdemServico } from 'hooks/useBuscarOrdemServico'
 
 export default function Home () {
-  const { getOs } = useWorkOrder()
+  const { getAllOs } = useWorkOrderFindAll()
   const router = useRouter()
   const { enviar } = useContext(AppContext) as UserContextType
 
   const handlerCardOs = (numOs: string, pass: string) => {
-    getOs(numOs, pass).then(async res => {
+    getAllOs(numOs, pass).then(res => {
+      let accessedOs
+      const filteredOs = res.map((os) => {
+        if (os.numOs === numOs) { accessedOs = os }
+        return os
+      }) as OrdemServico[]
       enviar({
         type: 'SET_VALUE',
         payload: {
-          dataWorkOrder: res
+          serviceOrderAccessed: accessedOs,
+          allServiceOrder: filteredOs
         }
       })
-      await router.push('/home/serviceOrder')
+      console.log('>> ', filteredOs)
+      console.log('>> ', accessedOs)
+      router.push('/home/serviceOrder')
     }).catch(err => console.error(err))
   }
   return (

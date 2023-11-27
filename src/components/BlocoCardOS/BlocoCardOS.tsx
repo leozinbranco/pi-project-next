@@ -1,4 +1,4 @@
-import { Flex, Heading, Box, Input } from '@chakra-ui/react'
+import { Flex, Heading, Box, Input, Text } from '@chakra-ui/react'
 import React, { FC, useContext } from 'react'
 import { CardDataOs } from '../CardDataOs'
 import { CardCreditCardOs } from '../CardCreditCardOs'
@@ -12,8 +12,21 @@ interface IFocusInput {
 }
 
 export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSearch }) => {
-  const { dataWorkOrder } = useContext(AppContext)
-
+  const { serviceOrderAccessed, allServiceOrder, enviar } = useContext(AppContext) as UserContextType
+  const handleChangeOsSelected = (numOs: string) => {
+    let accessedOs
+    const filteredOs = allServiceOrder.map((os) => {
+      if (os.numOs === numOs) { accessedOs = os }
+      return os
+    })
+    enviar({
+      type: 'SET_VALUE',
+      payload: {
+        serviceOrderAccessed: accessedOs,
+        allServiceOrder: filteredOs
+      }
+    })
+  }
   return (
     <>
       <Box width='90%' pt='5' pb='5' margin='auto'>
@@ -36,8 +49,19 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
           />
         </Flex>
       </Box >
-      <CardDataOs dataOs={dataWorkOrder}/>
-      <CardCreditCardOs dataOs={dataWorkOrder} />
+      <CardDataOs dataOs={serviceOrderAccessed}/>
+      <Flex flexDirection='row' width='90%' alignSelf='center' justifyContent='flex-start'>
+        { allServiceOrder && allServiceOrder.length > 0
+          ? allServiceOrder.map(os => {
+            return (<Flex marginRight={50} key={os.numOs}>
+              <CardCreditCardOs numOs={os.numOs} handleChangeOs={handleChangeOsSelected}/>
+            </Flex>)
+          }
+          )
+          : <Flex><Text> Não existem outras ordens de serviço.</Text></Flex>
+
+        }
+      </Flex>
     </>
   )
 }
