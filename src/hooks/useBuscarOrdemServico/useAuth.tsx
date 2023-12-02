@@ -30,6 +30,7 @@ export const useWorkOrder = () => {
       const queryParams = new URLSearchParams({ codOs, pass }).toString()
       const res = await axios.get('http://localhost:3002/work-order?' + queryParams, config)
       const os = res.data as OrdemServico
+      console.log(os)
       return os
     } catch (e) {
       const { message } = e as Error

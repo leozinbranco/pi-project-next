@@ -19,7 +19,7 @@ export const CardCreditCardOs: FC<ISecondayCards> = ({ numOs, handleChangeOs }) 
               height='50px'
               />
             <Text color='#fff'>
-              145236
+              {numOs}
             </Text>
             <Text color='#fff'>
               Ordem de Serviço

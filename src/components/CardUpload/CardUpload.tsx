@@ -6,11 +6,12 @@ interface IRedirectAuth {
   onFile: () => void
   onFileSelect: () => void
   onDrop: (event: any) => void
+  sendFile: () => void
   inputRef: React.Ref<HTMLInputElement>
   boxRef: React.Ref<HTMLDivElement>
 }
 
-export const CardUpload: FC<IRedirectAuth> = ({ onReturn, onFile, onFileSelect, onDrop, inputRef, boxRef }) => {
+export const CardUpload: FC<IRedirectAuth> = ({ onReturn, onFile, onFileSelect, onDrop, inputRef, boxRef, sendFile }) => {
   return (
     <>
 
@@ -25,7 +26,7 @@ export const CardUpload: FC<IRedirectAuth> = ({ onReturn, onFile, onFileSelect, 
           <Flex flexDirection='column' justifyContent='center' alignItems='center'>
             <Box padding='8' w='100%' border='2px dashed #02043E' onClick={onFile}>
               <Image src='images/cloud.png' margin='auto' />
-              <Input type='file' ref={inputRef} style={{ display: 'none' }} onChange={onFileSelect} />
+              <Input type='file' ref={inputRef} style={{ display: 'none' }} accept=".csv" onChange={onFileSelect} />
               Arraste e solte arquivos ou <b>navegue</b>
             </Box>
             <Box ref={boxRef} style={{ display: 'none' }} >
@@ -35,7 +36,7 @@ export const CardUpload: FC<IRedirectAuth> = ({ onReturn, onFile, onFileSelect, 
               Formatos Suporados: CSV
             </Box>
             <Flex flexDirection='row' gap='4' alignItems='center' justifyContent='center'>
-              <Button color='white' bgColor='#02043E' size='md' _hover={{ bg: '#212485' }}>
+              <Button color='white' bgColor='#02043E' size='md' _hover={{ bg: '#212485' }} onClick={sendFile}>
                 Upload de Arquivos
               </Button>
               <Button onClick={onReturn}>
