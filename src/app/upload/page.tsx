@@ -122,11 +122,8 @@ export default function UploadPage () {
       if (inputRef.current.files?.length === 0) {
         return false
       }
-      console.log(inputRef.current)
-      console.log(inputRef.current)
       const formData = new FormData()
       formData.append('file', inputRef.current?.files[0], inputRef.current?.files[0].name)
-      console.log(formData)
       try {
         const response = await axios.post('http://localhost:3002/upload/', formData, {
           headers: {
@@ -135,6 +132,7 @@ export default function UploadPage () {
         }
         )
         alert(response.data.message)
+        window.location.reload()
       } catch (error) {
         if (error?.response?.status === 404) {
           console.log(error?.response?.data?.message)
