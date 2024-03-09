@@ -110,9 +110,7 @@ export default function UploadPage () {
         alert(response.data.message)
         handlerOnCloseModal()
       } catch (error) {
-        if (error?.response?.status === 404) {
-          console.log(error?.response?.data?.message)
-        }
+        alert(error?.response?.data?.message)
       }
     }
   }
@@ -120,12 +118,13 @@ export default function UploadPage () {
   const handleSendFile = async () => {
     if (inputRef.current) {
       if (inputRef.current.files?.length === 0) {
+        alert('Insira um arquivo para realizar o upload!')
         return false
       }
       const formData = new FormData()
       formData.append('file', inputRef.current?.files[0], inputRef.current?.files[0].name)
       try {
-        const response = await axios.post('http://localhost:3002/upload/', formData, {
+        const response = await axios.post('http://localhost:3003/upload/', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -134,9 +133,7 @@ export default function UploadPage () {
         alert(response.data.message)
         window.location.reload()
       } catch (error) {
-        if (error?.response?.status === 404) {
-          console.log(error?.response?.data?.message)
-        }
+        alert(error?.response?.data?.message)
       }
     }
   }
