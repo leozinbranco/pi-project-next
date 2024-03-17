@@ -13,7 +13,7 @@ export default function Home () {
   const handlerCardAuth = async (cpf: string, senha: string) => {
     try {
       const responsible = await autenticaUsuario(cpf, senha)
-      autenticaUsuario(cpf, senha).then(res => {
+      void autenticaUsuario(cpf, senha).then(res => {
         enviar({
           type: 'SET_VALUE',
           payload: {

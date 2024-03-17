@@ -136,7 +136,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Telefone Empr.</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.telContatoOs : '-'} />
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.EmpresaOs.telefoneEmpresa : '-'} />
             </Flex>
           </Flex>
 
@@ -148,7 +148,9 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>E-mail Empr.</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.emailContatoOs : '-'} />
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined
+                ? dataOs.EmpresaOs.emailEmpresa
+                : '-'} />
             </Flex>
           </Flex>
 

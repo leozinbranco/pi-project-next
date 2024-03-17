@@ -1,7 +1,6 @@
-import { Flex, Box, Text, Image, Link } from '@chakra-ui/react'
+import { Flex, Box, Text, Image } from '@chakra-ui/react'
 import { OrdemServico, findOs } from 'hooks/useBuscarOrdemServico'
 import { useRouter } from 'next/navigation'
-// import { OrdemServico } from 'hooks/useBuscarOrdemServico'
 import { AppContext, UserContextType } from '../../context'
 import { FC, MouseEvent, useContext } from 'react'
 

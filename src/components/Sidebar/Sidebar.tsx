@@ -14,7 +14,7 @@ interface IRedirectAuth {
 
 export const Sidebar: FC<IRedirectAuth> = ({ onReturn }) => {
   return (
-    <Flex h='100vh' bgColor='#02043E' width={250} minW={250} flexDirection='column' padding={2}>
+    <Flex h='100%' bgColor='#02043E' width={250} minW={250} flexDirection='column' padding={2}>
       <Flex h='10%' paddingLeft={2} paddingBottom={3} paddingTop={5} paddingRight={5} alignItems='center'>
         <Image src='../../images/logo-white.svg' width={35} />
         <Text color='white' fontSize={32} width='100%' whiteSpace='nowrap' fontFamily='Poppins'>

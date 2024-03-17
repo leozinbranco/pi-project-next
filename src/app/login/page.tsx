@@ -6,7 +6,7 @@ import { AppContext } from '../../context'
 import { useContext } from 'react'
 import { UserContextType } from '@/context/types'
 import { useWorkOrderFindAll } from 'hooks/useBuscarAllOrdemServico'
-import { OrdemServico } from 'hooks/useBuscarOrdemServico'
+import { OrdemServico } from 'hooks/useBuscarOrdemServico/useBuscarOrdemServico'
 
 export default function Home () {
   const { getAllOs } = useWorkOrderFindAll()

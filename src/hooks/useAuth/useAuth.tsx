@@ -7,26 +7,28 @@ export interface UsuarioAdm {
   cpfUsuario: string
   telefoneUsuario: string
   emailUsuario: string
+  senhaUsuario: string
+  codEmpresaUsuario: number
+  empresaUsuario: Empresa
+}
+
+interface Empresa {
+  codEmpresa: number
   emailEmpresa: string
-  telefoneEmpresa: string
-  empresaUsuario: {
-    codEmpresa: number
-    cnpjEmpresa: string
-    emailEmpresa: string
-  }
+  cnpjEmpresa: string
 }
 
 export const useAuth = () => {
   const router = useRouter()
-  const autenticaUsuario = async (username: string, password: string): Promise<UsuarioAdm> => {
+  const autenticaUsuario = async (cpf: string, password: string): Promise<UsuarioAdm> => {
     try {
-      const response = await axios.post('http://localhost:3002/auth/login', {
-        username,
+      const response = await axios.post('http://localhost:3002/auth', {
+        cpf,
         password
       })
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
       localStorage.setItem('access-token', response.data.access_token)
-      const responsible = response.data as UsuarioAdm
+      const responsible = response.data.user as UsuarioAdm
       return responsible
       // TODO: Utilizar outra estrategia de armazenamento de token
     } catch (e) {
