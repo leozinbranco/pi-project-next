@@ -15,7 +15,7 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
   const { serviceOrderAccessed, allServiceOrder, enviar } = useContext(AppContext) as UserContextType
   const handleChangeOsSelected = (numOs: string) => {
     let accessedOs
-    const filteredOs = allServiceOrder.map((os) => {
+    const filteredOs = allServiceOrder.filter((os) => {
       if (os.numOs === numOs) { accessedOs = os }
       return os
     })

@@ -117,6 +117,7 @@ export default function UploadPage () {
 
   const handleSendFile = async () => {
     if (inputRef.current) {
+      const urlParams = new URLSearchParams(window.location.search)
       if (inputRef.current.files?.length === 0) {
         alert('Insira um arquivo para realizar o upload!')
         return false
@@ -124,7 +125,7 @@ export default function UploadPage () {
       const formData = new FormData()
       formData.append('file', inputRef.current?.files[0], inputRef.current?.files[0].name)
       try {
-        const response = await axios.post('http://localhost:3003/upload/', formData, {
+        const response = await axios.post(`http://localhost:3002/upload/${urlParams.get('cod')}/${urlParams.get('user')}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

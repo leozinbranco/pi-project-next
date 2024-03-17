@@ -8,8 +8,10 @@ interface ICardDataOs {
 
 export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
   /* Instanciando datas para formatação */
-  dataOs.dataAberturaOs = new Date(dataOs.dataAberturaOs)
-  dataOs.dataUltimaModOs = new Date(dataOs.dataUltimaModOs)
+  if (dataOs !== undefined) {
+    dataOs.dataAberturaOs = new Date(dataOs.dataAberturaOs)
+    dataOs.dataUltimaModOs = new Date(dataOs.dataUltimaModOs)
+  }
 
   return (
     <Box bgColor='#02043E' margin='auto' width='90%' height='520px' color='#FFF' fontWeight='bolder' borderRadius='8'>
@@ -23,7 +25,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Nº O.S</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.numOs} />
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.numOs : '-'} />
             </Flex>
           </Flex>
 
@@ -35,7 +37,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Tipo O.S</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.tipoOs} />
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.tipoOs : '-'} />
             </Flex>
           </Flex>
 
@@ -47,7 +49,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Tipo Objeto</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.tipoObjOs} />
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= {dataOs !== undefined ? dataOs.tipoObjOs : '-' } />
             </Flex>
           </Flex>
 
@@ -59,7 +61,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Status O.S</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.statusOs}/>
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= {dataOs !== undefined ? dataOs.statusOs : '-'} />
             </Flex>
           </Flex>
 
@@ -71,7 +73,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Data de Cadastro</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={`${dataOs.dataAberturaOs.getDate() + 1}/${Number(dataOs.dataAberturaOs.getMonth() + 1)}/${dataOs.dataAberturaOs.getFullYear()}`}/>
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs !== undefined ? `${dataOs.dataAberturaOs.getDate() + 1}/${Number(dataOs.dataAberturaOs.getMonth() + 1)}/${dataOs.dataAberturaOs.getFullYear()}` : '-' }/>
             </Flex>
           </Flex>
 
@@ -83,7 +85,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Data de Atualização</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={`${dataOs.dataUltimaModOs.getDate() + 1}/${Number(dataOs.dataUltimaModOs.getMonth() + 1)}/${dataOs.dataUltimaModOs.getFullYear()}`}/>
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? `${dataOs.dataUltimaModOs.getDate() + 1}/${Number(dataOs.dataUltimaModOs.getMonth() + 1)}/${dataOs.dataUltimaModOs.getFullYear()}` : '-'} />
             </Flex>
           </Flex>
 
@@ -98,7 +100,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Descrição Ajuste</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.descricaoAjustesOs}/>
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.descricaoAjustesOs : '-'} />
             </Flex>
           </Flex>
 
@@ -110,7 +112,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Observações</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.observacaoOs}/>
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.observacaoOs : '-'} />
             </Flex>
           </Flex>
 
@@ -122,7 +124,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Responsável O.S</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.emailContatoOs}/>
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.emailContatoOs : '-'} />
             </Flex>
           </Flex>
 
@@ -134,7 +136,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Telefone Empr.</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.telContatoOs}/>
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.telContatoOs : '-'} />
             </Flex>
           </Flex>
 
@@ -146,7 +148,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>E-mail Empr.</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs.emailContatoOs}/>
+              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.emailContatoOs : '-'} />
             </Flex>
           </Flex>
 

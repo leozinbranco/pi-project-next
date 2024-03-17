@@ -27,8 +27,6 @@ export default function Home () {
           allServiceOrder: filteredOs
         }
       })
-      console.log('>> ', filteredOs)
-      console.log('>> ', accessedOs)
       router.push('/home/serviceOrder')
     }).catch(err => console.error(err))
   }

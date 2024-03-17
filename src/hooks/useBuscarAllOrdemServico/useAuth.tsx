@@ -27,8 +27,8 @@ export const useWorkOrderFindAll = () => {
       }
       const nestAPI = process.env.NEXT_PUBLIC_BACKEND_URL
       const config = { headers }
-      const queryParams = new URLSearchParams({ codOs, pass }).toString()
-      const res = await axios.get('http://localhost:3002' + '/work-order/all?' + queryParams, config)
+      const queryParams = new URLSearchParams({ codOs, pass })
+      const res = await axios.get('http://localhost:3002' + '/work-order/all/' + queryParams.get('codOs') + '/' + queryParams.get('pass'), config)
       const os = res.data as OrdemServico[]
       return os
     } catch (e) {

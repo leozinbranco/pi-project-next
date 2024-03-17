@@ -33,7 +33,7 @@ export const CardUpload: FC<IRedirectAuth> = ({ onReturn, onFile, onFileSelect, 
               Arquivo
             </Box>
             <Box mt='25' mb='25' opacity='0.5'>
-              Formatos Suporados: CSV
+              Formatos Suportados: CSV
             </Box>
             <Flex flexDirection='row' gap='4' alignItems='center' justifyContent='center'>
               <Button color='white' bgColor='#02043E' size='md' _hover={{ bg: '#212485' }} onClick={sendFile}>

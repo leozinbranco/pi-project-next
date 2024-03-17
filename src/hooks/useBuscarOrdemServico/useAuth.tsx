@@ -39,3 +39,20 @@ export const useWorkOrder = () => {
   }
   return { getOs }
 }
+
+export const findOs = async (numOs: string) => {
+  try {
+    const token = localStorage.getItem('access-token')
+    const headers = {
+      'x-api-key': token,
+      'Content-Type': 'application/json;charset=utf-8'
+    }
+    const config = { headers }
+    const res = await axios.get('http://localhost:3002' + '/work-order/one/' + numOs, config)
+    const os = res.data as OrdemServico
+    return os
+  } catch (e) {
+    const { message } = e as Error
+    throw new Error(message)
+  }
+}

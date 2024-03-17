@@ -12,7 +12,7 @@ export default function Home () {
   const { enviar } = useContext(AppContext) as UserContextType
   const handlerCardAuth = async (cpf: string, senha: string) => {
     try {
-      await autenticaUsuario(cpf, senha)
+      const responsible = await autenticaUsuario(cpf, senha)
       autenticaUsuario(cpf, senha).then(res => {
         enviar({
           type: 'SET_VALUE',
@@ -21,7 +21,7 @@ export default function Home () {
           }
         })
       })
-      router.push('/upload')
+      router.push(`upload?cod=${responsible.empresaUsuario.codEmpresa}&user=${responsible.codUsuario}`)
     } catch (err) {
       console.log('error: ', err)
     }
