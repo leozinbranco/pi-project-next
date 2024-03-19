@@ -37,7 +37,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Tipo O.S</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.tipoOs : '-'} />
+              <Input borderColor='transparent' readOnly borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.tipoOs : '-'} />
             </Flex>
           </Flex>
 
@@ -49,7 +49,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Tipo Objeto</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= {dataOs !== undefined ? dataOs.tipoObjOs : '-' } />
+              <Input borderColor='transparent' readOnly borderBottom='2px solid #fff' value= {dataOs !== undefined ? dataOs.tipoObjOs : '-' } />
             </Flex>
           </Flex>
 
@@ -61,7 +61,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Status O.S</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= {dataOs !== undefined ? dataOs.statusOs : '-'} />
+              <Input borderColor='transparent' readOnly borderBottom='2px solid #fff' value= {dataOs !== undefined ? dataOs.statusOs : '-'} />
             </Flex>
           </Flex>
 
@@ -73,7 +73,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Data de Cadastro</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value={dataOs !== undefined ? `${dataOs.dataAberturaOs.getDate() + 1}/${Number(dataOs.dataAberturaOs.getMonth() + 1)}/${dataOs.dataAberturaOs.getFullYear()}` : '-' }/>
+              <Input borderColor='transparent' readOnly borderBottom='2px solid #fff' value={dataOs !== undefined ? `${dataOs.dataAberturaOs.getDate() + 1}/${Number(dataOs.dataAberturaOs.getMonth() + 1)}/${dataOs.dataAberturaOs.getFullYear()}` : '-' }/>
             </Flex>
           </Flex>
 
@@ -85,7 +85,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Data de Atualização</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? `${dataOs.dataUltimaModOs.getDate() + 1}/${Number(dataOs.dataUltimaModOs.getMonth() + 1)}/${dataOs.dataUltimaModOs.getFullYear()}` : '-'} />
+              <Input borderColor='transparent' readOnly borderBottom='2px solid #fff' value= { dataOs !== undefined ? `${dataOs.dataUltimaModOs.getDate() + 1}/${Number(dataOs.dataUltimaModOs.getMonth() + 1)}/${dataOs.dataUltimaModOs.getFullYear()}` : '-'} />
             </Flex>
           </Flex>
 
@@ -100,7 +100,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Descrição Ajuste</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.descricaoAjustesOs : '-'} />
+              <Input borderColor='transparent' readOnly borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.descricaoAjustesOs : '-'} />
             </Flex>
           </Flex>
 
@@ -112,7 +112,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Observações</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.observacaoOs : '-'} />
+              <Input borderColor='transparent' readOnly borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.observacaoOs : '-'} />
             </Flex>
           </Flex>
 
@@ -124,7 +124,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Responsável O.S</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.emailContatoOs : '-'} />
+              <Input borderColor='transparent' readOnly borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.emailContatoOs : '-'} />
             </Flex>
           </Flex>
 
@@ -136,7 +136,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>Telefone Empr.</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.EmpresaOs.telefoneEmpresa : '-'} />
+              <Input borderColor='transparent' readOnly borderBottom='2px solid #fff' value= { dataOs !== undefined ? dataOs.EmpresaOs.telefoneEmpresa : '-'} />
             </Flex>
           </Flex>
 
@@ -148,7 +148,7 @@ export const CardDataOs: FC<ICardDataOs> = ({ dataOs }) => {
               />
             <Flex flexDirection='column'>
               <Text>E-mail Empr.</Text>
-              <Input borderColor='transparent' disabled borderBottom='2px solid #fff' value= { dataOs !== undefined
+              <Input borderColor='transparent' readOnly borderBottom='2px solid #fff' value= { dataOs !== undefined
                 ? dataOs.EmpresaOs.emailEmpresa
                 : '-'} />
             </Flex>

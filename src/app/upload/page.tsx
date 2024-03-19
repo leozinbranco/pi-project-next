@@ -103,7 +103,8 @@ export default function UploadPage () {
           {
             headers: {
               'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*'
+              'Access-Control-Allow-Origin': '*',
+              Authorization: localStorage.getItem('access-token')
             }
           }
         )
@@ -127,12 +128,15 @@ export default function UploadPage () {
       try {
         const response = await axios.post(`http://localhost:3002/upload/${urlParams.get('cod')}/${urlParams.get('user')}`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
+            Authorization: localStorage.getItem('access-token')
           }
         }
         )
         alert(response.data.message)
-        window.location.reload()
+        if (boxRef.current) {
+          boxRef.current.innerText = ''
+        }
       } catch (error) {
         alert(error?.response?.data?.message)
       }

@@ -66,6 +66,7 @@ export const ModalSupport: FC<IModalSupport> = ({ dataResp, visible, onClose, se
                   borderRadius='20px'
                   value={dataResp?.empresaUsuario?.emailEmpresa}
                   ref={inputRef}
+                  disabled
                 />
               </InputGroup>
               <Input ref={cnpjEmpresa} value={dataResp?.empresaUsuario?.cnpjEmpresa} hidden/>
