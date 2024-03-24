@@ -1,6 +1,6 @@
 'use client'
 import { BlocoCardOS } from '@/components/BlocoCardOS'
-import { Flex, Box } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { Sidebar } from 'components/Sidebar'
 import { useRef } from 'react'
 import { useAuth } from 'hooks/useAuth'
@@ -25,10 +25,8 @@ export default function Home () {
     logout()
   }
 
-  return (<section><Flex marginLeft='auto' marginRight='auto' width='100%' >
-    <Box >
-      <Sidebar onReturn={handlerOnReturn}/>
-    </Box>
+  return (<section><Flex flexDirection='column' marginLeft='auto' marginRight='auto' width='100%' >
+    <Sidebar onReturn={handlerOnReturn}/>
     <Flex width='100%' height='100vh' flexDirection='column' >
       <BlocoCardOS onFocusSearch={handleOnFocusSearch} inputRef={inputSearch} onBlurSearch={handleOnBlurSearch} />
     </Flex>
