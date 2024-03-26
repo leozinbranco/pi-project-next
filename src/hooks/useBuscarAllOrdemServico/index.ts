@@ -1,1 +1,1 @@
-export * from './useBuscarAllOrdemServico'
+export * from './useBuscarAllOrdemServico.hook'
