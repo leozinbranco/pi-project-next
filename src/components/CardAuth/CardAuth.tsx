@@ -1,4 +1,14 @@
-import { Card, Text, CardBody, CardHeader, Image, Heading, Flex, Box, Input, Button } from '@chakra-ui/react'
+import {
+  Card, Text,
+  CardBody,
+  CardHeader,
+  Image,
+  Heading,
+  Flex,
+  Box,
+  Input,
+  Button
+} from '@chakra-ui/react'
 import { FC, useState } from 'react'
 
 interface ICardAuth {
@@ -11,8 +21,8 @@ export interface IAuth {
 }
 
 export const CardAuth: FC<ICardAuth> = ({ onAuth }) => {
-  const [cpf, setCpf] = useState<string>()
-  const [senha, setSenha] = useState<string>()
+  const [cpf, setCpf] = useState<string>('')
+  const [senha, setSenha] = useState<string>('')
   return (
     <Card padding='0px 42px 0px 42px' maxW='500px'>
       <CardHeader >
@@ -33,7 +43,7 @@ export const CardAuth: FC<ICardAuth> = ({ onAuth }) => {
           <Text mb='8px'>Senha</Text>
           <Input variant='filled' type='password' onChange={(e) => setSenha(e.target.value)}/>
           <Flex w='100%' justifyContent='center'>
-            <Button color='white' mt='67px' bgColor='#02043E' size='md' onClick={() => onAuth(cpf!, senha!)} _hover={{ bg: '#212485' }}>
+            <Button isDisabled={cpf === '' || senha === ''} color='white' mt='67px' bgColor='#02043E' size='md' onClick={() => onAuth(cpf, senha)} _hover={{ bg: '#212485' }}>
               Conecte-se
             </Button>
           </Flex>

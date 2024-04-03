@@ -26,6 +26,7 @@ const ToastContextProvider = ({ children }: IToastContextProps) => {
   useEffect(() => {
     if (state.toastOptions.isVisible) {
       toast({
+        position: 'bottom-right',
         title: state.toastOptions.title,
         description: state.toastOptions.description,
         status: state.toastOptions.status,
