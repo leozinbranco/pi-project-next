@@ -8,8 +8,8 @@ export interface ICardLogin extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const CardLogin: FC<ICardLogin> = ({ onClickLogin }) => {
-  const [numOs, setNumOs] = useState<string>()
-  const [pass, setPass] = useState<string>()
+  const [numOs, setNumOs] = useState<string>('')
+  const [pass, setPass] = useState<string>('')
   return (
     <Card padding='0px 42px 0px 42px' maxW='500px' >
       <CardHeader>
@@ -29,8 +29,8 @@ export const CardLogin: FC<ICardLogin> = ({ onClickLogin }) => {
           <Input variant='filled' mb='22px' onChange={(e) => setNumOs(e.target.value)} />
           <Text >Senha</Text>
           <Input type='password' variant='filled' mb='22px' onChange={(e) => setPass(e.target.value)}/>
-          <Flex gap='3' alignItems='center' justifyContent='center'>
-            <Button color='white' bgColor='#02043E' size='md' _hover={{ bg: '#212485' }} onClick={() => onClickLogin(numOs, pass)}>
+          <Flex flexDirection='column' alignItems='center' justifyContent='center'>
+            <Button isDisabled={numOs === '' || pass === ''} color='white' bgColor='#02043E' size='md' _hover={{ bg: '#212485' }} onClick={() => onClickLogin(numOs, pass)}>
               Conecte-se
             </Button>
           </Flex>

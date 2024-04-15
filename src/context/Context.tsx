@@ -2,6 +2,7 @@ import { createContext, FC, useReducer, useState } from 'react'
 import { reducer } from './reducer'
 import { IAppProvider, UserContextType } from './types'
 import { initialState } from './variables'
+import ToastContextProvider from './toast/toast.context'
 
 export const AppContext = createContext<UserContextType | null>(null)
 
@@ -16,6 +17,8 @@ export const AppProvider: FC<IAppProvider> = ({ children }) => {
     auth,
     setAuth
   }
-
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>
+  return <AppContext.Provider value={value}><ToastContextProvider>
+    {children}
+  </ToastContextProvider>
+  </AppContext.Provider>
 }
