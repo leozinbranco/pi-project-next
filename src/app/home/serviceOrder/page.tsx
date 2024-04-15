@@ -7,13 +7,13 @@ export default function Home () {
 
   const handleOnFocusSearch = () => {
     if (inputSearch.current) {
-      inputSearch.current.value = '      '
+      inputSearch.current.value = ''
     }
   }
 
   const handleOnBlurSearch = () => {
     if (inputSearch.current) {
-      inputSearch.current.placeholder = '       Pesquisar'
+      inputSearch.current.placeholder = 'Pesquisar'
       inputSearch.current.value = ''
     }
   }

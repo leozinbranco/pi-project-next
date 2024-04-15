@@ -3,6 +3,7 @@ import { FC, useState } from 'react'
 
 interface ICardAuth {
   onAuth: (cpf: string, senha: string) => void
+  onLogin: () => void
 }
 
 export interface IAuth {
@@ -10,7 +11,7 @@ export interface IAuth {
   senha: string
 }
 
-export const CardAuth: FC<ICardAuth> = ({ onAuth }) => {
+export const CardAuth: FC<ICardAuth> = ({ onAuth, onLogin }) => {
   const [cpf, setCpf] = useState<string>()
   const [senha, setSenha] = useState<string>()
   return (
@@ -32,9 +33,12 @@ export const CardAuth: FC<ICardAuth> = ({ onAuth }) => {
           <Input variant='filled' mb='22px' onChange={(e) => setCpf(e.target.value)}/>
           <Text mb='8px'>Senha</Text>
           <Input variant='filled' type='password' onChange={(e) => setSenha(e.target.value)}/>
-          <Flex w='100%' justifyContent='center'>
-            <Button color='white' mt='67px' bgColor='#02043E' size='md' onClick={() => onAuth(cpf!, senha!)} _hover={{ bg: '#212485' }}>
+          <Flex w='100%' justifyContent='center' gap='3'>
+            <Button color='white' mt='20px' bgColor='#02043E' size='md' onClick={() => onAuth(cpf!, senha!)} _hover={{ bg: '#212485' }}>
               Conecte-se
+            </Button>
+            <Button mt='20px' onClick={onLogin}>
+              Login
             </Button>
           </Flex>
         </Flex>

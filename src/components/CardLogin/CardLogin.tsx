@@ -29,7 +29,7 @@ export const CardLogin: FC<ICardLogin> = ({ onClickLogin }) => {
           <Input variant='filled' mb='22px' onChange={(e) => setNumOs(e.target.value)} />
           <Text >Senha</Text>
           <Input type='password' variant='filled' mb='22px' onChange={(e) => setPass(e.target.value)}/>
-          <Flex flexDirection='column' alignItems='center' justifyContent='center'>
+          <Flex gap='3' alignItems='center' justifyContent='center'>
             <Button color='white' bgColor='#02043E' size='md' _hover={{ bg: '#212485' }} onClick={() => onClickLogin(numOs, pass)}>
               Conecte-se
             </Button>

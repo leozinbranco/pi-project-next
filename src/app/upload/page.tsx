@@ -134,9 +134,6 @@ export default function UploadPage () {
         }
         )
         alert(response.data.message)
-        if (boxRef.current) {
-          boxRef.current.innerText = ''
-        }
       } catch (error) {
         alert(error?.response?.data?.message)
       }

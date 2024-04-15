@@ -26,6 +26,9 @@ export default function Home () {
       console.log('error: ', err)
     }
   }
+  const handlerLogin = () => {
+    router.push('/login')
+  }
   return (
     <Flex flexDirection={{ base: 'column', sm: 'column', md: 'row', lg: 'row' }} minH='100vh' padding='6' alignItems='center' justifyContent='center' >
       <Flex flexDirection='column' alignItems='center'>
@@ -38,7 +41,7 @@ export default function Home () {
           height='72px'
         />
       </Flex>
-      <CardAuth onAuth={async (cpf, senha) => await handlerCardAuth(cpf, senha)} />
+      <CardAuth onAuth={async (cpf, senha) => await handlerCardAuth(cpf, senha)} onLogin={handlerLogin} />
     </Flex>
   )
 }

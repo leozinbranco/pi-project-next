@@ -13,12 +13,14 @@ export interface OrdemServico {
   cnpjClienteOs: string
   dataAberturaOs: Date
   dataUltimaModOs: Date
+  dataUltimoUpload: Date
   atributoValidadorOs: string
   EmpresaOs: EmpresaOs
   codEmpresaOs: number
 }
 
 interface EmpresaOs {
+  razaoSocialEmpresa: string
   telefoneEmpresa: string
   emailEmpresa: string
 }

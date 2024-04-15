@@ -1,5 +1,5 @@
 'use client'
-import { Image, Flex } from '@chakra-ui/react'
+import { Image, Flex, Button } from '@chakra-ui/react'
 import { CardLogin } from 'components/CardLogin'
 import { useRouter } from 'next/navigation'
 import { AppContext } from '../../context'
@@ -27,22 +27,32 @@ export default function Home () {
           allServiceOrder: filteredOs
         }
       })
-      router.push('/home/serviceOrder')
+      router.push('/home/serviceOrder?numOs=' + filteredOs[0].numOs)
     }).catch(err => console.error(err))
+  }
+  const handlerAuth = () => {
+    router.push('/auth')
   }
   return (
     <Flex flexDirection={{ base: 'column', sm: 'column', md: 'row', lg: 'row' }} minH='100vh' padding='6' alignItems='center' justifyContent='center' >
-      <Flex flexDirection='column' alignItems='center'>
-        <Image src='../images/login-page.png'
-          width='350px'
-          height='350px'
-                />
-        <Image src='../images/slogan.png'
-          width='243px'
-          height='72px'
-                />
+
+      <Flex>
+        <Flex flexDirection='column' alignItems='center'>
+          <Image src='../images/login-page.png'
+            width='350px'
+            height='350px'
+                  />
+          <Image src='../images/slogan.png'
+            width='243px'
+            height='72px'
+                  />
+        </Flex>
+        <CardLogin onClickLogin={async (numOs, pass) => handlerCardOs(numOs, pass)} onAuth={handlerAuth}/>
+
       </Flex>
-      <CardLogin onClickLogin={async (numOs, pass) => handlerCardOs(numOs, pass)}/>
+      <Button mt='-460' ml='-178' mb='4' onClick={handlerAuth}>
+        Autenticação Emp.
+      </Button>
     </Flex>
   )
 }

@@ -6,10 +6,11 @@ import { FC, MouseEvent, useContext } from 'react'
 
 interface ISecondayCards {
   numOs: string
+  razaoSocial: string
   handleChangeOs: (numOs: string) => OrdemServico
 }
 
-export const CardCreditCardOs: FC<ISecondayCards> = ({ numOs, handleChangeOs }) => {
+export const CardCreditCardOs: FC<ISecondayCards> = ({ numOs, razaoSocial, handleChangeOs }) => {
   const { enviar } = useContext(AppContext) as UserContextType
   const router = useRouter()
   const handleClick = (event: MouseEvent<HTMLImageElement>): void => {
@@ -21,27 +22,32 @@ export const CardCreditCardOs: FC<ISecondayCards> = ({ numOs, handleChangeOs }) 
           serviceOrderAccessed: accessedOs
         }
       })
-      router.push('/home/serviceOrder')
+      router.push('/home/serviceOrder?numOs=' + res.numOs)
     }).catch((error) => { console.log(error) })
   }
   return (
     <>
-      <Box width='350px' height='150px' borderRadius='8' padding='8' mt='5' mb='5' bgColor='#02043E' onClick={handleClick} cursor='pointer'>
+      <Box width='250px' height='100px' borderRadius='8' padding='8' mt='5' mb='5' bgColor='#02043E' onClick={handleClick} cursor='pointer'>
         <Flex flexDirection='row' justifyContent='space-between'>
           <Flex flexDirection='column' gap='2'>
-            <Image
-              src='../../images/chip.png'
-              width='75px'
-              height='50px'
-              />
+            <Flex flexDirection='row' gap='2' alignContent='center'>
+              <Image
+                src='../../images/chip.png'
+                width='45px'
+                height='30px'
+                />
+              <Text color='#fff'>
+                {numOs}
+              </Text>
+            </Flex>
             <Text color='#fff'>
-              {numOs}
+              {razaoSocial}
             </Text>
           </Flex>
           <Image
             src='../../images/logo-card.png'
-            width='50px'
-            height='50px'
+            width='20px'
+            height='20px'
             position='relative'
             top='-5'
             right='-5'
