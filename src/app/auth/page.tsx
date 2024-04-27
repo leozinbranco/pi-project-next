@@ -3,17 +3,17 @@
 import { Image, Flex } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { CardAuth } from '@/components/CardAuth'
-// import { useAuth } from 'contexts/auth/auth.hook'
+import { useAuth } from 'contexts/auth/auth.hook'
 export default function Home () {
   const router = useRouter()
-  // const { signIn, user } = useAuth()
+  const { signIn, user } = useAuth()
   const handlerCardAuth = (cpf: string, senha: string) => {
-    // try {
-    //   signIn(cpf, senha)
-    //   router.push(`upload?cod=${user.empresaUsuario.codEmpresa}&user=${user.codUsuario}`)
-    // } catch (err) {
-    //   console.log('error: ', err)
-    // }
+    try {
+      signIn(cpf, senha)
+      router.push(`upload?cod=${user.empresaUsuario.codEmpresa}&user=${user.codUsuario}`)
+    } catch (err) {
+      console.log('error: ', err)
+    }
   }
   const handlerLogin = () => {
     router.push('/login')

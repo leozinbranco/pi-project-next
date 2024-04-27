@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { getAuth } from 'services/auth/auth.service'
 import { UsuarioAdm } from 'domains/profiles'
 import { authUserInitial } from './auth.mock'
+import ToastContextProvider from '../toast/toast.context'
 
 interface IAuthProviderProps {
   children: React.ReactNode
@@ -59,5 +60,5 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     updateAuthState()
   }, [signIn, signOut, updateAuthState])
 
-  return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={state}><ToastContextProvider>{children}</ToastContextProvider></AuthContext.Provider>
 }

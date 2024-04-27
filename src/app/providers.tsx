@@ -2,7 +2,7 @@
 
 import { CacheProvider } from '@chakra-ui/next-js'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
-import { AppProvider } from '../context'
+import AppProvider from 'contexts/app/app.provider'
 
 const theme = extendTheme({
   colors: {
