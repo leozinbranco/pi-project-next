@@ -30,6 +30,7 @@ export default function Home () {
       router.push('/home/serviceOrder?numOs=' + filteredOs[0].numOs)
     }).catch(err => console.error(err))
   }
+
   const handlerAuth = () => {
     router.push('/auth')
   }
