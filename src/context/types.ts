@@ -1,4 +1,5 @@
 // TODO: Criar domain, entities, ports (inbound and outbound)
+import { UsuarioAdm } from 'hooks/useAuth'
 import { OrdemServico } from 'hooks/useBuscarOrdemServico'
 import { Dispatch, ReactNode } from 'react'
 
@@ -11,6 +12,7 @@ export enum EActionTypes {
 // }
 
 export interface IContextState {
+  user: UsuarioAdm
   serviceOrderAccessed: OrdemServico
   allServiceOrder: OrdemServico[]
 }

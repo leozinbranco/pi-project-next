@@ -17,7 +17,7 @@ export default function Home () {
         enviar({
           type: 'SET_VALUE',
           payload: {
-            dataResp: res
+            user: res
           }
         })
       })

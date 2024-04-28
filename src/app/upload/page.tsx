@@ -108,10 +108,10 @@ export default function UploadPage () {
             }
           }
         )
-        alert(response.data.message)
+        alert((response.data as { message: string }).message)
         handlerOnCloseModal()
       } catch (error) {
-        alert(error?.response?.data?.message)
+        alert(error)
       }
     }
   }
