@@ -3,11 +3,11 @@ import React, { FC, useContext, useState, useRef } from 'react'
 import { CardDataOs } from '../CardDataOs'
 import { CardCreditCardOs } from '../CardCreditCardOs'
 import { BlocoContato } from '../BlocoContato'
-import { AppContext } from '@/context/Context'
-import { UserContextType } from '@/context/types'
 import { useFilterDate } from 'hooks/useFilterDate/useFilterDate'
 import { useFilterCodOs } from 'hooks/useFilterCodOs/useFilterCodOs'
 import { useRouter } from 'next/navigation'
+import { WorkOrdersContext } from 'contexts/work-order/work-order.context'
+import { OrdemServico } from 'domains/work-orders.domain'
 
 interface IFocusInput {
   onFocusSearch: () => void
@@ -16,28 +16,23 @@ interface IFocusInput {
 }
 
 export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSearch }) => {
-  const router = useRouter()
   const startDateRef = useRef<HTMLInputElement>(null)
   const endDateRef = useRef<HTMLInputElement>(null)
   const searchPersonRef = useRef<HTMLInputElement>(null)
-  const { serviceOrderAccessed, allServiceOrder, enviar } = useContext(AppContext) as UserContextType
+  const { accessedWorkOrder, workOrders, setWorkOrdersSuccess } = useContext(WorkOrdersContext)
   const handleChangeOsSelected = (numOs: string) => {
     let accessedOs
-    const filteredOs = allServiceOrder.filter((os) => {
+    const filteredOs = workOrders!.filter((os) => {
       if (os.numOs === numOs) { accessedOs = os }
       return os
     })
-    enviar({
-      type: 'SET_VALUE',
-      payload: {
-        serviceOrderAccessed: accessedOs,
-        allServiceOrder: filteredOs
-      }
-    })
+    setWorkOrdersSuccess(
+      filteredOs, accessedOs
+    )
   }
 
-  const urlParams = new URLSearchParams(window.location.search)
-  const numOs = urlParams?.get('numOs')
+  // const urlParams = new URLSearchParams(window.location.search)
+  // const numOs = urlParams?.get('numOs')
 
   const { filterDate } = useFilterDate()
   const { filterNumberOs } = useFilterCodOs()
@@ -48,13 +43,9 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
         if (os.numOs === numOs) { accessedOs = os }
         return os
       }) as OrdemServico[]
-      enviar({
-        type: 'SET_VALUE',
-        payload: {
-          serviceOrderAccessed: accessedOs,
-          allServiceOrder: filteredOs
-        }
-      })
+      setWorkOrdersSuccess(
+        filteredOs, accessedOs
+      )
     }).catch(err => console.error(err))
   }
 
@@ -65,19 +56,15 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
         ? res.map((os) => {
           if (os) { accessedOs = os }
           return os
-        }) as OrdemServico[]
+        })
         : undefined
       if (filteredOs === undefined) {
         alert('Nenhuma Ordem de Serviço foi encontrada!')
         return
       }
-      enviar({
-        type: 'SET_VALUE',
-        payload: {
-          serviceOrderAccessed: accessedOs,
-          allServiceOrder: filteredOs
-        }
-      })
+      setWorkOrdersSuccess(
+        filteredOs, accessedOs
+      )
     }).catch(err => console.error(err))
   }
 
@@ -134,7 +121,7 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
                     ref={startDateRef}
                     value={startDate}
                     onChange={(e) => setSelectedStartDate(e.target.value)}
-                    onBlur={() => handleFilterDate(numOs, getStartDate(), getEndDate())}
+                    onBlur={() => handleFilterDate(accessedWorkOrder!.numOs, getStartDate(), getEndDate())}
                     />
                 </Flex>
               </FormControl>
@@ -154,7 +141,7 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
                     ref={endDateRef}
                     value={endDate}
                     onChange={(e) => setSelectedEndDate(e.target.value)}
-                    onBlur={() => handleFilterDate(numOs, getStartDate(), getEndDate())}
+                    onBlur={() => handleFilterDate(accessedWorkOrder!.numOs, getStartDate(), getEndDate())}
                     />
                 </Flex>
               </FormControl>
@@ -179,10 +166,10 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
           </Flex>
         </Flex>
       </Box >
-      <CardDataOs dataOs={serviceOrderAccessed}/>
+      <CardDataOs dataOs={accessedWorkOrder}/>
       <Flex flexDirection='row' width='90%' alignSelf='center' justifyContent='flex-start' p='4'>
-        { allServiceOrder && allServiceOrder.length > 0
-          ? allServiceOrder.map(os => {
+        { ServiceWorker && ServiceWorker.length > 0
+          ? ServiceWorker.map(os => {
             return (<Flex marginRight={50} key={os.numOs}>
               <CardCreditCardOs numOs={os.numOs} razaoSocial={os.EmpresaOs.razaoSocialEmpresa} handleChangeOs={handleChangeOsSelected}/>
             </Flex>)

@@ -2,31 +2,28 @@
 import { Image, Flex, Button } from '@chakra-ui/react'
 import { CardLogin } from 'components/CardLogin'
 import { useRouter } from 'next/navigation'
-import { AppContext } from '../../context'
 import { useContext } from 'react'
-import { UserContextType } from '@/context/types'
 import { useWorkOrderFindAll } from 'hooks/useBuscarAllOrdemServico'
-import { OrdemServico } from 'hooks/useBuscarOrdemServico/useBuscarOrdemServico'
+import { OrdemServico } from 'domains/work-orders.domain'
+import { WorkOrdersContext } from 'contexts/work-order/work-order.context'
 
 export default function Home () {
-  const { getAllOs } = useWorkOrderFindAll()
+  const getWorks = useWorkOrderFindAll()
+  const { setWorkOrdersSuccess } = useContext(WorkOrdersContext)
   const router = useRouter()
-  const { enviar } = useContext(AppContext) as UserContextType
 
   const handlerCardOs = (numOs: string, pass: string) => {
-    getAllOs(numOs, pass).then(res => {
-      let accessedOs
-      const filteredOs = res.map((os) => {
+    getWorks(numOs, pass).then((res) => {
+      const allWorkOrders = res as unknown as OrdemServico[]
+      let accessedOs: OrdemServico | null
+      accessedOs = null
+      const filteredOs = allWorkOrders.map((os: OrdemServico) => {
         if (os.numOs === numOs) { accessedOs = os }
         return os
-      }) as OrdemServico[]
-      enviar({
-        type: 'SET_VALUE',
-        payload: {
-          serviceOrderAccessed: accessedOs,
-          allServiceOrder: filteredOs
-        }
       })
+      setWorkOrdersSuccess(
+        filteredOs, accessedOs!
+      )
       router.push('/home/serviceOrder?numOs=' + filteredOs[0].numOs)
     }).catch(err => console.error(err))
   }
@@ -48,7 +45,7 @@ export default function Home () {
             height='72px'
                   />
         </Flex>
-        <CardLogin onClickLogin={async (numOs, pass) => handlerCardOs(numOs, pass)} onAuth={handlerAuth}/>
+        <CardLogin onClickLogin={(numOs, pass) => handlerCardOs(numOs, pass)} />
 
       </Flex>
       <Button mt='-460' ml='-178' mb='4' onClick={handlerAuth}>

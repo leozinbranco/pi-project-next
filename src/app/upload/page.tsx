@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client'
 import { Image, Flex, IconButton } from '@chakra-ui/react'
 import { ModalSupport } from '@/components/ModalSupport'
 import { CardUpload } from 'components/CardUpload'
 import React, { useRef, useState, useContext } from 'react'
-import { useRouter } from 'next/navigation'
-import { AppContext } from '@/context/Context'
 import styles from './upload.module.css'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+import { AuthContext } from 'contexts/auth/auth.provider'
+import { useAuth } from 'contexts/auth/auth.hook'
 
 export default function UploadPage () {
+  const { signOut } = useAuth()
   const [visivel, setVisivel] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const boxRef = useRef<HTMLDivElement>(null)
@@ -22,8 +24,6 @@ export default function UploadPage () {
   const cnpjEmpresa = useRef<HTMLInputElement>(null)
   const codEmpresa = useRef<HTMLInputElement>(null)
 
-  const route = useRouter()
-
   const handlerOnCloseModal = () => {
     setVisivel(false)
   }
@@ -32,7 +32,7 @@ export default function UploadPage () {
   }
 
   const handlerOnReturn = () => {
-    route.push('/auth')
+    signOut()
   }
 
   const handleOnFile = () => {
@@ -80,7 +80,7 @@ export default function UploadPage () {
       }
       try {
         const response = await axios.post(
-          'http://localhost:3002/suport/',
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/suport/`,
           {
             statusTicket: 'dede',
             tipoTicket: String(typeTicket),
@@ -111,7 +111,7 @@ export default function UploadPage () {
         alert(response.data.message)
         handlerOnCloseModal()
       } catch (error) {
-        alert(error?.response?.data?.message)
+        if (error instanceof AxiosError) { alert(error.message) }
       }
     }
   }
@@ -124,9 +124,9 @@ export default function UploadPage () {
         return false
       }
       const formData = new FormData()
-      formData.append('file', inputRef.current?.files[0], inputRef.current?.files[0].name)
+      formData.append('file', inputRef.current.files[0], inputRef.current?.files[0].name)
       try {
-        const response = await axios.post(`http://localhost:3002/upload/${urlParams.get('cod')}/${urlParams.get('user')}`, formData, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload/${urlParams.get('cod')}/${urlParams.get('user')}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: localStorage.getItem('access-token')
@@ -140,7 +140,7 @@ export default function UploadPage () {
     }
   }
 
-  const { dataResp } = useContext(AppContext)
+  const { user } = useContext(AuthContext)
 
   class UploadComponent extends React.Component {
     handleDrop = (event: any) => {
@@ -194,7 +194,7 @@ export default function UploadPage () {
             inputRef={inputRefSup} textAreaRef={textAreaRef}
             textRef={textRef}
             textRefArea={textRefArea}
-            dataResp={dataResp}
+            user={user}
             cnpjEmpresa={cnpjEmpresa}
             codEmpresa={codEmpresa}/>
         </main>

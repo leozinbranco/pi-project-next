@@ -2,12 +2,12 @@
 import { BlocoCardOS } from '@/components/BlocoCardOS'
 import { Flex } from '@chakra-ui/react'
 import { Sidebar } from 'components/Sidebar'
+import { useAuth } from 'contexts/auth/auth.hook'
 import { useRef } from 'react'
-import { useAuth } from 'hooks/useAuth'
 
 export default function Home () {
   const inputSearch = useRef<HTMLInputElement>(null)
-  const { logout } = useAuth()
+  const { signOut } = useAuth()
 
   const handleOnFocusSearch = () => {
     if (inputSearch.current) {
@@ -22,7 +22,7 @@ export default function Home () {
     }
   }
   const handlerOnReturn = () => {
-    logout()
+    signOut()
   }
 
   return (<section><Flex flexDirection='column' marginLeft='auto' marginRight='auto' width='100%' >

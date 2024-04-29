@@ -1,29 +1,5 @@
 import axios from 'axios'
-
-export interface OrdemServico {
-  codOs: number
-  numOs: string
-  statusOs: string
-  tipoObjOs: string
-  tipoOs: string
-  descricaoAjustesOs: string
-  observacaoOs: string
-  telContatoOs: string
-  emailContatoOs: string
-  cnpjClienteOs: string
-  dataAberturaOs: Date
-  dataUltimaModOs: Date
-  dataAtualizacaoOs: Date
-  atributoValidadorOs: string
-  EmpresaOs: EmpresaOs
-  codEmpresaOs: number
-}
-
-interface EmpresaOs {
-  razaoSocialEmpresa: string
-  telefoneEmpresa: string
-  emailEmpresa: string
-}
+import { OrdemServico } from 'domains/work-orders.domain'
 
 export const useFilterCodOs = () => {
   const filterNumberOs = async (codOs: string) => {
@@ -38,7 +14,7 @@ export const useFilterCodOs = () => {
         alert('Digite um número de O.S válido!')
         return
       }
-      const res = await axios.get('http://localhost:3002' + '/work-order/filterCodOs/' + codOs, config)
+      const res = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/work-order/filterCodOs/' + codOs, config)
       const os = res.data as OrdemServico
       return [os]
     } catch (e) {

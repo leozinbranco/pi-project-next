@@ -18,7 +18,7 @@ import {
   InputLeftElement,
   Image
 } from '@chakra-ui/react'
-import { UsuarioAdm } from 'hooks/useAuth'
+import { UsuarioAdm } from 'domains/profiles'
 
 interface IModalSupport {
   visible: boolean
@@ -33,9 +33,9 @@ interface IModalSupport {
   textAreaRef: React.Ref<HTMLTextAreaElement>
   textRef: React.Ref<HTMLInputElement>
   textRefArea: React.Ref<HTMLInputElement>
-  dataResp: UsuarioAdm
+  user: UsuarioAdm
 }
-export const ModalSupport: FC<IModalSupport> = ({ dataResp, visible, onClose, sendSuport, inputRef, checkBoxError, checkBoxNewFeature, checkBoxOther, textAreaRef, textRef, textRefArea, cnpjEmpresa, codEmpresa }) => {
+export const ModalSupport: FC<IModalSupport> = ({ user, visible, onClose, sendSuport, inputRef, checkBoxError, checkBoxNewFeature, checkBoxOther, textAreaRef, textRef, textRefArea, cnpjEmpresa, codEmpresa }) => {
   return (
     <>
 
@@ -64,13 +64,13 @@ export const ModalSupport: FC<IModalSupport> = ({ dataResp, visible, onClose, se
                 </InputLeftElement>
                 <Input
                   borderRadius='20px'
-                  value={dataResp?.empresaUsuario?.emailEmpresa}
+                  value={user.empresaUsuario.emailEmpresa}
                   ref={inputRef}
                   disabled
                 />
               </InputGroup>
-              <Input ref={cnpjEmpresa} value={dataResp?.empresaUsuario?.cnpjEmpresa} hidden/>
-              <Input ref={codEmpresa} value={dataResp?.empresaUsuario?.codEmpresa} hidden/>
+              <Input ref={cnpjEmpresa} value={user.empresaUsuario.cnpjEmpresa} hidden/>
+              <Input ref={codEmpresa} value={user.empresaUsuario.codEmpresa} hidden/>
               <Flex flexDirection='column' margin='20px'>
                 <RadioGroup>
                   <Stack spacing={2} direction='column'>

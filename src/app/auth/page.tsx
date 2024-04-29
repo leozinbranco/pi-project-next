@@ -6,11 +6,12 @@ import { CardAuth } from '@/components/CardAuth'
 import { useAuth } from 'contexts/auth/auth.hook'
 export default function Home () {
   const router = useRouter()
-  const { signIn, user } = useAuth()
+  const { signIn } = useAuth()
   const handlerCardAuth = (cpf: string, senha: string) => {
     try {
       signIn(cpf, senha)
-      router.push(`upload?cod=${user.empresaUsuario.codEmpresa}&user=${user.codUsuario}`)
+      // router.push('upload')
+      // router.push(`upload?cod=${user.empresaUsuario.codEmpresa}&user=${user.codUsuario}`)
     } catch (err) {
       console.log('error: ', err)
     }

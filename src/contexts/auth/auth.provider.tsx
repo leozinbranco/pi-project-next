@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { createContext, useCallback, useEffect, useState } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { IAuthState, UsuarioAdmResponseAPI } from './auth.types'
 import { useRouter } from 'next/navigation'
 import { getAuth } from 'services/auth/auth.service'
-import { UsuarioAdm } from 'domains/profiles'
-import { authUserInitial } from './auth.mock'
-import ToastContextProvider from '../toast/toast.context'
+import { authContext, authUserInitial } from './auth.mock'
+import { ToastContext } from '../toast/toast.context'
+import { UsuarioAdm } from 'domains/profiles.domain'
 
 interface IAuthProviderProps {
   children: React.ReactNode
 }
 
-export const AuthContext = createContext<IAuthState | null>(null)
+export const AuthContext = createContext<IAuthState>(authContext)
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   const router = useRouter()
-  const [state, setState] = useState<IAuthState | null>(null)
+  const { setRenderToast, setResetToast } = useContext(ToastContext)
+  const [state, setState] = useState<IAuthState>(authContext)
   const [user, setUser] = useState<UsuarioAdm>(authUserInitial)
 
   const removeSession = useCallback(() => {
@@ -34,15 +35,41 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
         signOut,
         token: accessToken
       })
+      setRenderToast({
+        title: 'Sucesso!',
+        description: 'Autenticação feita com sucesso',
+        status: 'success',
+        isVisible: true,
+        duration: 4000,
+        isClosable: true
+      })
+      router.push('/upload')
     } catch (e) {
       const { message } = e as Error
-      throw new Error(message)
+
+      setRenderToast({
+        title: 'Erro ao autenticar!',
+        description: message,
+        status: 'error',
+        isVisible: true,
+        duration: 4000,
+        isClosable: true
+      })
     }
   }, [])
 
   const signOut = useCallback(() => {
+    setResetToast()
     removeSession()
-    router.push('/login')
+    router.push('/auth')
+    setRenderToast({
+      title: 'Usuário deslogado!',
+      description: 'asdad',
+      status: 'success',
+      isVisible: true,
+      duration: 4000,
+      isClosable: true
+    })
   }, [removeSession])
 
   const updateAuthState = useCallback(() => {
@@ -60,5 +87,5 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     updateAuthState()
   }, [signIn, signOut, updateAuthState])
 
-  return <AuthContext.Provider value={state}><ToastContextProvider>{children}</ToastContextProvider></AuthContext.Provider>
+  return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>
 }
