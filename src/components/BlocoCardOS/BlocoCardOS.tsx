@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Flex, Heading, Box, Input, Text, FormControl, FormLabel, ChakraProvider, Button } from '@chakra-ui/react'
 import React, { FC, useContext, useState, useRef } from 'react'
 import { CardDataOs } from '../CardDataOs'
@@ -5,7 +6,6 @@ import { CardCreditCardOs } from '../CardCreditCardOs'
 import { BlocoContato } from '../BlocoContato'
 import { useFilterDate } from 'hooks/useFilterDate/useFilterDate'
 import { useFilterCodOs } from 'hooks/useFilterCodOs/useFilterCodOs'
-import { useRouter } from 'next/navigation'
 import { WorkOrdersContext } from 'contexts/work-order/work-order.context'
 import { OrdemServico } from 'domains/work-orders.domain'
 
@@ -19,17 +19,7 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
   const startDateRef = useRef<HTMLInputElement>(null)
   const endDateRef = useRef<HTMLInputElement>(null)
   const searchPersonRef = useRef<HTMLInputElement>(null)
-  const { accessedWorkOrder, workOrders, setWorkOrdersSuccess } = useContext(WorkOrdersContext)
-  const handleChangeOsSelected = (numOs: string) => {
-    let accessedOs
-    const filteredOs = workOrders!.filter((os) => {
-      if (os.numOs === numOs) { accessedOs = os }
-      return os
-    })
-    setWorkOrdersSuccess(
-      filteredOs, accessedOs
-    )
-  }
+  const { accessedWorkOrder, setWorkOrdersSuccess } = useContext(WorkOrdersContext)
 
   // const urlParams = new URLSearchParams(window.location.search)
   // const numOs = urlParams?.get('numOs')
@@ -37,12 +27,12 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
   const { filterDate } = useFilterDate()
   const { filterNumberOs } = useFilterCodOs()
   const handleFilterDate = (numOs: string, startDate: string, endDate: string) => {
-    filterDate(startDate, endDate, numOs).then(res => {
+    filterDate(startDate, endDate, numOs).then((res: OrdemServico[]) => {
       let accessedOs
       const filteredOs = res.map((os) => {
         if (os.numOs === numOs) { accessedOs = os }
         return os
-      }) as OrdemServico[]
+      })
       setWorkOrdersSuccess(
         filteredOs, accessedOs
       )
@@ -50,20 +40,20 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
   }
 
   const handleFilterCodOs = (numberOs: string) => {
-    filterNumberOs(numberOs).then(res => {
-      let accessedOs
-      const filteredOs = res[0].EmpresaOs
-        ? res.map((os) => {
-          if (os) { accessedOs = os }
-          return os
-        })
-        : undefined
-      if (filteredOs === undefined) {
-        alert('Nenhuma Ordem de Serviço foi encontrada!')
-        return
-      }
+    filterNumberOs(numberOs).then((res: OrdemServico) => {
+      // let accessedOs
+      // const filteredOs = res.EmpresaOs
+      //   ? res.map((os) => {
+      //     if (os) { accessedOs = os }
+      //     return os
+      //   })
+      //   : undefined
+      // if (filteredOs === undefined) {
+      //   alert('Nenhuma Ordem de Serviço foi encontrada!')
+      //   return
+      // }
       setWorkOrdersSuccess(
-        filteredOs, accessedOs
+        [res]
       )
     }).catch(err => console.error(err))
   }
@@ -166,15 +156,15 @@ export const BlocoCardOS: FC<IFocusInput> = ({ onFocusSearch, inputRef, onBlurSe
           </Flex>
         </Flex>
       </Box >
-      <CardDataOs dataOs={accessedWorkOrder}/>
+      <CardDataOs dataOs={accessedWorkOrder!}/>
       <Flex flexDirection='row' width='90%' alignSelf='center' justifyContent='flex-start' p='4'>
         { ServiceWorker && ServiceWorker.length > 0
-          ? ServiceWorker.map(os => {
-            return (<Flex marginRight={50} key={os.numOs}>
-              <CardCreditCardOs numOs={os.numOs} razaoSocial={os.EmpresaOs.razaoSocialEmpresa} handleChangeOs={handleChangeOsSelected}/>
-            </Flex>)
-          }
-          )
+          ? (ServiceWorker as unknown as OrdemServico[]).map((os: OrdemServico) => {
+              return (<Flex marginRight={50} key={os.numOs}>
+                <CardCreditCardOs numOs={os.numOs} razaoSocial={os.EmpresaOs.razaoSocialEmpresa} />
+              </Flex>)
+            }
+            )
           : <Flex><Text color='#02043E' fontWeight='bold'> Não existem outras ordens de serviço.</Text></Flex>
 
         }

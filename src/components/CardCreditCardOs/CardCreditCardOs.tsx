@@ -3,15 +3,13 @@ import { findOs } from 'hooks/useBuscarOrdemServico'
 import { useRouter } from 'next/navigation'
 import { FC, MouseEvent, useContext } from 'react'
 import { WorkOrdersContext } from 'contexts/work-order/work-order.context'
-import { OrdemServico } from 'domains/work-orders.domain'
 
 interface ISecondayCards {
   numOs: string
   razaoSocial: string
-  handleChangeOs: (numOs: string) => OrdemServico
 }
 
-export const CardCreditCardOs: FC<ISecondayCards> = ({ numOs, razaoSocial, handleChangeOs }) => {
+export const CardCreditCardOs: FC<ISecondayCards> = ({ numOs, razaoSocial }) => {
   const { workOrders, setWorkOrdersSuccess } = useContext(WorkOrdersContext)
   const router = useRouter()
   const handleClick = (event: MouseEvent<HTMLImageElement>): void => {

@@ -1,6 +1,6 @@
 // import { Configuration } from '@azure/msal-browser'
 // import { User } from 'oidc-client'
-import { UsuarioAdm } from 'domains/profiles'
+import { UsuarioAdm } from 'domains/profiles.domain'
 import React, { ReactElement } from 'react'
 
 // export interface IMsalConfiguration extends Configuration {

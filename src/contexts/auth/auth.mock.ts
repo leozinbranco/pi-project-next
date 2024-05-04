@@ -1,4 +1,4 @@
-import { UsuarioAdm } from 'domains/profiles'
+import { UsuarioAdm } from 'domains/profiles.domain'
 import { IAuthState } from './auth.types'
 
 export const authUserInitial: UsuarioAdm = {

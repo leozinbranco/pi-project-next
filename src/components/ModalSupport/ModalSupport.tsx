@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { FC } from 'react'
 import {
   Modal,
@@ -18,7 +19,7 @@ import {
   InputLeftElement,
   Image
 } from '@chakra-ui/react'
-import { UsuarioAdm } from 'domains/profiles'
+import { UsuarioAdm } from 'domains/profiles.domain'
 
 interface IModalSupport {
   visible: boolean

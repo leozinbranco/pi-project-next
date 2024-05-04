@@ -1,5 +1,5 @@
 import { Flex, Text, Image, Box, Input } from '@chakra-ui/react'
-import { OrdemServico } from 'hooks/useBuscarOrdemServico'
+import { OrdemServico } from 'domains/work-orders.domain'
 import React, { FC } from 'react'
 
 interface ICardDataOs {
