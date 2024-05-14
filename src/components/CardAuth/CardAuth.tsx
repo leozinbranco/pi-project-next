@@ -24,6 +24,9 @@ export interface IAuth {
 export const CardAuth: FC<ICardAuth> = ({ onAuth, onLogin }) => {
   const [cpf, setCpf] = useState<string>('')
   const [senha, setSenha] = useState<string>('')
+  const handleClick = () => {
+    onAuth(cpf, senha)
+  }
   return (
     <Card padding='0px 42px 0px 42px' maxW='500px'>
       <CardHeader >
@@ -44,7 +47,7 @@ export const CardAuth: FC<ICardAuth> = ({ onAuth, onLogin }) => {
           <Text mb='8px'>Senha</Text>
           <Input variant='filled' type='password' onChange={(e) => setSenha(e.target.value)}/>
           <Flex w='100%' justifyContent='center' gap='4'>
-            <Button isDisabled={cpf === '' || senha === ''} color='white' mt='20px' bgColor='#02043E' size='md' onClick={() => onAuth(cpf, senha)} _hover={{ bg: '#212485' }}>
+            <Button isDisabled={cpf === '' || senha === ''} color='white' mt='20px' bgColor='#02043E' size='md' onClick={handleClick} _hover={{ bg: '#212485' }}>
               Conecte-se
             </Button>
             <Button mt='20px' onClick={onLogin}>

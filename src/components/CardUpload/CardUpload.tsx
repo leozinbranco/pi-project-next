@@ -5,6 +5,7 @@ interface IRedirectAuth {
   onReturn: () => void
   onFile: () => void
   onFileSelect: () => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onDrop: (event: any) => void
   sendFile: () => void
   inputRef: React.Ref<HTMLInputElement>

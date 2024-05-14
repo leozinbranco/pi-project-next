@@ -1,27 +1,17 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 'use client'
 import { Image, Flex } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { CardAuth } from '@/components/CardAuth'
-import { useAuth } from 'hooks/useAuth'
-import { UserContextType } from '@/context/types'
-import { AppContext } from '../../context'
-import { useContext } from 'react'
+import { useAuth } from 'contexts/auth/auth.hook'
 export default function Home () {
   const router = useRouter()
-  const { autenticaUsuario } = useAuth()
-  const { enviar } = useContext(AppContext) as UserContextType
-  const handlerCardAuth = async (cpf: string, senha: string) => {
+  const { signIn } = useAuth()
+  const handlerCardAuth = (cpf: string, senha: string) => {
     try {
-      const responsible = await autenticaUsuario(cpf, senha)
-      void autenticaUsuario(cpf, senha).then(res => {
-        enviar({
-          type: 'SET_VALUE',
-          payload: {
-            user: res
-          }
-        })
-      })
-      router.push(`upload?cod=${responsible.empresaUsuario.codEmpresa}&user=${responsible.codUsuario}`)
+      signIn(cpf, senha)
+      // router.push('upload')
+      // router.push(`upload?cod=${user.empresaUsuario.codEmpresa}&user=${user.codUsuario}`)
     } catch (err) {
       console.log('error: ', err)
     }
@@ -41,7 +31,7 @@ export default function Home () {
           height='72px'
         />
       </Flex>
-      <CardAuth onAuth={async (cpf, senha) => await handlerCardAuth(cpf, senha)} onLogin={handlerLogin} />
+      <CardAuth onAuth={handlerCardAuth} onLogin={handlerLogin} />
     </Flex>
   )
 }

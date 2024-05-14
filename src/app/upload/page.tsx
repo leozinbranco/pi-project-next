@@ -1,14 +1,21 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client'
 import { Image, Flex, IconButton } from '@chakra-ui/react'
 import { ModalSupport } from '@/components/ModalSupport'
 import { CardUpload } from 'components/CardUpload'
 import React, { useRef, useState, useContext } from 'react'
-import { useRouter } from 'next/navigation'
-import { AppContext } from '@/context/Context'
 import styles from './upload.module.css'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+import { AuthContext } from 'contexts/auth/auth.provider'
+import { useAuth } from 'contexts/auth/auth.hook'
+import { ToastContext } from 'contexts/toast/toast.context'
 
 export default function UploadPage () {
+  const { setRenderToast } = useContext(ToastContext)
+  const { user } = useContext(AuthContext)
+  const { signOut } = useAuth()
   const [visivel, setVisivel] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const boxRef = useRef<HTMLDivElement>(null)
@@ -22,8 +29,6 @@ export default function UploadPage () {
   const cnpjEmpresa = useRef<HTMLInputElement>(null)
   const codEmpresa = useRef<HTMLInputElement>(null)
 
-  const route = useRouter()
-
   const handlerOnCloseModal = () => {
     setVisivel(false)
   }
@@ -32,7 +37,7 @@ export default function UploadPage () {
   }
 
   const handlerOnReturn = () => {
-    route.push('/auth')
+    signOut()
   }
 
   const handleOnFile = () => {
@@ -79,8 +84,8 @@ export default function UploadPage () {
         typeTicket = 'Outros'
       }
       try {
-        const response = await axios.post(
-          'http://localhost:3002/suport/',
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/suport/`,
           {
             statusTicket: 'dede',
             tipoTicket: String(typeTicket),
@@ -108,10 +113,24 @@ export default function UploadPage () {
             }
           }
         )
-        alert((response.data as { message: string }).message)
+        setRenderToast({
+          title: 'Sucesso!',
+          description: 'Ticket enviado com sucesso!',
+          status: 'success',
+          isVisible: true,
+          isClosable: true
+        })
         handlerOnCloseModal()
       } catch (error) {
-        alert(error)
+        if (error instanceof AxiosError) {
+          setRenderToast({
+            title: 'Erro ao recuperar ordem de serviço!',
+            description: (error as AxiosError).message,
+            status: 'error',
+            isVisible: true,
+            isClosable: true
+          })
+        }
       }
     }
   }
@@ -124,32 +143,43 @@ export default function UploadPage () {
         return false
       }
       const formData = new FormData()
-      formData.append('file', inputRef.current?.files[0], inputRef.current?.files[0].name)
+      formData.append('file', inputRef.current.files![0], inputRef.current?.files![0].name)
       try {
-        const response = await axios.post(`http://localhost:3002/upload/${urlParams.get('cod')}/${urlParams.get('user')}`, formData, {
+        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload/${urlParams.get('cod')}/${urlParams.get('user')}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: localStorage.getItem('access-token')
           }
         }
         )
-        alert(response.data.message)
+        setRenderToast({
+          title: 'Sucesso!',
+          description: 'Arquivo enviado com sucesso!',
+          status: 'success',
+          isVisible: true,
+          isClosable: true
+        })
       } catch (error) {
-        alert(error?.response?.data?.message)
+        setRenderToast({
+          title: 'Erro ao recuperar ordem de serviço!',
+          description: (error as AxiosError).message,
+          status: 'error',
+          isVisible: true,
+          isClosable: true
+        })
       }
     }
   }
 
-  const { dataResp } = useContext(AppContext)
-
   class UploadComponent extends React.Component {
-    handleDrop = (event: any) => {
+    handleDrop = (event: InputEvent) => {
       event.preventDefault()
-      const files = event.dataTransfer.files
-      if (boxRef.current) {
+      if (event.dataTransfer && boxRef.current) {
+        const files = event.dataTransfer.files
         boxRef.current.style.display = 'block'
         boxRef.current.innerText = files[0].name
       }
+      console.error('[ERRO] Evento de upload')
     }
 
     render () {
@@ -167,7 +197,7 @@ export default function UploadPage () {
                             />
             </Flex>
             <Flex flexDirection='column'>
-              <CardUpload onReturn={handlerOnReturn} onFile={handleOnFile} inputRef={inputRef} boxRef={boxRef} onFileSelect={handleOnFileSelect} onDrop={this.handleDrop} sendFile={handleSendFile} />
+              <CardUpload onReturn={handlerOnReturn} onFile={handleOnFile} inputRef={inputRef} boxRef={boxRef} onFileSelect={handleOnFileSelect} onDrop={this.handleDrop} sendFile={async () => await handleSendFile()} />
               <IconButton
                 aria-label='Send email'
                 onClick={handlerOnOpenModal}
@@ -194,7 +224,7 @@ export default function UploadPage () {
             inputRef={inputRefSup} textAreaRef={textAreaRef}
             textRef={textRef}
             textRefArea={textRefArea}
-            dataResp={dataResp}
+            user={user}
             cnpjEmpresa={cnpjEmpresa}
             codEmpresa={codEmpresa}/>
         </main>

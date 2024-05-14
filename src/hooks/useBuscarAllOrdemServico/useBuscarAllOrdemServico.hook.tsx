@@ -1,19 +1,18 @@
 'use client'
-import { AppContext } from '@/context/Context'
-import { ToastContext } from '@/context/toast/toast.context'
-import { UserContextType } from '@/context/types'
 import axios from 'axios'
-import { OrdemServico } from 'hooks/useBuscarOrdemServico'
 import { useCallback, useContext } from 'react'
 import { useRouter } from 'next/navigation'
+import { WorkOrdersContext } from 'contexts/work-order/work-order.context'
+import { OrdemServico } from 'domains/work-orders.domain'
+import { ToastContext } from 'contexts/toast/toast.context'
 
 export const useWorkOrderFindAll = () => {
-  const { enviar } = useContext(AppContext) as UserContextType
+  const { setWorkOrdersRequest, setWorkOrdersSuccess, setWorkOrdersError } = useContext(WorkOrdersContext)
   const { setRenderToast, setResetToast } = useContext(ToastContext)
   const router = useRouter()
 
   return useCallback(async (codOs: string, pass: string) => {
-    setResetToast()
+    setWorkOrdersRequest()
     try {
       const headers = {
         'x-api-key': 'aaa',
@@ -21,34 +20,26 @@ export const useWorkOrderFindAll = () => {
       }
       const config = { headers }
       const queryParams = new URLSearchParams({ codOs, pass })
-      const res = await axios.get('http://localhost:3002' + '/work-order/all/' + queryParams.get('codOs') + '/' + queryParams.get('pass'), config)
-      if (res) {
-        setRenderToast({
-          title: 'Sucesso!',
-          description: 'Ordem de serviço encontrada com sucesso',
-          status: 'success',
-          isVisible: true,
-          duration: 4000,
-          isClosable: true
-        })
-      }
-      const os = res.data as OrdemServico[]
+      const res = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/work-order/all/' + queryParams.get('codOs') + '/' + queryParams.get('pass'), config)
       let accessedOs
+      const os = res.data as OrdemServico[]
 
-      const filteredOs = os.map((os: OrdemServico) => {
+      os.map((os: OrdemServico) => {
         if (os.numOs === codOs) { accessedOs = os }
         return os
       })
-      enviar({
-        type: 'SET_VALUE',
-        payload: {
-          serviceOrderAccessed: accessedOs,
-          allServiceOrder: filteredOs
-        }
+      setWorkOrdersSuccess(os, accessedOs)
+      setRenderToast({
+        title: 'Sucesso!',
+        description: 'Ordem de serviço encontrada!',
+        status: 'success',
+        isVisible: true,
+        isClosable: true
       })
       void router.push('/home/serviceOrder')
     } catch (e) {
       const { message } = e as Error
+      setWorkOrdersError(message)
       setRenderToast({
         title: 'Erro ao recuperar ordem de serviço!',
         description: message,
@@ -57,5 +48,5 @@ export const useWorkOrderFindAll = () => {
         isClosable: true
       })
     }
-  }, [setRenderToast, setResetToast, enviar])
+  }, [setRenderToast, setResetToast, setWorkOrdersError, setWorkOrdersSuccess, setWorkOrdersRequest])
 }

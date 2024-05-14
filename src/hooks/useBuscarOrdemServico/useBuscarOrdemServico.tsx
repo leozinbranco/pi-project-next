@@ -1,29 +1,5 @@
 import axios from 'axios'
-
-export interface OrdemServico {
-  codOs: number
-  numOs: string
-  statusOs: string
-  tipoObjOs: string
-  tipoOs: string
-  descricaoAjustesOs: string
-  observacaoOs: string
-  telContatoOs: string
-  emailContatoOs: string
-  cnpjClienteOs: string
-  dataAberturaOs: Date
-  dataUltimaModOs: Date
-  dataUltimoUpload: Date
-  atributoValidadorOs: string
-  EmpresaOs: EmpresaOs
-  codEmpresaOs: number
-}
-
-interface EmpresaOs {
-  razaoSocialEmpresa: string
-  telefoneEmpresa: string
-  emailEmpresa: string
-}
+import { OrdemServico } from 'domains/work-orders.domain'
 
 export const useWorkOrder = () => {
   const getOs = async (codOs: string, pass: string): Promise<OrdemServico> => {
@@ -35,7 +11,7 @@ export const useWorkOrder = () => {
       }
       const config = { headers }
       const queryParams = new URLSearchParams({ codOs, pass }).toString()
-      const res = await axios.get('http://localhost:3002/work-order?' + queryParams, config)
+      const res = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/work-order?' + queryParams, config)
       const os = res.data as OrdemServico
       console.log(os)
       return os
@@ -55,7 +31,7 @@ export const findOs = async (numOs: string) => {
       'Content-Type': 'application/json;charset=utf-8'
     }
     const config = { headers }
-    const res = await axios.get('http://localhost:3002' + '/work-order/one/' + numOs, config)
+    const res = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/work-order/one/' + numOs, config)
     const os = res.data as OrdemServico
     return os
   } catch (e) {
