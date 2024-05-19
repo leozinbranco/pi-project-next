@@ -11,6 +11,7 @@ export interface IAuthState {
   token: string
   user: UsuarioAdm
   signIn: (cpf: string, senha: string) => void
+  signInAdm: (email: string, senha: string) => void
   signOut: () => void
 }
 export interface UsuarioAdmResponseAPI {

@@ -6,6 +6,7 @@ import { getAuth } from 'services/auth/auth.service'
 import { authContext, authUserInitial } from './auth.mock'
 import { ToastContext } from '../toast/toast.context'
 import { UsuarioAdm } from 'domains/profiles.domain'
+import { getAuthAdm } from 'services/auth/auth-adm.service'
 
 interface IAuthProviderProps {
   children: React.ReactNode
@@ -28,9 +29,11 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     try {
       const response: UsuarioAdmResponseAPI = await getAuth(cpf, password)
       const accessToken = response.access_token
+      localStorage.setItem('access-token', accessToken)
       setUser(response.user)
       setState({
         signIn,
+        signInAdm,
         user: response.user,
         signOut,
         token: accessToken
@@ -44,6 +47,42 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
         isClosable: true
       })
       router.push('/upload')
+    } catch (e) {
+      const { message } = e as Error
+
+      setRenderToast({
+        title: 'Erro ao autenticar!',
+        description: message,
+        status: 'error',
+        isVisible: true,
+        duration: 4000,
+        isClosable: true
+      })
+    }
+  }, [])
+
+  const signInAdm = useCallback(async (email: string, password: string) => {
+    try {
+      const response: UsuarioAdmResponseAPI = await getAuthAdm(email, password)
+      const accessToken = response.access_token
+      localStorage.setItem('access-token', accessToken)
+      setUser(response.user)
+      setState({
+        signIn,
+        signInAdm,
+        user: response.user,
+        signOut,
+        token: accessToken
+      })
+      setRenderToast({
+        title: 'Sucesso!',
+        description: 'Autenticação feita com sucesso',
+        status: 'success',
+        isVisible: true,
+        duration: 4000,
+        isClosable: true
+      })
+      router.push('/cadastroEmpresa')
     } catch (e) {
       const { message } = e as Error
 
@@ -77,7 +116,8 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
     setState({
       signIn,
-      user,
+        signInAdm,
+        user,
       signOut,
       token: accessToken
     })

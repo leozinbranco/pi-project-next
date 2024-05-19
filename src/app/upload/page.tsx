@@ -145,10 +145,11 @@ export default function UploadPage () {
       const formData = new FormData()
       formData.append('file', inputRef.current.files![0], inputRef.current?.files![0].name)
       try {
+        const token = localStorage.getItem('access-token')
         await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload/${urlParams.get('cod')}/${urlParams.get('user')}`, formData, {
           headers: {
+            'x-api-key': token,
             'Content-Type': 'multipart/form-data',
-            Authorization: localStorage.getItem('access-token')
           }
         }
         )
