@@ -87,7 +87,7 @@ export default function UploadPage () {
         await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/suport/`,
           {
-            statusTicket: 'dede',
+            statusTicket: 'Aberto',
             tipoTicket: String(typeTicket),
             descricaoTicket: textAreaRef.current.value,
             descricaoAjusteTicket: typeTicket,

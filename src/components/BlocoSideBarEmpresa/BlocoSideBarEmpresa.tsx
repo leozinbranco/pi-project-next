@@ -1,34 +1,38 @@
 'use client'
 import { Button, Flex, Image } from "@chakra-ui/react";
 import { FC } from "react";
-import { usePathname } from "next/navigation";
 
 interface IRouting {
   onList: () => void,
   onTicket: () => void,
   onCad: () => void,
+  linkCurrent: string
 }
 
-export const BlocoSideBarEmpresa: FC<IRouting>  = ({onCad, onTicket, onList}) => {
-  const pathName = usePathname()
-  const bgColorCad = pathName.startsWith('/cad') ? '#FFFFFF' : 'transparent'
-  const textColorCad = pathName.startsWith('/cad') ? '#010A22' : '#FFFFFF'
-  const bgColorList = pathName.startsWith('/list') ? '#FFFFFF' : 'transparent'
-  const textColorList = pathName.startsWith('/list') ? '#010A22' : '#FFFFFF'
-  const bgColorTic = pathName.startsWith('/tic') ? '#FFFFFF' : 'transparent'
-  const textColorTic = pathName.startsWith('/tic') ? '#010A22' : '#FFFFFF'
+export const BlocoSideBarEmpresa: FC<IRouting>  = ({onCad, onTicket, onList, linkCurrent}) => {
 
     return (
       <Flex width='234px' height='100vh' bgColor='#010A22' flexDirection='column'
-        justifyContent='center'  alignItems='center'>
+        justifyContent='center'  alignItems='center' alignContent='space-around'>
+        <Flex>
+            
+          <Image 
+            src='images/logoUp.png'
+            width='185px'
+            height='45px'
+            position='relative'
+            top='-105'
+            />
+        </Flex>
         <Flex flexDirection='column' gap='4'>
-          <Button style={{ backgroundColor: `${bgColorCad}`, color: `${textColorCad}` }}
+          <Button style={{ backgroundColor: `${linkCurrent.startsWith('cad') ? '#FFFFFF' : 'transparent'}`, color: `${linkCurrent.startsWith('cad') ? '#010A22' : '#FFFFFF'}` }}
             left='12px' textAlign='initial' borderStartRadius='20px' borderEndRadius='0px' width='210px'
-            onClick={onCad}>
+            onClick={onCad}
+            >
             <Image 
               position='relative'
               left='-37px'
-              src={`images/${pathName.startsWith('/cad') ? 'User.png' : 'User-W.png'}`}
+              src={`images/${linkCurrent.startsWith('cad') ? 'User.png' : 'User-W.png'}`}
               width='25px'
               height='25px'
               />
@@ -36,13 +40,14 @@ export const BlocoSideBarEmpresa: FC<IRouting>  = ({onCad, onTicket, onList}) =>
               Cadastro
             </span>
           </Button>
-          <Button style={{ backgroundColor: `${bgColorList}`, color: `${textColorList}` }}
+          <Button style={{ backgroundColor: `${linkCurrent.startsWith('list') ? '#FFFFFF' : 'transparent'}`, color: `${linkCurrent.startsWith('list') ? '#010A22' : '#FFFFFF'}` }}
             left='12px' textAlign='initial' borderStartRadius='20px' borderEndRadius='0px' width='210px'
-            onClick={onList}>
+            onClick={onList}
+            >
             <Image 
               position='relative'
               left='-40px'
-              src={`images/${pathName.startsWith('/list') ? 'home.png' : 'home-w.png'}`}
+              src={`images/${linkCurrent.startsWith('list') ? 'home.png' : 'home-w.png'}`}
               width='25px'
               height='25px'
               />
@@ -50,14 +55,14 @@ export const BlocoSideBarEmpresa: FC<IRouting>  = ({onCad, onTicket, onList}) =>
               Pessoas
             </span>
           </Button>
-          <Button style={{ backgroundColor: `${bgColorTic}`, color: `${textColorTic}` }}
+          <Button style={{ backgroundColor: `${linkCurrent.startsWith('tic') ? '#FFFFFF' : 'transparent'}`, color: `${linkCurrent.startsWith('tic') ? '#010A22' : '#FFFFFF'}` }}
             left='12px' textAlign='start' borderStartRadius='20px' borderEndRadius='0px'
             onClick={onTicket}
             >
             <Image 
               position='relative'
               left='-40px'
-              src={`images/${pathName.startsWith('/tic') ? 'Activity.png' : 'Activity-W.png'}`}
+              src={`images/${linkCurrent.startsWith('tic') ? 'Activity.png' : 'Activity-W.png'}`}
               width='25px'
               height='25px'
               />

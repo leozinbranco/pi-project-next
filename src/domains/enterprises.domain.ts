@@ -1,9 +1,10 @@
 export interface Empresas {
-    name: string,
-    fancyName: string,
-    cnpj: string,
-    email: string,
-    area: string,
-    telefone: string,
-    enderecoComp: string
+    cod: number,
+    nome: string | undefined,
+    fancyName: string | undefined,
+    document: string | undefined,
+    email: string | undefined,
+    area: string | undefined,
+    telefone: string | undefined,
+    enderecoComp: string | undefined
 }

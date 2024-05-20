@@ -1,10 +1,11 @@
 import { Flex, Text } from "@chakra-ui/react"
-import { FC } from "react"
+import { FC, useState } from "react"
 import { BlocoSideBarEmpresa } from "../BlocoSideBarEmpresa"
 import { useRouter } from "next/navigation"
 
 export const BlocoTickets: FC = () => {
     const router = useRouter()
+    const [linkCurrent] = useState('tickets')
     const handlerCad = () => {
       router.push('/cadastroEmpresa')
     }
@@ -20,7 +21,7 @@ export const BlocoTickets: FC = () => {
     return (<section>
       <Flex> 
 
-        <BlocoSideBarEmpresa onCad={handlerCad} onTicket={handlerTicket} onList={handlerList}/>
+        <BlocoSideBarEmpresa onCad={handlerCad} onTicket={handlerTicket} onList={handlerList} linkCurrent={linkCurrent}/>
 
         <Flex  padding='8px' margin='0 auto'>
           <Text>Tickets</Text>
