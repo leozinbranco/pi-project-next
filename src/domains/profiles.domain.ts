@@ -6,7 +6,7 @@ export interface UsuarioAdm {
   emailUsuario: string
   senhaUsuario: string
   codEmpresaUsuario: number
-  empresaUsuario: EmpresaUsuario
+  empresaUsuarioCnpj: EmpresaUsuario
 }
 
 interface EmpresaUsuario {
