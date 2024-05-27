@@ -64,7 +64,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     router.push('/auth')
     setRenderToast({
       title: 'Usuário deslogado!',
-      description: 'asdad',
+      description: '',
       status: 'success',
       isVisible: true,
       duration: 4000,

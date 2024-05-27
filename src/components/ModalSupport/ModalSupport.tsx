@@ -29,14 +29,12 @@ interface IModalSupport {
   checkBoxError: React.Ref<HTMLInputElement>
   checkBoxNewFeature: React.Ref<HTMLInputElement>
   checkBoxOther: React.Ref<HTMLInputElement>
-  cnpjEmpresa: React.Ref<HTMLInputElement>
-  codEmpresa: React.Ref<HTMLInputElement>
   textAreaRef: React.Ref<HTMLTextAreaElement>
   textRef: React.Ref<HTMLInputElement>
   textRefArea: React.Ref<HTMLInputElement>
   user: UsuarioAdm
 }
-export const ModalSupport: FC<IModalSupport> = ({ user, visible, onClose, sendSuport, inputRef, checkBoxError, checkBoxNewFeature, checkBoxOther, textAreaRef, textRef, textRefArea, cnpjEmpresa, codEmpresa }) => {
+export const ModalSupport: FC<IModalSupport> = ({ user, visible, onClose, sendSuport, inputRef, checkBoxError, checkBoxNewFeature, checkBoxOther, textAreaRef, textRef, textRefArea }) => {
   return (
     <>
 
@@ -65,13 +63,11 @@ export const ModalSupport: FC<IModalSupport> = ({ user, visible, onClose, sendSu
                 </InputLeftElement>
                 <Input
                   borderRadius='20px'
-                  value={user.empresaUsuario.emailEmpresa}
+                  value={user.empresaUsuarioCnpj.emailEmpresa}
                   ref={inputRef}
                   disabled
                 />
               </InputGroup>
-              <Input ref={cnpjEmpresa} value={user.empresaUsuario.cnpjEmpresa} hidden/>
-              <Input ref={codEmpresa} value={user.empresaUsuario.codEmpresa} hidden/>
               <Flex flexDirection='column' margin='20px'>
                 <RadioGroup>
                   <Stack spacing={2} direction='column'>
