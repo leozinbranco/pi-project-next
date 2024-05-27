@@ -19,7 +19,7 @@ export const useCadastraFuncionario = () => {
           'Content-Type': 'application/json',
         } 
       const config = { headers }
-      const res = await axios.post('http://localhost:3002' + '/up-next/cadastroFunc/' + employees.cnpjEmpresa, {
+      const res = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/cadastroFunc/' + employees.cnpjEmpresa, {
         nomeUsuario: employees.nome,
         cpfUsuario: employees.documento,
         telefoneUsuario: employees.telefone,
@@ -65,7 +65,7 @@ export const useDeleteFuncionario = async (codFuncionario: number): Promise<void
       'Content-Type': 'application/json;charset=utf-8'
     } 
      const config = { headers }
-     await axios.post('http://localhost:3002' + '/up-next/removeFunc/' +  codFuncionario, [], config)
+     await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/removeFunc/' +  codFuncionario, [], config)
      setRenderToast({
       title: 'Sucesso!',
       description: 'Funcionário deletado com sucesso!',
@@ -95,7 +95,7 @@ export const useBuscaFuncionario = () => {
         'Content-Type': 'application/json;charset=utf-8'
       } 
        const config = { headers }
-       const res = await axios.get('http://localhost:3002' + '/up-next/funcionarioUn/' +  codFuncionario, config)
+       const res = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/funcionarioUn/' +  codFuncionario, config)
        setRenderToast({
         title: 'Sucesso!',
         description: 'Funcionário encontrado com sucesso!',
@@ -130,7 +130,7 @@ export const useEditaFuncionario = () => {
           'Content-Type': 'application/json',
         } 
       const config = { headers }
-      const res = await axios.post('http://localhost:3002' + '/up-next/editaFunc/' + employees.cnpjEmpresa, {
+      const res = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/editaFunc/' + employees.cnpjEmpresa, {
         codUsuario: employees.codigo,
         nomeUsuario: employees.nome,
         cpfUsuario: employees.documento,

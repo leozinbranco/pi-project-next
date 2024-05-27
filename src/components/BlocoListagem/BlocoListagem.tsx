@@ -12,7 +12,7 @@ export const BlocoListagem = () => {
   const [searchType, setSearchType] = useState('empresas'); 
   const [accessedPagent] = useState('listagem');
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data } = useSwr(`http://localhost:3002/up-next/${searchType}`);
+  const { data } = useSwr(`${process.env.NEXT_PUBLIC_BACKEND_URL}/up-next/${searchType}`);
 
     const handlerCad = () => {
       router.push('/cadastroEmpresa');

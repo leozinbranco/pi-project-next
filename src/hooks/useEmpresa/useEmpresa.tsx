@@ -19,7 +19,7 @@ export const useCadastroEmpresa = () => {
           'Content-Type': 'application/json;charset=utf-8'
         } 
          const config = { headers }
-         const res = await axios.post('http://localhost:3002' + '/up-next/cadastroEmp/', {
+         const res = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/cadastroEmp/', {
           razaoSocialEmpresa: enterprises.nome,
           nomeFantasiaEmpresa: enterprises.nomeFantasia,
           cnpjEmpresa: enterprises.documento,
@@ -60,7 +60,7 @@ export const useCadastroEmpresa = () => {
         'Content-Type': 'application/json;charset=utf-8'
       } 
        const config = { headers }
-       const res = await axios.post('http://localhost:3002' + '/up-next/removeEmp/' +  codEmpresa, [], config)
+       const res = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/removeEmp/' +  codEmpresa, [], config)
        setRenderToast({
         title: 'Sucesso!',
         description: 'Empresa deletada com sucesso!',
@@ -91,7 +91,7 @@ export const useBuscaEmpresa = () => {
         'Content-Type': 'application/json;charset=utf-8'
       } 
        const config = { headers }
-       const res = await axios.get('http://localhost:3002' + '/up-next/empresaUn/' +  codEmpresa, config)
+       const res = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/empresaUn/' +  codEmpresa, config)
        setRenderToast({
         title: 'Sucesso!',
         description: 'Empresa encontrada com sucesso!',
@@ -126,7 +126,7 @@ export const useEditaEmpresa = () => {
        'Content-Type': 'application/json;charset=utf-8'
      } 
       const config = { headers }
-      const res = await axios.post('http://localhost:3002' + '/up-next/editaEmp/', {
+      const res = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/editaEmp/', {
        codEmpresa: enterprises.codigo,
        razaoSocialEmpresa: enterprises.nome,
        nomeFantasiaEmpresa: enterprises.nomeFantasia,
