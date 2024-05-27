@@ -1,9 +1,10 @@
 import axios, { AxiosResponse } from 'axios'
 import { APITicketsResponse, Ticket } from 'domains/tickets.domain'
+import Cookies from 'cookies-js'
 
 export const updateTicket = async (numTicket: number, ticket: Partial<Ticket>): Promise<APITicketsResponse
 > => {
-    const token = localStorage.getItem('access-token')
+    const token = Cookies.get('token')
     const headers = {
         'x-api-key': token,
         'Content-Type': 'application/json;charset=utf-8'

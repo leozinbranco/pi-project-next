@@ -1,6 +1,7 @@
 // import { Configuration } from '@azure/msal-browser'
 // import { User } from 'oidc-client'
 import { UsuarioAdm } from 'domains/profiles.domain'
+import { JwtPayload } from 'jsonwebtoken'
 import React, { ReactElement } from 'react'
 
 // export interface IMsalConfiguration extends Configuration {
@@ -10,6 +11,7 @@ import React, { ReactElement } from 'react'
 export interface IAuthState {
   token: string
   user: UsuarioAdm
+  userData?: JwtPayload
   signIn: (cpf: string, senha: string) => void
   signInAdm: (email: string, senha: string) => void
   signOut: () => void

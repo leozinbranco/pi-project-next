@@ -8,13 +8,12 @@ import { CardUpload } from 'components/CardUpload'
 import React, { useRef, useState, useContext } from 'react'
 import styles from './upload.module.css'
 import axios, { AxiosError } from 'axios'
-import { AuthContext } from 'contexts/auth/auth.provider'
 import { useAuth } from 'contexts/auth/auth.hook'
 import { ToastContext } from 'contexts/toast/toast.context'
+import Cookies from 'cookies-js'
 
-export default function UploadPage () {
+export default function UploadPage() {
   const { setRenderToast } = useContext(ToastContext)
-  const { user } = useContext(AuthContext)
   const { signOut } = useAuth()
   const [visivel, setVisivel] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -37,6 +36,7 @@ export default function UploadPage () {
   }
 
   const handlerOnReturn = () => {
+    console.log('Chegou aqui ')
     signOut()
   }
 
@@ -58,12 +58,30 @@ export default function UploadPage () {
   }
 
   const handlerSendSuport = async () => {
-    if (inputRefSup.current && checkBoxError.current && checkBoxNewFeature.current && checkBoxOther.current && textAreaRef.current && cnpjEmpresa.current && codEmpresa.current) {
-      if (!checkBoxError.current.checked && !checkBoxNewFeature.current.checked && !checkBoxOther.current.checked && textRef.current) {
+    if (
+      inputRefSup.current &&
+      checkBoxError.current &&
+      checkBoxNewFeature.current &&
+      checkBoxOther.current &&
+      textAreaRef.current &&
+      cnpjEmpresa.current &&
+      codEmpresa.current
+    ) {
+      if (
+        !checkBoxError.current.checked &&
+        !checkBoxNewFeature.current.checked &&
+        !checkBoxOther.current.checked &&
+        textRef.current
+      ) {
         textRef.current.hidden = false
         return false
       }
-      if ((checkBoxError.current.checked || checkBoxNewFeature.current.checked || checkBoxOther.current.checked) && textRef.current) {
+      if (
+        (checkBoxError.current.checked ||
+          checkBoxNewFeature.current.checked ||
+          checkBoxOther.current.checked) &&
+        textRef.current
+      ) {
         textRef.current.hidden = true
       }
 
@@ -96,21 +114,21 @@ export default function UploadPage () {
 
             empresaTicket: {
               connect: {
-                codEmpresa: Number(codEmpresa.current.value)
-              }
+                codEmpresa: Number(codEmpresa.current.value),
+              },
             },
             cnpjTicket: {
               connect: {
-                cnpjEmpresa: cnpjEmpresa.current.value
-              }
-            }
+                cnpjEmpresa: cnpjEmpresa.current.value,
+              },
+            },
           },
           {
             headers: {
               'Content-Type': 'application/json',
               'Access-Control-Allow-Origin': '*',
-              Authorization: localStorage.getItem('access-token')
-            }
+              Authorization: Cookies.get('token'),
+            },
           }
         )
         setRenderToast({
@@ -118,7 +136,7 @@ export default function UploadPage () {
           description: 'Ticket enviado com sucesso!',
           status: 'success',
           isVisible: true,
-          isClosable: true
+          isClosable: true,
         })
         handlerOnCloseModal()
       } catch (error) {
@@ -128,7 +146,7 @@ export default function UploadPage () {
             description: (error as AxiosError).message,
             status: 'error',
             isVisible: true,
-            isClosable: true
+            isClosable: true,
           })
         }
       }
@@ -143,22 +161,31 @@ export default function UploadPage () {
         return false
       }
       const formData = new FormData()
-      formData.append('file', inputRef.current.files![0], inputRef.current?.files![0].name)
+      formData.append(
+        'file',
+        inputRef.current.files![0],
+        inputRef.current?.files![0].name
+      )
       try {
-        const token = localStorage.getItem('access-token')
-        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload/${urlParams.get('cod')}/${urlParams.get('user')}`, formData, {
-          headers: {
-            'x-api-key': token,
-            'Content-Type': 'multipart/form-data',
+        const token = Cookies.get('token')
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload/${urlParams.get(
+            'cod'
+          )}/${urlParams.get('user')}`,
+          formData,
+          {
+            headers: {
+              'x-api-key': token,
+              'Content-Type': 'multipart/form-data',
+            },
           }
-        }
         )
         setRenderToast({
           title: 'Sucesso!',
           description: 'Arquivo enviado com sucesso!',
           status: 'success',
           isVisible: true,
-          isClosable: true
+          isClosable: true,
         })
       } catch (error) {
         setRenderToast({
@@ -166,7 +193,7 @@ export default function UploadPage () {
           description: (error as AxiosError).message,
           status: 'error',
           isVisible: true,
-          isClosable: true
+          isClosable: true,
         })
       }
     }
@@ -183,36 +210,54 @@ export default function UploadPage () {
       console.error('[ERRO] Evento de upload')
     }
 
-    render () {
+    render() {
       return (
         <main className={styles.main}>
-          <Flex flexDirection={{ base: 'column', sm: 'column', md: 'row', lg: 'row' }} minH='100vh' padding='6' alignItems='center' justifyContent='center' >
-            <Flex flexDirection='column' alignItems='center'>
-              <Image src='images/upload-page.png'
-                width='350px'
-                height='350px'
-                            />
-              <Image src='images/slogan.png'
-                width='243px'
-                height='72px'
-                            />
+          <Flex
+            flexDirection={{
+              base: 'column',
+              sm: 'column',
+              md: 'row',
+              lg: 'row',
+            }}
+            minH="100vh"
+            padding="6"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Flex flexDirection="column" alignItems="center">
+              <Image
+                src="images/upload-page.png"
+                width="350px"
+                height="350px"
+              />
+              <Image src="images/slogan.png" width="243px" height="72px" />
             </Flex>
-            <Flex flexDirection='column'>
-              <CardUpload onReturn={handlerOnReturn} onFile={handleOnFile} inputRef={inputRef} boxRef={boxRef} onFileSelect={handleOnFileSelect} onDrop={this.handleDrop} sendFile={async () => await handleSendFile()} />
+            <Flex flexDirection="column">
+              <CardUpload
+                onReturn={handlerOnReturn}
+                onFile={handleOnFile}
+                inputRef={inputRef}
+                boxRef={boxRef}
+                onFileSelect={handleOnFileSelect}
+                onDrop={this.handleDrop}
+                sendFile={async () => await handleSendFile()}
+              />
               <IconButton
-                aria-label='Send email'
+                aria-label="Send email"
                 onClick={handlerOnOpenModal}
-                colorScheme='transparent'
-                height='100px'
-                justifyContent='end'
-                icon={<Image
-                  src='images/suport.png'
-                  width='60px'
-                  height='60px'
-                  onClick={handlerOnOpenModal}
-                                />}
-                            />
-
+                colorScheme="transparent"
+                height="100px"
+                justifyContent="end"
+                icon={
+                  <Image
+                    src="images/suport.png"
+                    width="60px"
+                    height="60px"
+                    onClick={handlerOnOpenModal}
+                  />
+                }
+              />
             </Flex>
           </Flex>
           <ModalSupport
@@ -222,12 +267,13 @@ export default function UploadPage () {
             checkBoxError={checkBoxError}
             checkBoxNewFeature={checkBoxNewFeature}
             checkBoxOther={checkBoxOther}
-            inputRef={inputRefSup} textAreaRef={textAreaRef}
+            inputRef={inputRefSup}
+            textAreaRef={textAreaRef}
             textRef={textRef}
             textRefArea={textRefArea}
-            user={user}
             cnpjEmpresa={cnpjEmpresa}
-            codEmpresa={codEmpresa}/>
+            codEmpresa={codEmpresa}
+          />
         </main>
       )
     }

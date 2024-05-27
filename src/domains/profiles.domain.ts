@@ -7,6 +7,7 @@ export interface UsuarioAdm {
   senhaUsuario: string
   codEmpresaUsuario: number
   empresaUsuario: EmpresaUsuario
+  adm: boolean
 }
 
 interface EmpresaUsuario {

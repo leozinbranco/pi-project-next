@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { useState, useEffect } from 'react'
 import {
   Modal,
   Text,
@@ -13,75 +14,88 @@ import {
   Textarea,
   Flex,
   Box,
-  IconButton
-} from "@chakra-ui/react";
-import { useTickets } from "contexts/tickets/tickets.context";
-import { AttachmentIcon, TimeIcon, ArrowRightIcon } from "@chakra-ui/icons";
-import { useUpdateTicket } from "hooks/useUpdateTicket";
-import { stat } from "fs";
+  IconButton,
+} from '@chakra-ui/react'
+import { useTickets } from 'contexts/tickets/tickets.context'
+import { CheckIcon, TimeIcon, ArrowRightIcon } from '@chakra-ui/icons'
+import { useUpdateTicket } from 'hooks/useUpdateTicket'
 
-const TicketModal = ({ isOpen, onClose }) => {
-  const { selectedTicket } = useTickets();
-  const updateTicket  = useUpdateTicket()
-  const [responsavel, setResponsavel] = useState("");
-  const [status, setStatus] = useState("");
-  const [assunto, setAssunto] = useState("");
-  const [outroCampo, setOutroCampo] = useState("");
-  const [dataAbertura, setDataAbertura] = useState("");
-  const [dataAtualizacao, setDataAtualizacao] = useState("");
-  const [observacoes, setObservacoes] = useState("");
+interface TicketModalProps {
+  isOpen: boolean
+  onClose: () => void
+}
+
+const TicketModal = ({ isOpen, onClose }: TicketModalProps) => {
+  const { selectedTicket } = useTickets()
+  const updateTicket = useUpdateTicket()
+  const [responsavel, setResponsavel] = useState('')
+  const [status, setStatus] = useState('')
+  const [descricao, setDescricao] = useState('')
+  const [tipoTicket, setTipoTicket] = useState('')
+  const [dataAbertura, setDataAbertura] = useState('')
+  const [dataAtualizacao, setDataAtualizacao] = useState('')
+  const [observacoes, setObservacoes] = useState('')
 
   useEffect(() => {
-    console.log('>>>', selectedTicket)
     if (selectedTicket) {
-      setResponsavel(selectedTicket.cnpjEmpresaTicket);
-      setAssunto(selectedTicket.descricaoTicket);
-      setStatus(selectedTicket.statusTicket);
-      setOutroCampo(selectedTicket.tipoTicket);
-      setDataAbertura(selectedTicket.dataAberturaTicket);
-      setDataAtualizacao(selectedTicket.dataUltimaModTicket);
-      setObservacoes(selectedTicket.descricaoAjusteTicket);
+      setResponsavel(selectedTicket.cnpjEmpresaTicket)
+      setDescricao(selectedTicket.descricaoTicket)
+      setStatus(selectedTicket.statusTicket)
+      setTipoTicket(selectedTicket.tipoTicket)
+      setDataAbertura(selectedTicket.dataAberturaTicket)
+      setDataAtualizacao(selectedTicket.dataUltimaModTicket)
+      setObservacoes(selectedTicket.descricaoAjusteTicket)
     }
-  }, [selectedTicket]);
+  }, [selectedTicket])
 
   const handleSave = async () => {
     const updatedTicket = {
-      tipoTicket: outroCampo,
-      descricaoTicket: assunto,
+      tipoTicket,
+      descricaoTicket: descricao,
       dataAberturaTicket: dataAbertura,
       dataUltimaModTicket: new Date().toISOString(),
       descricaoAjusteTicket: observacoes,
       cnpjEmpresaTicket: responsavel,
-      codEmpresaTicket: 1
+      codEmpresaTicket: 1,
+      statusTicket: status,
     }
-    await updateTicket(updatedTicket, selectedTicket!.numTicket);
-  };
+    await updateTicket(updatedTicket, selectedTicket!.numTicket)
+    onClose()
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader bgColor="#010A22" justifyContent="center">
-          <Flex >
-            <Text alignSelf="center" color="white" marginRight={60}>Ticket {selectedTicket ? selectedTicket.id : "-"}</Text>
+          <Flex>
+            <Text alignSelf="center" color="white" marginRight={60}>
+              Ticket {selectedTicket ? selectedTicket.numTicket : '-'}
+            </Text>
             <IconButton
               aria-label="Edit Ticket"
               icon={<ArrowRightIcon />}
               colorScheme="transparent"
-              onClick={() => {}}
-                />
+              onClick={() => {
+                setStatus('Desenvolvimento')
+              }}
+            />
             <IconButton
               aria-label="Edit Ticket"
               icon={<TimeIcon />}
               colorScheme="transparent"
-              onClick={() => {}}
-                />
+              onClick={() => {
+                setStatus('Pendente')
+              }}
+            />
             <IconButton
               aria-label="Edit Ticket"
-              icon={<AttachmentIcon />}
+              icon={<CheckIcon />}
               colorScheme="transparent"
-              onClick={() => {}}
-                />
+              onClick={() => {
+                setStatus('Concluída')
+              }}
+            />
           </Flex>
         </ModalHeader>
         <ModalCloseButton color="white" />
@@ -98,19 +112,19 @@ const TicketModal = ({ isOpen, onClose }) => {
                 />
               </Box>
               <Box mb={4}>
-                <Text fontWeight="bold">Assunto</Text>
+                <Text fontWeight="bold">Descrição</Text>
                 <Input
-                  value={assunto}
-                  onChange={(e) => setAssunto(e.target.value)}
-                  placeholder="Assunto"
+                  value={descricao}
+                  onChange={(e) => setDescricao(e.target.value)}
+                  placeholder="Descrição"
                 />
               </Box>
               <Box mb={4}>
-                <Text fontWeight="bold">Outro Campo</Text>
+                <Text fontWeight="bold">Tipo do ticket</Text>
                 <Input
-                  value={outroCampo}
-                  onChange={(e) => setOutroCampo(e.target.value)}
-                  placeholder="Outro Campo"
+                  value={tipoTicket}
+                  onChange={(e) => setTipoTicket(e.target.value)}
+                  placeholder="Tipo do ticket"
                 />
               </Box>
             </Flex>
@@ -127,7 +141,7 @@ const TicketModal = ({ isOpen, onClose }) => {
               <Box mb={4}>
                 <Text fontWeight="bold">Data Abertura</Text>
                 <Input
-                  value={dataAbertura}
+                  value={new Date(dataAbertura).toDateString()}
                   onChange={(e) => setDataAbertura(e.target.value)}
                   placeholder="Data Abertura"
                   disabled={true}
@@ -136,7 +150,7 @@ const TicketModal = ({ isOpen, onClose }) => {
               <Box mb={4}>
                 <Text fontWeight="bold">Data Atualização</Text>
                 <Input
-                  value={dataAtualizacao}
+                  value={new Date(dataAtualizacao).toDateString()}
                   onChange={(e) => setDataAtualizacao(e.target.value)}
                   disabled={true}
                   placeholder="Data Atualização"
@@ -154,7 +168,12 @@ const TicketModal = ({ isOpen, onClose }) => {
           </Flex>
         </ModalBody>
         <ModalFooter justifyContent="center">
-          <Button colorScheme="green" mr={3} onClick={handleSave} disabled={!selectedTicket}>
+          <Button
+            colorScheme="green"
+            mr={3}
+            onClick={handleSave}
+            disabled={!selectedTicket}
+          >
             Salvar
           </Button>
           <Button variant="ghost" onClick={onClose}>
@@ -163,7 +182,7 @@ const TicketModal = ({ isOpen, onClose }) => {
         </ModalFooter>
       </ModalContent>
     </Modal>
-  );
-};
+  )
+}
 
-export default TicketModal;
+export default TicketModal

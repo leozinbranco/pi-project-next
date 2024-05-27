@@ -1,70 +1,110 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 // pages/tickets.js
 'use client'
-import { Flex, Box, Text, Input, InputGroup, InputLeftElement, Spinner } from "@chakra-ui/react";
-import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
-import { SearchIcon } from '@chakra-ui/icons';
-import CardTicket from "@/components/CardTicket/CardTicket";
-import { BlocoSideBarEmpresa } from "@/components/BlocoSideBarEmpresa";
-import { useGetTickets } from "hooks/useGetTickets";
+import {
+  Flex,
+  Box,
+  Text,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Spinner,
+  Image,
+} from '@chakra-ui/react'
+import { useState, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
+import { SearchIcon } from '@chakra-ui/icons'
+import CardTicket from '@/components/CardTicket/CardTicket'
+import { BlocoSideBarEmpresa } from '@/components/BlocoSideBarEmpresa'
+import { useGetTickets } from 'hooks/useGetTickets'
+import { Ticket } from 'domains/tickets.domain'
 
 const BlocoTickets = () => {
-  const router = useRouter();
-  const { tickets, isLoading, error } = useGetTickets();
-  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter()
+  const { tickets, isLoading, error } = useGetTickets()
+  const [searchTerm, setSearchTerm] = useState('')
 
   const handlerCad = () => {
-    router.push('/cadastroEmpresa');
-  };
+    router.push('/cadastroEmpresa')
+  }
 
   const handlerTicket = () => {
-    router.push('/tickets');
-  };
+    router.push('/tickets')
+  }
 
   const handlerList = () => {
-    router.push('/listagem');
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+    router.push('/listagem')
+  }
 
   const filteredTickets = useMemo(() => {
-    if (!tickets) return [];
-    return tickets.filter(ticket =>
-      ticket.cnpjEmpresaTicket.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ticket.descricaoTicket.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ticket.descricaoAjusteTicket.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [tickets, searchTerm]);
+    if (!tickets) return []
+    return tickets.filter((ticket: Ticket) =>
+      ticket.numTicket
+        .toString()
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    )
+  }, [tickets, searchTerm])
 
   const renderContent = useMemo(() => {
     if (isLoading) {
-      return (<Flex justifyContent='center' height='100%' alignItems='center'>
-        <Spinner size='xl'/>
-      </Flex>)
+      return (
+        <Flex justifyContent="center" height="100%" alignItems="center">
+          <Spinner size="xl" />
+        </Flex>
+      )
     }
-
     if (error) {
-      return (<Text>Erro: {error}</Text>)
+      return (
+        <Flex
+          justifyContent="center"
+          height="100%"
+          alignItems="center"
+          flexDirection="column"
+        >
+          <Text fontSize={20}>Ocorreu um erro ao procurar os Tickets.</Text>
+          <Image
+            src="images/Computer troubleshooting-rafiki.svg"
+            width="400px"
+            height="400px"
+            alt="Error"
+          />
+        </Flex>
+      )
     }
-
+    console.log(filteredTickets)
     if (filteredTickets.length > 0) {
-      return filteredTickets.map(ticket => (
+      return filteredTickets.map((ticket) => (
         <CardTicket key={ticket.numTicket} ticket={ticket} />
       ))
     } else {
-      return (<Text>Nenhum ticket encontrado</Text>);
+      return <Text>Nenhum ticket encontrado</Text>
     }
-  }, [filteredTickets, isLoading, error]);
+  }, [filteredTickets, isLoading, error])
 
   return (
     <section>
       <Flex>
-        <BlocoSideBarEmpresa onCad={handlerCad} onTicket={handlerTicket} onList={handlerList} />
-        <Flex direction="column" flex="1" padding="29px 29px 0px 29px" mx="auto" width="1100px">
+        <BlocoSideBarEmpresa
+          onCad={handlerCad}
+          onTicket={handlerTicket}
+          onList={handlerList}
+        />
+        <Flex
+          direction="column"
+          flex="1"
+          padding="29px 29px 0px 29px"
+          mx="auto"
+          width="1100px"
+        >
           <Flex justifyContent="space-between" alignItems="center" mb={4}>
-            <Text fontFamily="Poppins" fontWeight={800} fontSize={32}>Tickets</Text>
+            <Text fontFamily="Poppins" fontWeight={800} fontSize={32}>
+              Tickets
+            </Text>
             <InputGroup maxW="300px">
               <InputLeftElement pointerEvents="none">
                 <SearchIcon color="black" />
@@ -74,7 +114,7 @@ const BlocoTickets = () => {
                 placeholder="Pesquisar"
                 borderColor="black"
                 value={searchTerm}
-                onChange={handleSearchChange}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </InputGroup>
           </Flex>
@@ -88,7 +128,7 @@ const BlocoTickets = () => {
         </Flex>
       </Flex>
     </section>
-  );
-};
+  )
+}
 
-export default BlocoTickets;
+export default BlocoTickets
