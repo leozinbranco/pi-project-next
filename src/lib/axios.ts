@@ -1,13 +1,18 @@
+import Cookies from 'cookies-js'
 import axios from 'axios'
-const axiosInterceptorInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL // Replace with your API base URL
+export const axiosInterceptorInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL, // Replace with your API base URL
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
 })
 
 // Request interceptor
 axiosInterceptorInstance.interceptors.request.use(
   (config) => {
     // Modify the request config here (add headers, authentication tokens)
-    const token = localStorage.getItem('access-token')
+    const token = Cookies.get('token')
 
     // If token is present add it to request's Authorization Header
     if (token) {
@@ -27,7 +32,12 @@ axiosInterceptorInstance.interceptors.request.use(
 axiosInterceptorInstance.interceptors.response.use(
   (response) => {
     // Modify the response data here
+    const token = Cookies.get('token')
 
+    // If token is present add it to request's Authorization Header
+    if (token) {
+      response.headers.Authorization = `Bearer ${token}`
+    }
     return response
   },
   async (error) => {
