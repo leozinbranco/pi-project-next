@@ -70,7 +70,11 @@ export const ModalSupport: FC<IModalSupport> = ({
                 </InputLeftElement>
                 <Input
                   borderRadius="20px"
-                  value={user.empresaUsuarioCnpj.emailEmpresa ?? ''}
+                  value={
+                    user.adm
+                      ? 'Usuário Administrador'
+                      : user.empresaUsuarioCnpj.emailEmpresa ?? '-'
+                  }
                   ref={inputRef}
                   disabled
                 />
