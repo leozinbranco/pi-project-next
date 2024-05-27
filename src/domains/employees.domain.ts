@@ -1,13 +1,11 @@
 export interface Funcionario {
-    nome: string,
-    cpf: string,
-    telefone: string,
-    email: string,
-    senha: string,
-    cnpjEmpresa: EmpresaFunc
+    codigo: number
+    nome?: string,
+    documento?: string,
+    telefone?: string,
+    email?: string,
+    senha?: string,
+    cnpjEmpresa?: string
 }
-  
-export interface EmpresaFunc {
-    cnpj: string
-}
+
   

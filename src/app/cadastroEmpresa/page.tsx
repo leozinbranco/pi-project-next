@@ -1,55 +1,32 @@
 'use client'
 
 import { BlocoCadastroEmp } from "@/components/BlocoCadastroEmp"
-import { Funcionario } from "domains/employees.domain"
+import { cadastroEmp } from "domains/empresas.domain"
 import { Empresas } from "domains/enterprises.domain"
+import { cadastroFunc } from "domains/funcionarios.domain"
+import { useCadastroEmpresa, useEditaEmpresa } from "hooks/useEmpresa/useEmpresa"
+import { useRouter } from "next/navigation"
 import React from "react"
 
 
 export default function Home () {
-  const cadastroFunc: Funcionario = {
-      nome: '' ,
-      cpf: '' ,
-      telefone: '' ,
-      email: '' ,
-      senha: '' ,
-      cnpjEmpresa: {
-        cnpj: ''
-      }
+  const {cadEmp} = useCadastroEmpresa();
+  const {editEmp} = useEditaEmpresa();
+  const router = useRouter();
+
+  const useHandlerSubmit = async (empresa: Empresas) => {
+    await cadEmp(empresa)
+    router.push('/listagem');
   }
 
-  const cadastroEmp: Empresas = {
-    name: '',
-    fancyName: '',
-    cnpj: '',
-    email: '',
-    area: '',
-    telefone: '',
-    enderecoComp: ''
-  }
-
-  const inputRef = {
-    nome: React.createRef<HTMLInputElement>(),
-    cpf: React.createRef<HTMLInputElement>(),
-    telefoneFunc: React.createRef<HTMLInputElement>(),
-    emailFunc: React.createRef<HTMLInputElement>(),
-    senha: React.createRef<HTMLInputElement>(),
-    cnpjFunc: React.createRef<HTMLInputElement>(),
-    name: React.createRef<HTMLInputElement>(),
-    fancyName: React.createRef<HTMLInputElement>(),
-    cnpjEmp: React.createRef<HTMLInputElement>(),
-    emailEmp: React.createRef<HTMLInputElement>(),
-    area: React.createRef<HTMLInputElement>(),
-    telefoneEmp: React.createRef<HTMLInputElement>(),
-    enderecoComp: React.createRef<HTMLInputElement>()
+  const useHandlerSubmitEdit = async (empresa: Empresas) => {
+    await editEmp(empresa)
+    router.push('/listagem');
   }
 
     return (
       
-      <BlocoCadastroEmp funcionario={cadastroFunc} empresa={cadastroEmp}
-        nome={inputRef.nome} cpf={inputRef.cpf} telefoneFunc={inputRef.telefoneFunc}
-        emailFunc={inputRef.emailFunc} senha={inputRef.senha} cnpjFunc={inputRef.cnpjFunc} name={inputRef.name} fancyName={inputRef.fancyName} cnpjEmp={inputRef.cnpjEmp}
-        emailEmp={inputRef.emailEmp} area={inputRef.area} telefoneEmp={inputRef.telefoneEmp} enderecoComp={inputRef.enderecoComp}/>
+      <BlocoCadastroEmp onSubmit={useHandlerSubmit} onSubmitEdit={useHandlerSubmitEdit} funcionario={cadastroFunc} empresa={cadastroEmp} />
     )
 }
   

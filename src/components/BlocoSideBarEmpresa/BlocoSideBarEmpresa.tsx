@@ -1,28 +1,23 @@
 'use client'
 import { Button, Flex, Image } from '@chakra-ui/react'
 import { FC } from 'react'
-import { usePathname } from 'next/navigation'
 import { useAuth } from 'contexts/auth/auth.hook'
 
-interface IRouting {
+interface ISide {
   onList: () => void
   onTicket: () => void
   onCad: () => void
+  accessedPagent: string
 }
 
-export const BlocoSideBarEmpresa: FC<IRouting> = ({
+export const BlocoSideBarEmpresa: FC<ISide> = ({
   onCad,
   onTicket,
   onList,
+  accessedPagent,
 }) => {
-  const pathName = usePathname()
-  const bgColorCad = pathName.startsWith('/cad') ? '#FFFFFF' : 'transparent'
-  const textColorCad = pathName.startsWith('/cad') ? '#010A22' : '#FFFFFF'
-  const bgColorList = pathName.startsWith('/list') ? '#FFFFFF' : 'transparent'
-  const textColorList = pathName.startsWith('/list') ? '#010A22' : '#FFFFFF'
-  const bgColorTic = pathName.startsWith('/tic') ? '#FFFFFF' : 'transparent'
-  const textColorTic = pathName.startsWith('/tic') ? '#010A22' : '#FFFFFF'
   const { signOut } = useAuth()
+
   return (
     <Flex
       width="234px"
@@ -31,10 +26,27 @@ export const BlocoSideBarEmpresa: FC<IRouting> = ({
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
+      alignContent="space-around"
     >
+      <Flex>
+        <Image
+          src="images/logoUp.png"
+          width="185px"
+          height="45px"
+          position="relative"
+          top="-105"
+        />
+      </Flex>
       <Flex flexDirection="column" gap="4">
         <Button
-          style={{ backgroundColor: `${bgColorCad}`, color: `${textColorCad}` }}
+          style={{
+            backgroundColor: `${
+              accessedPagent.startsWith('cad') ? '#FFFFFF' : 'transparent'
+            }`,
+            color: `${
+              accessedPagent.startsWith('cad') ? '#010A22' : '#FFFFFF'
+            }`,
+          }}
           left="12px"
           textAlign="initial"
           borderStartRadius="20px"
@@ -46,7 +58,7 @@ export const BlocoSideBarEmpresa: FC<IRouting> = ({
             position="relative"
             left="-37px"
             src={`images/${
-              pathName.startsWith('/cad') ? 'User.png' : 'User-W.png'
+              accessedPagent.startsWith('cad') ? 'User.png' : 'User-W.png'
             }`}
             width="25px"
             height="25px"
@@ -55,8 +67,12 @@ export const BlocoSideBarEmpresa: FC<IRouting> = ({
         </Button>
         <Button
           style={{
-            backgroundColor: `${bgColorList}`,
-            color: `${textColorList}`,
+            backgroundColor: `${
+              accessedPagent.startsWith('list') ? '#FFFFFF' : 'transparent'
+            }`,
+            color: `${
+              accessedPagent.startsWith('list') ? '#010A22' : '#FFFFFF'
+            }`,
           }}
           left="12px"
           textAlign="initial"
@@ -69,7 +85,7 @@ export const BlocoSideBarEmpresa: FC<IRouting> = ({
             position="relative"
             left="-40px"
             src={`images/${
-              pathName.startsWith('/list') ? 'home.png' : 'home-w.png'
+              accessedPagent.startsWith('list') ? 'home.png' : 'home-w.png'
             }`}
             width="25px"
             height="25px"
@@ -77,7 +93,14 @@ export const BlocoSideBarEmpresa: FC<IRouting> = ({
           <span style={{ left: '-30px', position: 'relative' }}>Pessoas</span>
         </Button>
         <Button
-          style={{ backgroundColor: `${bgColorTic}`, color: `${textColorTic}` }}
+          style={{
+            backgroundColor: `${
+              accessedPagent.startsWith('tic') ? '#FFFFFF' : 'transparent'
+            }`,
+            color: `${
+              accessedPagent.startsWith('tic') ? '#010A22' : '#FFFFFF'
+            }`,
+          }}
           left="12px"
           textAlign="start"
           borderStartRadius="20px"
@@ -88,7 +111,9 @@ export const BlocoSideBarEmpresa: FC<IRouting> = ({
             position="relative"
             left="-40px"
             src={`images/${
-              pathName.startsWith('/tic') ? 'Activity.png' : 'Activity-W.png'
+              accessedPagent.startsWith('tic')
+                ? 'Activity.png'
+                : 'Activity-W.png'
             }`}
             width="25px"
             height="25px"
@@ -101,11 +126,11 @@ export const BlocoSideBarEmpresa: FC<IRouting> = ({
           top="180px"
           width="200px"
           color="#FFFFFF"
+          onClick={signOut}
           _hover={{ bg: '#010A22', color: '#FFFFFF' }}
           border="2px #FFFFFF solid"
           borderRadius="8px"
           bgColor="#010A22"
-          onClick={signOut}
         >
           Sair
         </Button>

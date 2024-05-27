@@ -25,8 +25,6 @@ export default function UploadPage() {
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
   const textRef = useRef<HTMLInputElement>(null)
   const textRefArea = useRef<HTMLInputElement>(null)
-  const cnpjEmpresa = useRef<HTMLInputElement>(null)
-  const codEmpresa = useRef<HTMLInputElement>(null)
 
   const handlerOnCloseModal = () => {
     setVisivel(false)
@@ -63,9 +61,7 @@ export default function UploadPage() {
       checkBoxError.current &&
       checkBoxNewFeature.current &&
       checkBoxOther.current &&
-      textAreaRef.current &&
-      cnpjEmpresa.current &&
-      codEmpresa.current
+      textAreaRef.current
     ) {
       if (
         !checkBoxError.current.checked &&
@@ -105,7 +101,7 @@ export default function UploadPage() {
         await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/suport/`,
           {
-            statusTicket: 'dede',
+            statusTicket: 'Aberto',
             tipoTicket: String(typeTicket),
             descricaoTicket: textAreaRef.current.value,
             descricaoAjusteTicket: typeTicket,
@@ -114,12 +110,12 @@ export default function UploadPage() {
 
             empresaTicket: {
               connect: {
-                codEmpresa: Number(codEmpresa.current.value),
+                codEmpresa: Number(user.empresaUsuarioCnpj.codEmpresa),
               },
             },
             cnpjTicket: {
               connect: {
-                cnpjEmpresa: cnpjEmpresa.current.value,
+                cnpjEmpresa: user.empresaUsuarioCnpj.cnpjEmpresa,
               },
             },
           },
@@ -155,7 +151,6 @@ export default function UploadPage() {
 
   const handleSendFile = async () => {
     if (inputRef.current) {
-      const urlParams = new URLSearchParams(window.location.search)
       if (inputRef.current.files?.length === 0) {
         alert('Insira um arquivo para realizar o upload!')
         return false

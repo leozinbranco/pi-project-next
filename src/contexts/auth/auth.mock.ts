@@ -10,7 +10,7 @@ export const authUserInitial: UsuarioAdm = {
   emailUsuario: '-',
   senhaUsuario: '-',
   codEmpresaUsuario: 0,
-  empresaUsuario: {
+  empresaUsuarioCnpj: {
     codEmpresa: 0,
     emailEmpresa: '-',
     cnpjEmpresa: '-'

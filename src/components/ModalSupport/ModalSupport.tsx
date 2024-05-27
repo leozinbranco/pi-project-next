@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { FC, useContext } from 'react'
+import React, { FC } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -19,7 +19,7 @@ import {
   InputLeftElement,
   Image,
 } from '@chakra-ui/react'
-import { AuthContext } from 'contexts/auth/auth.provider'
+import { UsuarioAdm } from 'domains/profiles.domain'
 
 interface IModalSupport {
   visible: boolean
@@ -29,13 +29,13 @@ interface IModalSupport {
   checkBoxError: React.Ref<HTMLInputElement>
   checkBoxNewFeature: React.Ref<HTMLInputElement>
   checkBoxOther: React.Ref<HTMLInputElement>
-  cnpjEmpresa: React.Ref<HTMLInputElement>
-  codEmpresa: React.Ref<HTMLInputElement>
   textAreaRef: React.Ref<HTMLTextAreaElement>
   textRef: React.Ref<HTMLInputElement>
   textRefArea: React.Ref<HTMLInputElement>
+  user: UsuarioAdm
 }
 export const ModalSupport: FC<IModalSupport> = ({
+  user,
   visible,
   onClose,
   sendSuport,
@@ -46,11 +46,7 @@ export const ModalSupport: FC<IModalSupport> = ({
   textAreaRef,
   textRef,
   textRefArea,
-  cnpjEmpresa,
-  codEmpresa,
 }) => {
-  const { user } = useContext(AuthContext)
-  if (!user) return
   return (
     <>
       <Modal isOpen={visible} onClose={onClose}>
@@ -67,27 +63,18 @@ export const ModalSupport: FC<IModalSupport> = ({
           </ModalHeader>
           <ModalBody>
             <Flex flexDirection="column">
+              {/* <Input variant='filled' placeholder='Filled' /> */}
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <Image src="images/profile.png" />
                 </InputLeftElement>
                 <Input
                   borderRadius="20px"
-                  value={user.empresaUsuario?.emailEmpresa ?? ''}
+                  value={user.empresaUsuarioCnpj.emailEmpresa}
                   ref={inputRef}
                   disabled
                 />
               </InputGroup>
-              <Input
-                ref={cnpjEmpresa}
-                value={user.empresaUsuario?.cnpjEmpresa ?? ''}
-                hidden
-              />
-              <Input
-                ref={codEmpresa}
-                value={user.empresaUsuario?.codEmpresa ?? ''}
-                hidden
-              />
               <Flex flexDirection="column" margin="20px">
                 <RadioGroup>
                   <Stack spacing={2} direction="column">
