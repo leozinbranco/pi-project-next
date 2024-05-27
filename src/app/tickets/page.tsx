@@ -77,7 +77,6 @@ const BlocoTickets = () => {
         </Flex>
       )
     }
-    console.log(filteredTickets)
     if (filteredTickets.length > 0) {
       return filteredTickets.map((ticket) => (
         <CardTicket key={ticket.numTicket} ticket={ticket} />

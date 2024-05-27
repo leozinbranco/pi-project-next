@@ -77,7 +77,6 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       }
     } catch (e) {
       toast.closeAll()
-      console.log('>>> ', e)
       const { message } = e as Error
 
       setRenderToast({

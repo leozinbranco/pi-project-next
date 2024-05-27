@@ -17,7 +17,6 @@ export const useWorkOrder = () => {
         config
       )
       const os = res.data as OrdemServico
-      console.log(os)
       return os
     } catch (e) {
       const { message } = e as Error

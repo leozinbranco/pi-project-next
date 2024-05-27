@@ -7,7 +7,6 @@ export default function Home() {
   const { signIn } = useAuth()
   const handlerCardAuth = (cpf: string, senha: string) => {
     try {
-      console.log('ENTROUUU')
       signIn(cpf, senha)
     } catch (err) {
       console.log('error: ', err)
