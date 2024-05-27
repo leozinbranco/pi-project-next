@@ -11,9 +11,11 @@ import axios, { AxiosError } from 'axios'
 import { useAuth } from 'contexts/auth/auth.hook'
 import { ToastContext } from 'contexts/toast/toast.context'
 import Cookies from 'cookies-js'
+import { AuthContext } from 'contexts/auth/auth.provider'
 
 export default function UploadPage() {
   const { setRenderToast } = useContext(ToastContext)
+  const { user } = useContext(AuthContext)
   const { signOut } = useAuth()
   const [visivel, setVisivel] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -164,9 +166,7 @@ export default function UploadPage() {
       try {
         const token = Cookies.get('token')
         await axios.post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload/${urlParams.get(
-            'cod'
-          )}/${urlParams.get('user')}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload/${user.empresaUsuarioCnpj.codEmpresa}/${user.empresaUsuarioCnpj.cnpjEmpresa}`,
           formData,
           {
             headers: {
@@ -266,8 +266,7 @@ export default function UploadPage() {
             textAreaRef={textAreaRef}
             textRef={textRef}
             textRefArea={textRefArea}
-            cnpjEmpresa={cnpjEmpresa}
-            codEmpresa={codEmpresa}
+            user={user}
           />
         </main>
       )

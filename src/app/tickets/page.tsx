@@ -27,6 +27,7 @@ const BlocoTickets = () => {
   const router = useRouter()
   const { tickets, isLoading, error } = useGetTickets()
   const [searchTerm, setSearchTerm] = useState('')
+  const [accessedPagent] = useState('tickets')
 
   const handlerCad = () => {
     router.push('/cadastroEmpresa')
@@ -93,6 +94,7 @@ const BlocoTickets = () => {
           onCad={handlerCad}
           onTicket={handlerTicket}
           onList={handlerList}
+          accessedPagent={accessedPagent}
         />
         <Flex
           direction="column"
