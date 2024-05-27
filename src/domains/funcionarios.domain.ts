@@ -1,9 +1,9 @@
 import { Funcionario } from "./employees.domain";
 
 export const cadastroFunc: Funcionario = {
-    cod: 0,
+    codigo: 0,
     nome: '' ,
-    document: '' ,
+    documento: '' ,
     telefone: '' ,
     email: '' ,
     senha: '' ,

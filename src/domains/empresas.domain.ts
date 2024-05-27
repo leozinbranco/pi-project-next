@@ -1,10 +1,10 @@
 import { Empresas } from "./enterprises.domain";
 
 export   const cadastroEmp: Empresas = {
-    cod: 0,
+    codigo: 0,
     nome: '',
-    fancyName: '',
-    document: '',
+    nomeFantasia: '',
+    documento: '',
     email: '',
     area: '',
     telefone: '',

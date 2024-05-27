@@ -2,14 +2,14 @@
 import { Button, Flex, Image } from "@chakra-ui/react";
 import { FC } from "react";
 
-interface IRouting {
+interface ISide {
   onList: () => void,
   onTicket: () => void,
   onCad: () => void,
-  linkCurrent: string
+  accessedPagent: string
 }
 
-export const BlocoSideBarEmpresa: FC<IRouting>  = ({onCad, onTicket, onList, linkCurrent}) => {
+export const BlocoSideBarEmpresa: FC<ISide>  = ({onCad, onTicket, onList, accessedPagent}) => {
 
     return (
       <Flex width='234px' height='100vh' bgColor='#010A22' flexDirection='column'
@@ -25,14 +25,14 @@ export const BlocoSideBarEmpresa: FC<IRouting>  = ({onCad, onTicket, onList, lin
             />
         </Flex>
         <Flex flexDirection='column' gap='4'>
-          <Button style={{ backgroundColor: `${linkCurrent.startsWith('cad') ? '#FFFFFF' : 'transparent'}`, color: `${linkCurrent.startsWith('cad') ? '#010A22' : '#FFFFFF'}` }}
+          <Button style={{ backgroundColor: `${accessedPagent.startsWith('cad') ? '#FFFFFF' : 'transparent'}`, color: `${accessedPagent.startsWith('cad') ? '#010A22' : '#FFFFFF'}` }}
             left='12px' textAlign='initial' borderStartRadius='20px' borderEndRadius='0px' width='210px'
             onClick={onCad}
             >
             <Image 
               position='relative'
               left='-37px'
-              src={`images/${linkCurrent.startsWith('cad') ? 'User.png' : 'User-W.png'}`}
+              src={`images/${accessedPagent.startsWith('cad') ? 'User.png' : 'User-W.png'}`}
               width='25px'
               height='25px'
               />
@@ -40,14 +40,14 @@ export const BlocoSideBarEmpresa: FC<IRouting>  = ({onCad, onTicket, onList, lin
               Cadastro
             </span>
           </Button>
-          <Button style={{ backgroundColor: `${linkCurrent.startsWith('list') ? '#FFFFFF' : 'transparent'}`, color: `${linkCurrent.startsWith('list') ? '#010A22' : '#FFFFFF'}` }}
+          <Button style={{ backgroundColor: `${accessedPagent.startsWith('list') ? '#FFFFFF' : 'transparent'}`, color: `${accessedPagent.startsWith('list') ? '#010A22' : '#FFFFFF'}` }}
             left='12px' textAlign='initial' borderStartRadius='20px' borderEndRadius='0px' width='210px'
             onClick={onList}
             >
             <Image 
               position='relative'
               left='-40px'
-              src={`images/${linkCurrent.startsWith('list') ? 'home.png' : 'home-w.png'}`}
+              src={`images/${accessedPagent.startsWith('list') ? 'home.png' : 'home-w.png'}`}
               width='25px'
               height='25px'
               />
@@ -55,14 +55,14 @@ export const BlocoSideBarEmpresa: FC<IRouting>  = ({onCad, onTicket, onList, lin
               Pessoas
             </span>
           </Button>
-          <Button style={{ backgroundColor: `${linkCurrent.startsWith('tic') ? '#FFFFFF' : 'transparent'}`, color: `${linkCurrent.startsWith('tic') ? '#010A22' : '#FFFFFF'}` }}
+          <Button style={{ backgroundColor: `${accessedPagent.startsWith('tic') ? '#FFFFFF' : 'transparent'}`, color: `${accessedPagent.startsWith('tic') ? '#010A22' : '#FFFFFF'}` }}
             left='12px' textAlign='start' borderStartRadius='20px' borderEndRadius='0px'
             onClick={onTicket}
             >
             <Image 
               position='relative'
               left='-40px'
-              src={`images/${linkCurrent.startsWith('tic') ? 'Activity.png' : 'Activity-W.png'}`}
+              src={`images/${accessedPagent.startsWith('tic') ? 'Activity.png' : 'Activity-W.png'}`}
               width='25px'
               height='25px'
               />

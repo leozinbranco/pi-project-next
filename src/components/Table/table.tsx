@@ -3,14 +3,14 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Empresas } from "domains/enterprises.domain";
 import { Funcionario } from "domains/employees.domain";
 
-interface dataTable {
+interface DataTable {
     data?: Empresas[] | Funcionario[],
-    onDelete: (item: number) => Promise<[]>,
+    onDelete: (item: number) => Promise<undefined>,
     onEdit: (item: number) => void
 }
 
 
-const TableComponent = ({ data, onDelete, onEdit } : dataTable) => {
+const TableComponent = ({ data, onDelete, onEdit } : DataTable) => {
   return (
     <Table variant="simple">
       <Thead>
@@ -25,24 +25,24 @@ const TableComponent = ({ data, onDelete, onEdit } : dataTable) => {
       <Tbody>
         {data && data.length > 0 ? (
           data.map((item) => (
-            <Tr key={item.cod}>
+            <Tr key={item.codigo}>
               <Td>{item.nome}</Td>
               <Td>{item.email}</Td>
-              <Td>{item.document}</Td>
+              <Td>{item.documento}</Td>
               <Td>{item.telefone}</Td>
               <Td>
                 <IconButton
                   aria-label="Editar"
                   icon={<EditIcon />}
                   mr={2}
-                  onClick={() => onEdit(item.cod)}
+                  onClick={() => onEdit(item.codigo)}
                 />
                 <IconButton
                   aria-label="Excluir"
                   icon={<DeleteIcon />}
                   colorScheme="red"
                   // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                  onClick={async () => await onDelete(item.cod)}
+                  onClick={async () => await onDelete(item.codigo)}
                 />
               </Td>
             </Tr>

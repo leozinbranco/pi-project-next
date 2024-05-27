@@ -1,41 +1,38 @@
-import { Flex, Input } from "@chakra-ui/react"
+import { Flex, Input, Button } from "@chakra-ui/react"
 import { Empresas } from "domains/enterprises.domain"
-import { buscaEmpresa } from "hooks/useEmpresa";
+import { useBuscaEmpresa } from "hooks/useEmpresa";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FC, useEffect, useState } from "react"
 
 interface Cadastro {
   empresa: Empresas,
-  codEmp: React.Ref<HTMLInputElement>,
-  nomeEmp: React.Ref<HTMLInputElement>,
-  fancyName: React.Ref<HTMLInputElement>,
-  cnpjEmp: React.Ref<HTMLInputElement>,
-  emailEmp: React.Ref<HTMLInputElement>,
-  area: React.Ref<HTMLInputElement>,
-  telefoneEmp: React.Ref<HTMLInputElement>,
-  enderecoComp: React.Ref<HTMLInputElement>,
-  }
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  onSubmit: (empresa: Empresas) => Promise<unknown | undefined>,
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  onSubmitEdit: (empresa: Empresas) => Promise<unknown | undefined>,
+}
 
-  export const BlocoCampoEmp: FC<Cadastro> = ({ empresa, codEmp, nomeEmp, cnpjEmp, enderecoComp, area, fancyName, emailEmp, telefoneEmp }) => {
-    const [codValue, setCodValue] = useState(empresa?.cod ?? '');
-    const [nomeValue, setNomeValue] = useState(empresa?.nome ?? '');
-    const [cnpjValue, setCnpjValue] = useState(empresa?.document ?? '');
-    const [areaValue, setAreaValue] = useState(empresa?.area ?? '');
-    const [enderecoCompValue, setEnderecoCompValue] = useState(empresa?.enderecoComp ?? '');
-    const [fancyNameValue, setFancyNameValue] = useState(empresa?.fancyName ?? '');
-    const [emailValue, setEmailValue] = useState(empresa?.email ?? '');
-    const [telefoneValue, setTelefoneValue] = useState(empresa?.telefone ?? '');
+  export const BlocoCampoEmp: FC<Cadastro> = ({ empresa, onSubmitEdit, onSubmit }) => {
+    const [codigo, setCodValue] = useState(empresa?.codigo ?? '');
+    const [nome, setNomeValue] = useState(empresa?.nome ?? '');
+    const [documento, setCnpjValue] = useState(empresa?.documento ?? '');
+    const [area, setAreaValue] = useState(empresa?.area ?? '');
+    const [enderecoComp, setEnderecoCompValue] = useState(empresa?.enderecoComp ?? '');
+    const [nomeFantasia, setFancyNameValue] = useState(empresa?.nomeFantasia ?? '');
+    const [email, setEmailValue] = useState(empresa?.email ?? '');
+    const [telefone, setTelefoneValue] = useState(empresa?.telefone ?? '');
+    const { buscaEmp } = useBuscaEmpresa();
     const searchParams = useSearchParams();
-    const id = searchParams.get('idEmp'); 
+    const id = searchParams.get('idEmp') ? searchParams.get('idEmp') : searchParams.get('idFunc'); 
     const router = useRouter()
 
     useEffect(() => {
-      setCodValue(empresa?.cod ?? '')
+      setCodValue(empresa?.codigo ?? '')
       setNomeValue(empresa?.nome ?? '');
-      setCnpjValue(empresa?.document ?? '');
+      setCnpjValue(empresa?.documento ?? '');
       setAreaValue(empresa?.area ?? '');
       setEnderecoCompValue(empresa?.enderecoComp ?? '');
-      setFancyNameValue(empresa?.fancyName ?? '');
+      setFancyNameValue(empresa?.nomeFantasia ?? '');
       setEmailValue(empresa?.email ?? '');
       setTelefoneValue(empresa?.telefone ?? '');
     }, [empresa]);
@@ -44,101 +41,115 @@ interface Cadastro {
       const fetchEmployee = async () => {
         if (id) {
           try {
-            const empresa = await buscaEmpresa(Number(id));
+            const empresa = await buscaEmp(Number(id));
             if (empresa) {
-              setCodValue(empresa?.cod ?? '')
+              setCodValue(empresa?.codigo ?? '')
               setNomeValue(empresa?.nome ?? '');
-              setCnpjValue(empresa?.document ? empresa.document.replace(/\D/g, '') : '');
+              setCnpjValue(empresa?.documento ? empresa.documento.replace(/\D/g, '') : '');
               setAreaValue(empresa?.area ?? '');
               setEnderecoCompValue(empresa?.enderecoComp ?? '');
-              setFancyNameValue(empresa?.fancyName ?? '');
+              setFancyNameValue(empresa?.nomeFantasia ?? '');
               setEmailValue(empresa?.email ?? '');
               setTelefoneValue(empresa?.telefone ? empresa.telefone.replace(/\D/g, '') : '');
             }
           } catch (error) {
-            router.push('/listagem')
+            router.push('/listagem');
           }
         }
       }
   
       fetchEmployee().catch(error => console.error('Erro na chamada:', error)); 
-      }, [id]);
+      }, [id, router]);
+
+      const handlerBack = () => {
+        router.push('/listagem');
+      }
   
     return (
       <>
-        <Flex flexDirection='column' gap='12'>
-          <Input
-            border='2px solid #010A22'
-            padding='25px'
-            value={codValue}
-            onChange={(e) => setCodValue(Number(e.target.value))}
-            ref={codEmp}
-            display='none'
+        <Flex flexDirection='column'> 
+          <Flex gap='12'>
+
+            <Flex flexDirection='column' gap='12'>
+              <Input
+                border='2px solid #010A22'
+                padding='25px'
+                value={codigo}
+                onChange={(e) => setCodValue(Number(e.target.value))}
+                display='none'
           />
-          <Input
-            border='2px solid #010A22'
-            padding='25px'
-            value={nomeValue}
-            onChange={(e) => setNomeValue(e.target.value)}
-            ref={nomeEmp}
-            placeholder='Razão Social'
+              <Input
+                border='2px solid #010A22'
+                padding='25px'
+                value={nome}
+                onChange={(e) => setNomeValue(e.target.value)}
+                placeholder='Razão Social'
           />
-          <Input 
-            border='2px solid #010A22'
-            padding='25px'
-            maxLength={14}
-            minLength={14}
-            value={cnpjValue}
-            onChange={(e) => setCnpjValue(e.target.value)}
-            ref={cnpjEmp}
-            placeholder='CNPJ'
+              <Input 
+                border='2px solid #010A22'
+                padding='25px'
+                maxLength={14}
+                minLength={14}
+                value={documento}
+                onChange={(e) => setCnpjValue(e.target.value)}
+                placeholder='CNPJ'
           />
-          <Input 
-            border='2px solid #010A22'
-            padding='25px'
-            value={areaValue}
-            onChange={(e) => setAreaValue(e.target.value)}
-            ref={area}
-            placeholder='Área de Atua.'
+              <Input 
+                border='2px solid #010A22'
+                padding='25px'
+                value={area}
+                onChange={(e) => setAreaValue(e.target.value)}
+                placeholder='Área de Atua.'
           />
-          <Input 
-            border='2px solid #010A22'
-            padding='25px'
-            value={enderecoCompValue}
-            onChange={(e) => setEnderecoCompValue(e.target.value)}
-            ref={enderecoComp}
-            placeholder='Endereço Comp.'
+              <Input 
+                border='2px solid #010A22'
+                padding='25px'
+                value={enderecoComp}
+                onChange={(e) => setEnderecoCompValue(e.target.value)}
+                placeholder='Endereço Comp.'
           />
-        </Flex>
+            </Flex>
   
-        <Flex flexDirection='column' gap='12'>
-          <Input 
-            border='2px solid #010A22'
-            padding='25px'
-            value={fancyNameValue}
-            onChange={(e) => setFancyNameValue(e.target.value)}
-            ref={fancyName}
-            placeholder='Nome Fantasia'
+            <Flex flexDirection='column' gap='12'>
+              <Input 
+                border='2px solid #010A22'
+                padding='25px'
+                value={nomeFantasia}
+                onChange={(e) => setFancyNameValue(e.target.value)}
+                placeholder='Nome Fantasia'
           />
-          <Input 
-            border='2px solid #010A22'
-            padding='25px'
-            type="email"
-            value={emailValue}
-            onChange={(e) => setEmailValue(e.target.value)}
-            ref={emailEmp}
-            placeholder='E-mail'
+              <Input 
+                border='2px solid #010A22'
+                padding='25px'
+                type="email"
+                value={email}
+                onChange={(e) => setEmailValue(e.target.value)}
+                placeholder='E-mail'
           />
-          <Input 
-            border='2px solid #010A22'
-            padding='25px'
-            value={telefoneValue}
-            onChange={(e) => setTelefoneValue(e.target.value)}
-            ref={telefoneEmp}
-            minLength={10}
-            maxLength={11}
-            placeholder='Telefone'
+              <Input 
+                border='2px solid #010A22'
+                padding='25px'
+                value={telefone}
+                onChange={(e) => setTelefoneValue(e.target.value)}
+                minLength={10}
+                maxLength={11}
+                placeholder='Telefone'
           />
+            </Flex>
+          </Flex>
+
+          <Flex margin='45px auto' gap='15'>
+            <Button width='200px' display={id ? 'none' : 'flex'} color='#FFFFFF' _hover={{ bg: '#010A22', color: '#FFFFFF'}} border='2px #FFFFFF solid' borderRadius='8px' bgColor='#010A22'
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onClick={async () => await onSubmit({nome, email, documento, telefone, enderecoComp, nomeFantasia, codigo, area})}>
+              Cadastrar</Button>
+
+            <Button width='200px' display={id ? 'flex' : 'none'} color='#FFFFFF' _hover={{ bg: '#010A22', color: '#FFFFFF'}} border='2px #FFFFFF solid' borderRadius='8px' bgColor='#010A22'
+              onClick={() => { void onSubmitEdit({nome, email, documento, telefone, enderecoComp, nomeFantasia, codigo, area}) }}>
+              Salvar</Button>
+
+            <Button border='2px solid #010A22' bgColor='#FFFFFF' onClick={handlerBack}>Voltar</Button>
+          </Flex>
         </Flex>
       </>
     );

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 
 export const BlocoTickets: FC = () => {
     const router = useRouter()
-    const [linkCurrent] = useState('tickets')
+    const [accessedPagent] = useState('tickets')
     const handlerCad = () => {
       router.push('/cadastroEmpresa')
     }
@@ -15,13 +15,13 @@ export const BlocoTickets: FC = () => {
     }
 
     const handlerList = () => {
-      router.push('/listagem')
+      router.push('/listagem');
     }
 
     return (<section>
       <Flex> 
 
-        <BlocoSideBarEmpresa onCad={handlerCad} onTicket={handlerTicket} onList={handlerList} linkCurrent={linkCurrent}/>
+        <BlocoSideBarEmpresa onCad={handlerCad} onTicket={handlerTicket} onList={handlerList} accessedPagent={accessedPagent}/>
 
         <Flex  padding='8px' margin='0 auto'>
           <Text>Tickets</Text>

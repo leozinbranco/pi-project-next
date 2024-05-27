@@ -1,19 +1,18 @@
 import { Flex, Text, Select, Input, Box } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { BlocoSideBarEmpresa } from "../BlocoSideBarEmpresa";
-import useSWR from "swr";
-import axios from "axios";
 import { FocusEventHandler, useState } from "react";
-import { Empresas } from "domains/enterprises.domain";
-import { Funcionario } from "domains/employees.domain";
 import TableComponent from "../Table/table";
-import { deleteEmpresa } from "hooks/useEmpresa/useEmpresa";
-import { deleteFuncionario } from "hooks/useFuncionario/useFuncionario";
+import { useDeleteEmpresa } from "hooks/useEmpresa/useEmpresa";
+import { useDeleteFuncionario } from "hooks/useFuncionario/useFuncionario";
+import { useSwr } from "hooks/useSwr";
 
 export const BlocoListagem = () => {
   const router = useRouter();
   const [searchType, setSearchType] = useState('empresas'); 
-  const [linkCurrent] = useState('listagem');
+  const [accessedPagent] = useState('listagem');
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { data } = useSwr(`http://localhost:3002/up-next/${searchType}`);
 
     const handlerCad = () => {
       router.push('/cadastroEmpresa');
@@ -28,8 +27,7 @@ export const BlocoListagem = () => {
     }
 
     const handleChangeList = (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const selectedType = event.target.value;
-      setSearchType(selectedType);
+      setSearchType(event.target.value);
     };
 
     const handlerSearch: FocusEventHandler<HTMLInputElement> = (event) => {
@@ -43,18 +41,16 @@ export const BlocoListagem = () => {
       router.push('/cadastro' + route + '?id' + (searchType === 'empresas' ? 'Emp' : 'Func') + '=' + cod);
     }
 
-    const handlerDelete = async (cod: number): Promise<[]> => {
-      const data = searchType === 'empresas' ? await deleteEmpresa(cod) : await deleteFuncionario(cod)
+    const useHandlerDelete = async (cod: number): Promise<undefined> => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      searchType === 'empresas' ? await useDeleteEmpresa(cod) : await useDeleteFuncionario(cod)
       window.location.reload()
-      return data
     }
 
-    const fetcher = async (url: string) => await axios.get<Empresas[] | Funcionario[]>(url).then(res => res.data);
-    const { data } = useSWR<Empresas[] | Funcionario[]>(`http://localhost:3002/up-next/${searchType}`, fetcher);
     return (
       <section>
         <Flex> 
-          <BlocoSideBarEmpresa onCad={handlerCad} onTicket={handlerTicket} onList={handlerList} linkCurrent={linkCurrent}/>
+          <BlocoSideBarEmpresa onCad={handlerCad} onTicket={handlerTicket} onList={handlerList} accessedPagent={accessedPagent}/>
           <Flex flexDirection='column' margin='15px auto' width='1100px'>
             <Flex margin='15px auto' width='1100px' justifyContent='space-between'>
               <Flex>
@@ -81,7 +77,7 @@ export const BlocoListagem = () => {
               </Flex>
             </Flex>
             <Box p={4}>
-              <TableComponent data={data?.data ? data.data[0].data : data} onDelete={handlerDelete} onEdit={handlerEdit} />
+              <TableComponent data={data?.data ? data.data[0].data : data} onDelete={useHandlerDelete} onEdit={handlerEdit} />
             </Box>
           </Flex>
         </Flex>
