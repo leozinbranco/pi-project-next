@@ -1,6 +1,12 @@
+
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+// pages/tickets.js
 'use client'
 
-import { BlocoTickets } from '@/components/BlocoTickets'
 import {
   Flex,
   Box,
@@ -19,21 +25,11 @@ import { BlocoSideBarEmpresa } from '@/components/BlocoSideBarEmpresa'
 import { useGetTickets } from 'hooks/useGetTickets'
 import { Ticket } from 'domains/tickets.domain'
 
-export default function Home() {
-  return <BlocoTickets />
-}
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-// pages/tickets.js
-'use client'
-
 const BlocoTickets = () => {
   const router = useRouter()
   const { tickets, isLoading, error } = useGetTickets()
   const [searchTerm, setSearchTerm] = useState('')
+  const [accessedPagent] = useState('tickets');
 
   const handlerCad = () => {
     router.push('/cadastro')
@@ -100,6 +96,7 @@ const BlocoTickets = () => {
           onCad={handlerCad}
           onTicket={handlerTicket}
           onList={handlerList}
+          accessedPagent={accessedPagent}
         />
         <Flex
           direction="column"
