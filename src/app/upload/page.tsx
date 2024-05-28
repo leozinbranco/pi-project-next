@@ -99,7 +99,7 @@ export default function UploadPage() {
       }
       try {
         await axios.post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/suport/`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/support/`,
           {
             statusTicket: 'Aberto',
             tipoTicket: String(typeTicket),
