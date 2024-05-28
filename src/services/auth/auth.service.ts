@@ -6,13 +6,13 @@ export const getAuth = async (cpf: string, password: string): Promise<UsuarioAdm
   const response: AxiosResponse = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth`, {
     cpf,
     password
+  }
+  ,
+  { 
+    headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    }
   })
-  // ,
-  // { 
-  //   headers: {
-  //   'Content-Type': 'application/json',
-  //   'Access-Control-Allow-Origin': '*',
-  //   }
-  // })
   return response.data as UsuarioAdmResponseAPI
 }
