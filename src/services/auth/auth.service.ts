@@ -7,5 +7,12 @@ export const getAuth = async (cpf: string, password: string): Promise<UsuarioAdm
     cpf,
     password
   })
+  // ,
+  // { 
+  //   headers: {
+  //   'Content-Type': 'application/json',
+  //   'Access-Control-Allow-Origin': '*',
+  //   }
+  // })
   return response.data as UsuarioAdmResponseAPI
 }

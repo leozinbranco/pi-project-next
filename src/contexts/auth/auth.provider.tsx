@@ -34,6 +34,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     try {
       const response: UsuarioAdmResponseAPI = await getAuth(cpf, password)
       const accessToken = response.access_token
+      localStorage.setItem('access-token', accessToken)
       setUser(response.user)
       setState({
         signIn,
