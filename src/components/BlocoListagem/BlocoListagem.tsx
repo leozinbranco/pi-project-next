@@ -22,7 +22,7 @@ export const BlocoListagem = () => {
   const deleteFuncionario = useDeleteFuncionario()
 
   const handlerCad = () => {
-    router.push('/cadastroEmpresa')
+    router.push('/cadastro')
   }
 
   const handlerTicket = () => {

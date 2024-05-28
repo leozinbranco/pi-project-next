@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, Button } from "@chakra-ui/react";
 import React, { FC, useState } from "react";
 import { BlocoSideBarEmpresa } from "../BlocoSideBarEmpresa";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -12,20 +12,24 @@ interface Cadastro {
   onSubmit: (empresa: Empresas) => Promise<unknown | undefined>,
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   onSubmitEdit: (empresa: Empresas) => Promise<unknown | undefined>,
+    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+    onSubmitFunc: (empresa: Empresas) => Promise<unknown | undefined>,
+    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+    onSubmitEditFunc: (empresa: Empresas) => Promise<unknown | undefined>,
   funcionario: Funcionario,
   empresa: Empresas,
 }
 
 export const BlocoCadastroEmp: FC<Cadastro> = ({funcionario, empresa,
-  onSubmit, onSubmitEdit}) => {
+  onSubmit, onSubmitEdit, onSubmitFunc, onSubmitEditFunc}) => {
     const router = useRouter()
     const searchParams = useSearchParams();
     const id = searchParams.get('idEmp') ? searchParams.get('idEmp') : searchParams.get('idFunc'); 
-    const [typeCad] = useState(1);
+    const [typeCad, setTypeCad] = useState(1);
     const [accessedPagent] = useState('cadastro');
 
     const handlerCad = () => {
-      router.push('/cadastroEmpresa');
+      router.push('/cadastro');
     }
     
     const handlerTicket = () => {
@@ -36,7 +40,9 @@ export const BlocoCadastroEmp: FC<Cadastro> = ({funcionario, empresa,
       router.push('/listagem');
     }
 
-
+    const handlerTypeCad = () => {
+      setTypeCad(typeCad === 1 ? 2 : 1);
+    }
     
     return (<section>
 
@@ -52,10 +58,13 @@ export const BlocoCadastroEmp: FC<Cadastro> = ({funcionario, empresa,
           </Flex>
 
           <Flex gap='24' display={typeCad === 2 ? 'flex' : 'none'}>
-            <BlocoCampoFunc funcionario={funcionario} onSubmitEdit={onSubmitEdit} onSubmit={onSubmit}/>
+            <BlocoCampoFunc funcionario={funcionario} onSubmitEdit={onSubmitEditFunc} onSubmit={onSubmitFunc}/>
           </Flex>
+          
+          <Button onClick={handlerTypeCad} color='#FFFFFF' _hover={{ bg: '#010A22', color: '#FFFFFF'}} border='2px #FFFFFF solid' borderRadius='8px' bgColor='#010A22'>
+            Cadastro de {typeCad === 1 ? 'Funcionário' : 'Empresa'}
+          </Button>
         </Flex>
-
 
       </Flex>
 
