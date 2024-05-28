@@ -14,10 +14,12 @@ export const BlocoListagem = () => {
   const router = useRouter()
   const [searchType, setSearchType] = useState('empresas')
   const [accessedPagent] = useState('listagem')
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data } = useSwr(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/up-next/${searchType}`
   )
+
+  const deleteEmpresa = useDeleteEmpresa()
+  const deleteFuncionario = useDeleteFuncionario()
 
   const handlerCad = () => {
     router.push('/cadastroEmpresa')
@@ -58,12 +60,13 @@ export const BlocoListagem = () => {
     )
   }
 
-  const useHandlerDelete = async (cod: number): Promise<undefined> => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    searchType === 'empresas'
-      ? await useDeleteEmpresa(cod)
-      : await useDeleteFuncionario(cod)
-    window.location.reload()
+  const handleDelete = async (cod: number): Promise<undefined> => {
+    if (searchType === 'empresas') {
+      await deleteEmpresa(cod)
+    } else {
+      await deleteFuncionario(cod)
+    }
+    window.location.reload() // Uncomment if you want to reload the page after deletion
   }
 
   return (
@@ -114,7 +117,7 @@ export const BlocoListagem = () => {
           <Box p={4}>
             <TableComponent
               data={data?.data ? data.data[0].data : data}
-              onDelete={useHandlerDelete}
+              onDelete={handleDelete}
               onEdit={handlerEdit}
             />
           </Box>

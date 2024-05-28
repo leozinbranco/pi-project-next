@@ -123,7 +123,7 @@ export default function UploadPage() {
             headers: {
               'Content-Type': 'application/json',
               'Access-Control-Allow-Origin': '*',
-              Authorization: localStorage.getItem('access-token'),
+              'x-api-key': localStorage.getItem('access-token'),
             },
           }
         )
@@ -168,7 +168,7 @@ export default function UploadPage() {
           {
             headers: {
               'Content-Type': 'multipart/form-data',
-              Authorization: localStorage.getItem('access-token'),
+              'x-api-key': localStorage.getItem('access-token'),
             },
           }
         )

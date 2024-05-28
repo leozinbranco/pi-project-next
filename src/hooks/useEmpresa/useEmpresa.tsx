@@ -1,74 +1,85 @@
-import axios from "axios";
-import { ToastContext } from "contexts/toast/toast.context";
-import { Empresas } from "domains/enterprises.domain";
-import { useContext } from "react";
+import axios from 'axios'
+import { ToastContext } from 'contexts/toast/toast.context'
+import { Empresas } from 'domains/enterprises.domain'
+import { useCallback, useContext } from 'react'
 
 interface ErrorResponse {
   response: {
     data: {
-      message: string;
-    };
-  };
+      message: string
+    }
+  }
 }
 
 export const useCadastroEmpresa = () => {
   const { setRenderToast } = useContext(ToastContext)
-    const cadEmp = async (enterprises: Empresas): Promise<Empresas|undefined> => {
-      try {
-         const headers = {
-          'Content-Type': 'application/json;charset=utf-8'
-        } 
-         const config = { headers }
-         const res = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/cadastroEmp/', {
+  const cadEmp = async (
+    enterprises: Empresas
+  ): Promise<Empresas | undefined> => {
+    try {
+      const headers = {
+        'Content-Type': 'application/json;charset=utf-8',
+      }
+      const config = { headers }
+      const res = await axios.post(
+        process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/cadastroEmp/',
+        {
           razaoSocialEmpresa: enterprises.nome,
           nomeFantasiaEmpresa: enterprises.nomeFantasia,
           cnpjEmpresa: enterprises.documento,
           emailEmpresa: enterprises.email,
           areaAtuacaoEmpresa: enterprises.area,
           telefoneEmpresa: enterprises.telefone,
-          enderecoEmpresa: enterprises.enderecoComp
-         }, config)
-         setRenderToast({
-          title: 'Sucesso!',
-          description: 'Empresa cadastrada com sucesso!',
-          status: 'success',
-          isVisible: true,
-          isClosable: true
-        })
-         return res.data as Empresas
-      } catch (e) {
-        const { response } = e as ErrorResponse
-        setRenderToast({
-          title: 'Erro ao cadastrar uma empresa!',
-          description: response.data.message,
-          status: 'error',
-          isVisible: true,
-          isClosable: true
-        })
-        return undefined;
-      }
+          enderecoEmpresa: enterprises.enderecoComp,
+        },
+        config
+      )
+      setRenderToast({
+        title: 'Sucesso!',
+        description: 'Empresa cadastrada com sucesso!',
+        status: 'success',
+        isVisible: true,
+        isClosable: true,
+      })
+      return res.data as Empresas
+    } catch (e) {
+      const { response } = e as ErrorResponse
+      setRenderToast({
+        title: 'Erro ao cadastrar uma empresa!',
+        description: response.data.message,
+        status: 'error',
+        isVisible: true,
+        isClosable: true,
+      })
+      return undefined
     }
-
-    return { cadEmp }
   }
+  return { cadEmp }
+}
 
-  export const useDeleteEmpresa = async (codEmpresa: number): Promise<[]|undefined> => {
-    const { setRenderToast } = useContext(ToastContext)
-
+export const useDeleteEmpresa = () => {
+  const { setRenderToast } = useContext(ToastContext)
+  return useCallback(async (codEmpresa: number) => {
     try {
-       const headers = {
-        'Content-Type': 'application/json;charset=utf-8'
-      } 
-       const config = { headers }
-       const res = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/removeEmp/' +  codEmpresa, [], config)
-       setRenderToast({
+      const headers = {
+        'Content-Type': 'application/json;charset=utf-8',
+      }
+      const config = { headers }
+      const res = await axios.post(
+        process.env.NEXT_PUBLIC_BACKEND_URL +
+          '/up-next/removeEmp/' +
+          codEmpresa,
+        [],
+        config
+      )
+      setRenderToast({
         title: 'Sucesso!',
         description: 'Empresa deletada com sucesso!',
         status: 'success',
         isVisible: true,
-        isClosable: true
+        isClosable: true,
       })
-       return res.data as []
+      return res.data as []
     } catch (e) {
       const { response } = e as ErrorResponse
       setRenderToast({
@@ -76,31 +87,38 @@ export const useCadastroEmpresa = () => {
         description: response.data.message,
         status: 'error',
         isVisible: true,
-        isClosable: true
+        isClosable: true,
       })
-      return undefined;
+      return undefined
     }
+  }, [])
 }
 
 export const useBuscaEmpresa = () => {
   const { setRenderToast } = useContext(ToastContext)
-  const buscaEmp = async (codEmpresa: number): Promise<Empresas|undefined> => {
-
+  const buscaEmp = async (
+    codEmpresa: number
+  ): Promise<Empresas | undefined> => {
     try {
-       const headers = {
-        'Content-Type': 'application/json;charset=utf-8'
-      } 
-       const config = { headers }
-       const res = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/empresaUn/' +  codEmpresa, config)
-       setRenderToast({
+      const headers = {
+        'Content-Type': 'application/json;charset=utf-8',
+      }
+      const config = { headers }
+      const res = await axios.get(
+        process.env.NEXT_PUBLIC_BACKEND_URL +
+          '/up-next/empresaUn/' +
+          codEmpresa,
+        config
+      )
+      setRenderToast({
         title: 'Sucesso!',
         description: 'Empresa encontrada com sucesso!',
         status: 'success',
         isVisible: true,
-        isClosable: true
+        isClosable: true,
       })
-       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-       return res.data.data[0].data[0] as Empresas
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      return res.data.data[0].data[0] as Empresas
     } catch (e) {
       const { response } = e as ErrorResponse
       setRenderToast({
@@ -108,55 +126,59 @@ export const useBuscaEmpresa = () => {
         description: response.data.message,
         status: 'error',
         isVisible: true,
-        isClosable: true
+        isClosable: true,
       })
-      return undefined;
+      return undefined
     }
   }
 
   return { buscaEmp }
-
 }
 
 export const useEditaEmpresa = () => {
   const { setRenderToast } = useContext(ToastContext)
-  const editEmp = async (enterprises: Empresas): Promise<Empresas|undefined> => {
+  const editEmp = async (
+    enterprises: Empresas
+  ): Promise<Empresas | undefined> => {
     try {
       const headers = {
-       'Content-Type': 'application/json;charset=utf-8'
-     } 
+        'Content-Type': 'application/json;charset=utf-8',
+      }
       const config = { headers }
-      const res = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/editaEmp/', {
-       codEmpresa: enterprises.codigo,
-       razaoSocialEmpresa: enterprises.nome,
-       nomeFantasiaEmpresa: enterprises.nomeFantasia,
-       cnpjEmpresa: enterprises.documento,
-       emailEmpresa: enterprises.email,
-       areaAtuacaoEmpresa: enterprises.area,
-       telefoneEmpresa: enterprises.telefone,
-       enderecoEmpresa: enterprises.enderecoComp
-      }, config)
+      const res = await axios.post(
+        process.env.NEXT_PUBLIC_BACKEND_URL + '/up-next/editaEmp/',
+        {
+          codEmpresa: enterprises.codigo,
+          razaoSocialEmpresa: enterprises.nome,
+          nomeFantasiaEmpresa: enterprises.nomeFantasia,
+          cnpjEmpresa: enterprises.documento,
+          emailEmpresa: enterprises.email,
+          areaAtuacaoEmpresa: enterprises.area,
+          telefoneEmpresa: enterprises.telefone,
+          enderecoEmpresa: enterprises.enderecoComp,
+        },
+        config
+      )
       setRenderToast({
-       title: 'Sucesso!',
-       description: 'Empresa atualizada com sucesso!',
-       status: 'success',
-       isVisible: true,
-       isClosable: true
-     })
+        title: 'Sucesso!',
+        description: 'Empresa atualizada com sucesso!',
+        status: 'success',
+        isVisible: true,
+        isClosable: true,
+      })
       return res.data as Empresas
-   } catch (e) {
-     const { response } = e as ErrorResponse
-     setRenderToast({
-       title: 'Erro ao atualizar uma empresa!',
-       description: response.data.message,
-       status: 'error',
-       isVisible: true,
-       isClosable: true
-     })
-     return undefined;
-   }
+    } catch (e) {
+      const { response } = e as ErrorResponse
+      setRenderToast({
+        title: 'Erro ao atualizar uma empresa!',
+        description: response.data.message,
+        status: 'error',
+        isVisible: true,
+        isClosable: true,
+      })
+      return undefined
+    }
   }
 
   return { editEmp }
-  
 }

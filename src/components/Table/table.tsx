@@ -1,16 +1,15 @@
-import { Table, Thead, Tbody, Tr, Th, Td, IconButton } from "@chakra-ui/react";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { Empresas } from "domains/enterprises.domain";
-import { Funcionario } from "domains/employees.domain";
+import { Table, Thead, Tbody, Tr, Th, Td, IconButton } from '@chakra-ui/react'
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
+import { Empresas } from 'domains/enterprises.domain'
+import { Funcionario } from 'domains/employees.domain'
 
 interface DataTable {
-    data?: Empresas[] | Funcionario[],
-    onDelete: (item: number) => Promise<undefined>,
-    onEdit: (item: number) => void
+  data?: Empresas[] | Funcionario[]
+  onDelete: (item: number) => Promise<undefined>
+  onEdit: (item: number) => void
 }
 
-
-const TableComponent = ({ data, onDelete, onEdit } : DataTable) => {
+const TableComponent = ({ data, onDelete, onEdit }: DataTable) => {
   return (
     <Table variant="simple">
       <Thead>
@@ -25,7 +24,7 @@ const TableComponent = ({ data, onDelete, onEdit } : DataTable) => {
       <Tbody>
         {data && data.length > 0 ? (
           data.map((item) => (
-            <Tr key={item.codigo}>
+            <Tr key={item.cod}>
               <Td>{item.nome}</Td>
               <Td>{item.email}</Td>
               <Td>{item.documento}</Td>
@@ -56,7 +55,7 @@ const TableComponent = ({ data, onDelete, onEdit } : DataTable) => {
         )}
       </Tbody>
     </Table>
-  );
-};
+  )
+}
 
-export default TableComponent;
+export default TableComponent
