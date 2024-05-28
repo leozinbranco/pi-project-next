@@ -8,10 +8,9 @@ import { CardUpload } from 'components/CardUpload'
 import React, { useRef, useState, useContext } from 'react'
 import styles from './upload.module.css'
 import axios, { AxiosError } from 'axios'
+import { AuthContext } from 'contexts/auth/auth.provider'
 import { useAuth } from 'contexts/auth/auth.hook'
 import { ToastContext } from 'contexts/toast/toast.context'
-import Cookies from 'cookies-js'
-import { AuthContext } from 'contexts/auth/auth.provider'
 
 export default function UploadPage() {
   const { setRenderToast } = useContext(ToastContext)
@@ -36,7 +35,6 @@ export default function UploadPage() {
   }
 
   const handlerOnReturn = () => {
-    console.log('Chegou aqui ')
     signOut()
   }
 
@@ -125,7 +123,7 @@ export default function UploadPage() {
             headers: {
               'Content-Type': 'application/json',
               'Access-Control-Allow-Origin': '*',
-              Authorization: Cookies.get('token'),
+              Authorization: localStorage.getItem('access-token'),
             },
           }
         )
@@ -164,14 +162,13 @@ export default function UploadPage() {
         inputRef.current?.files![0].name
       )
       try {
-        const token = Cookies.get('token')
         await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload/${user.empresaUsuarioCnpj.codEmpresa}/${user.empresaUsuarioCnpj.cnpjEmpresa}`,
           formData,
           {
             headers: {
-              'x-api-key': token,
               'Content-Type': 'multipart/form-data',
+              Authorization: localStorage.getItem('access-token'),
             },
           }
         )

@@ -9,12 +9,7 @@ const theme = extendTheme({
     teal: {
       100: '#407BFF '
     }
-  },
-  fonts: {
-    heading: `Poppins`,
-    body: `Poppins`,
-  },
-
+  }
 })
 
 export function Providers ({

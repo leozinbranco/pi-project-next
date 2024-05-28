@@ -1,26 +1,13 @@
 'use client'
-import React, {
-  ReactNode,
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react'
+import React, { ReactNode, createContext, useCallback, useEffect, useMemo, useReducer } from 'react'
 import { toastReducer } from './toast.reducer'
 import { IToastActionType } from './toast.action'
-import {
-  toastOptionsInitialState,
-  IToastContext,
-  IToastOptions,
-} from './toast.types'
+import { toastOptionsInitialState, IToastContext, IToastOptions } from './toast.types'
 import { useToast } from '@chakra-ui/react'
 interface IToastContextProps {
   children: ReactNode
 }
-export const ToastContext = createContext<IToastContext>(
-  toastOptionsInitialState
-)
+export const ToastContext = createContext<IToastContext>(toastOptionsInitialState)
 
 const ToastContextProvider = ({ children }: IToastContextProps) => {
   const [state, dispatch] = useReducer(toastReducer, toastOptionsInitialState)
@@ -32,7 +19,7 @@ const ToastContextProvider = ({ children }: IToastContextProps) => {
   const setResetToast = useCallback(() => {
     dispatch({
       type: IToastActionType.TOAST_RESET,
-      payload: undefined,
+      payload: undefined
     })
   }, [])
 
@@ -44,7 +31,7 @@ const ToastContextProvider = ({ children }: IToastContextProps) => {
         description: state.toastOptions.description,
         status: state.toastOptions.status,
         duration: state.toastOptions.duration,
-        isClosable: state.toastOptions.isClosable,
+        isClosable: state.toastOptions.isClosable
       })
     }
   }, [state.toastOptions, toast])
@@ -52,7 +39,7 @@ const ToastContextProvider = ({ children }: IToastContextProps) => {
     return {
       toastOptions: state.toastOptions,
       setRenderToast,
-      setResetToast,
+      setResetToast
     }
   }, [setRenderToast, setResetToast, state.toastOptions])
 
