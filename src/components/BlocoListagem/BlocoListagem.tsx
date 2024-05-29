@@ -49,10 +49,8 @@ export const BlocoListagem = () => {
   }
 
   const handlerEdit = (cod: number) => {
-    const route = searchType === 'empresas' ? 'Empresa' : 'Funcionario'
     router.push(
       '/cadastro' +
-        route +
         '?id' +
         (searchType === 'empresas' ? 'Emp' : 'Func') +
         '=' +

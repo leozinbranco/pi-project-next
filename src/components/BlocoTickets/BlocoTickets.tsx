@@ -7,7 +7,7 @@ export const BlocoTickets: FC = () => {
     const router = useRouter()
     const [accessedPagent] = useState('tickets')
     const handlerCad = () => {
-      router.push('/cadastroEmpresa')
+      router.push('/cadastro')
     }
 
     const handlerTicket = () => {
