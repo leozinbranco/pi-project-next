@@ -1,4 +1,6 @@
 import axios from 'axios'
+import Cookies from 'cookies-js'
+
 const axiosInterceptorInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL // Replace with your API base URL
 })
@@ -7,7 +9,7 @@ const axiosInterceptorInstance = axios.create({
 axiosInterceptorInstance.interceptors.request.use(
   (config) => {
     // Modify the request config here (add headers, authentication tokens)
-    const token = localStorage.getItem('access-token')
+    const token = Cookies.get('token')
 
     // If token is present add it to request's Authorization Header
     if (token) {

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { OrdemServico } from 'domains/work-orders.domain'
+import Cookies from 'cookies-js'
 
 export const useFilterDate = () => {
   const filterDate = async (startDate: string, endDate: string, codOs: string): Promise<OrdemServico[]> => {
@@ -8,7 +9,7 @@ export const useFilterDate = () => {
     //   throw
     // }
     try {
-      const token = localStorage.getItem('access-token')
+      const token = Cookies.get('token')
       const headers = {
         'x-api-key': token,
         'Content-Type': 'application/json;charset=utf-8'

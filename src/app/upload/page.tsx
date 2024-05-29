@@ -11,6 +11,7 @@ import axios, { AxiosError } from 'axios'
 import { AuthContext } from 'contexts/auth/auth.provider'
 import { useAuth } from 'contexts/auth/auth.hook'
 import { ToastContext } from 'contexts/toast/toast.context'
+import Cookies from 'cookies-js'
 
 export default function UploadPage() {
   const { setRenderToast } = useContext(ToastContext)
@@ -123,7 +124,7 @@ export default function UploadPage() {
             headers: {
               'Content-Type': 'application/json',
               'Access-Control-Allow-Origin': '*',
-              'x-api-key': localStorage.getItem('access-token'),
+              'x-api-key': Cookies.get('token'),
             },
           }
         )
@@ -168,7 +169,7 @@ export default function UploadPage() {
           {
             headers: {
               'Content-Type': 'multipart/form-data',
-              'x-api-key': localStorage.getItem('access-token'),
+              'x-api-key': Cookies.get('token'),
             },
           }
         )

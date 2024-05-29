@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { OrdemServico } from 'domains/work-orders.domain'
+import Cookies from 'cookies-js'
 
 export const useFilterCodOs = () => {
   const filterNumberOs = async (codOs: string) => {
     try {
-      const token = localStorage.getItem('access-token')
+      const token = Cookies.get('token')
       const headers = {
         'x-api-key': token,
         'Content-Type': 'application/json;charset=utf-8'
