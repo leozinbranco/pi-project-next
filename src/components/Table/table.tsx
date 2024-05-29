@@ -24,7 +24,7 @@ const TableComponent = ({ data, onDelete, onEdit }: DataTable) => {
       <Tbody>
         {data && data.length > 0 ? (
           data.map((item) => (
-            <Tr key={item.cod}>
+            <Tr key={item.codigo}>
               <Td>{item.nome}</Td>
               <Td>{item.email}</Td>
               <Td>{item.documento}</Td>
