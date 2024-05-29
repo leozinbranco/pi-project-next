@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       setRenderToast({
         title: 'Pendente',
         description: 'Obtendo dados...',
-        status: 'loading',
+        status: 'warning',
         isVisible: true,
         duration: 4000,
         isClosable: true,
@@ -96,7 +96,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       setRenderToast({
         title: 'Pendente',
         description: 'Obtendo dados...',
-        status: 'loading',
+        status: 'warning',
         isVisible: true,
         duration: 4000,
         isClosable: true,
