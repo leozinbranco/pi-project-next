@@ -1,5 +1,6 @@
 import { UsuarioAdm } from 'domains/profiles.domain'
 import { IAuthState } from './auth.types'
+import { JwtPayload } from 'jsonwebtoken'
 
 export const authUserInitial: UsuarioAdm = {
   codUsuario: 0,
@@ -17,10 +18,17 @@ export const authUserInitial: UsuarioAdm = {
   adm: false
 }
 
+export const userDataInitial: JwtPayload = {
+  email: "",
+  sub: "",
+  adm: "",
+}
+
 export const authContext: IAuthState = {
   user: authUserInitial,
-  signInAdm: () => true,
   signIn: () => true,
+  userData: userDataInitial,
+  signInAdm: () => false,
   signOut: () => true,
   token: 'token'
 }
