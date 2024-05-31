@@ -181,13 +181,24 @@ export default function UploadPage() {
           isClosable: true,
         })
       } catch (error) {
-        setRenderToast({
-          title: 'Erro ao recuperar ordem de serviço!',
-          description: (error as AxiosError).message,
-          status: 'error',
-          isVisible: true,
-          isClosable: true,
-        })
+        console.log('>> ', error)
+        if (error instanceof AxiosError && error.response?.data.message) {
+          setRenderToast({
+            title: 'Planilha inválida!',
+            description: error.response?.data.message,
+            status: 'error',
+            isVisible: true,
+            isClosable: true,
+          })
+        } else {
+          setRenderToast({
+            title: 'Ocorreu um erro desconhecido.',
+            description: '',
+            status: 'error',
+            isVisible: true,
+            isClosable: true,
+          })
+        }
       }
     }
   }
