@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client'
-import { Image, Flex, IconButton } from '@chakra-ui/react'
+import { Image, Flex, IconButton, Box } from '@chakra-ui/react'
 import { ModalSupport } from '@/components/ModalSupport'
 import { CardUpload } from 'components/CardUpload'
 import React, { useRef, useState, useContext } from 'react'
@@ -247,21 +247,24 @@ export default function UploadPage() {
                 onDrop={this.handleDrop}
                 sendFile={async () => await handleSendFile()}
               />
-              <IconButton
-                aria-label="Send email"
-                onClick={handlerOnOpenModal}
-                colorScheme="transparent"
-                height="100px"
-                justifyContent="end"
-                icon={
-                  <Image
-                    src="images/suport.png"
-                    width="60px"
-                    height="60px"
-                    onClick={handlerOnOpenModal}
-                  />
+              <Box display="flex" justifyContent="flex-end">
+                <IconButton
+                  aria-label="Send email"
+                  onClick={handlerOnOpenModal}
+                  colorScheme="transparent"
+                  height="100px"
+                  width='70px'
+                  justifyContent="flex-end"
+                  icon={
+                    <Image
+                      src="images/suport.png"
+                      width="70px"
+                      height="70px"
+                      onClick={handlerOnOpenModal}
+                    />
                 }
               />
+              </Box>
             </Flex>
           </Flex>
           <ModalSupport
