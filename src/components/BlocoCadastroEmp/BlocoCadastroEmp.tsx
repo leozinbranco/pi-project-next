@@ -17,7 +17,7 @@ interface Cadastro {
     // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
     onSubmitEditFunc: (empresa: Empresas) => Promise<unknown | undefined>,
   funcionario: Funcionario,
-  empresa: Empresas,
+  empresa: Empresas
 }
 
 export const BlocoCadastroEmp: FC<Cadastro> = ({funcionario, empresa,
@@ -25,9 +25,10 @@ export const BlocoCadastroEmp: FC<Cadastro> = ({funcionario, empresa,
     const router = useRouter()
     const searchParams = useSearchParams();
     const id = searchParams.get('idEmp') ? searchParams.get('idEmp') : searchParams.get('idFunc'); 
-    const [typeCad, setTypeCad] = useState(1);
+    const [typeCad, setTypeCad] = useState(searchParams.get('idFunc') ? 2 : 1);
     const [accessedPagent] = useState('cadastro');
 
+    console.log(typeCad)
     const handlerCad = () => {
       router.push('/cadastro');
     }
