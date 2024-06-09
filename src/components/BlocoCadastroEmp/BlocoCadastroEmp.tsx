@@ -28,7 +28,6 @@ export const BlocoCadastroEmp: FC<Cadastro> = ({funcionario, empresa,
     const [typeCad, setTypeCad] = useState(searchParams.get('idFunc') ? 2 : 1);
     const [accessedPagent] = useState('cadastro');
 
-    console.log(typeCad)
     const handlerCad = () => {
       router.push('/cadastro');
     }
