@@ -44,7 +44,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
         description: 'Obtendo dados...',
         status: 'loading',
         isVisible: true,
-        duration: 4000,
+        duration: 6000,
         isClosable: true,
       })
       const response: UsuarioAdmResponseAPI = await getAuth(cpf, password)

@@ -3,7 +3,7 @@ import { IToastActionType } from './toast.action'
 export interface IToastOptions {
   title: string
   description: string
-  status: 'success' | 'error' | 'loading'
+  status: 'success' | 'error' | 'loading' 
   isVisible: boolean
   duration?: number
   isClosable: boolean
